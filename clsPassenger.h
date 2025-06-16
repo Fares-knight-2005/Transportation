@@ -149,6 +149,27 @@ public:
     }
 
 
+    static void savePassengersFromOpenHash(OpenHash <int ,clsPassenger> Passengers)
+    {
+        fstream PassengerFile;
+
+        PassengerFile.open(clsPassengerFileName, ios::out);
+
+        if (PassengerFile.is_open())
+        {
+            for (int i = 0; i < Passengers.size(); i++) {
+                Node <HashNode<int, clsPassenger>>* d = Passengers.getHead(i);
+                while (d != nullptr) {
+                    PassengerFile << d->item.item.toString() << endl;
+                    d = d->next;
+                }
+            }
+
+            PassengerFile.close();
+        }
+    }
+
+
     static DoubleLinkedList <clsPassenger> GetAllPassengers()
     {
         DoubleLinkedList <clsPassenger> AllPassengers;

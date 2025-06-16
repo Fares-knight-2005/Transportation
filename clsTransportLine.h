@@ -5,6 +5,7 @@
 #include "clsStation.h"
 #include "clsVehicle.h"
 #include <sstream>
+#include "Input.h"
 
 class clsTransportLine
 {
@@ -119,7 +120,7 @@ public:
     }
 
     static clsTransportLine parse(string line, OpenHash<int, clsStation>& stations) {
-        DoubleLinkedList<string> tokens = Database::Split(line,",,,");
+        DoubleLinkedList<string> tokens = Input::Split(line,",,,");
         if (tokens.size() < 5) {
             throw invalid_argument("Not enough tokens in line");
         }
@@ -143,68 +144,120 @@ public:
         return tl;
     }
 
-    template<class Item>
-    static void saveTransportLines(string filename, OpenHash<Item, clsTransportLine>& transportLines) {
-        ofstream outFile(filename);
 
-        for (int i = 0; i < transportLines.getCapicty(); i++) {
-            Node<clsTransportLine>* current = transportLines.getHead(i);
-            while (current != nullptr) {
-                outFile << current->item, toString() << endl;
-                current = current->next;
-            }
-        }
-        outFile.close();
-    }
 
-    static OpenHash<int, clsTransportLine> loadTransportLines(string filename) {
-        OpenHash<int, clsTransportLine> transportLines;
-        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
+    static void saveTransportLines(DoubleLinkedList <clsTransportLine> Lines)
+    {
+        fstream TripsFile;
 
-        ifstream file(filename);
-        string line;
+        TripsFile.open(clsTransportLineFileName, ios::out);
 
-        while (getline(file, line)) {
-            try {
-                clsTransportLine tl = clsTransportLine::parse(line, stations);
-                transportLines.insert(tl.getId(), tl);
-
-                if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
-                    clsTransportLine::setNumberOfAllTransportLine(tl.getId());
+        if (TripsFile.is_open())
+        {
+            for (int i = 0; i < Lines.size(); i++)
+            {
+                if (Lines[i] != nullptr)
+                {
+                    clsTransportLine p = *Lines[i];
+                    string Line = p.toString();
+                    TripsFile << Line << endl;
                 }
             }
-            catch (...) {
-                continue;
-            }
-        }
 
-        return transportLines;
+            TripsFile.close();
+        }
     }
 
-    static OpenHash<string, clsTransportLine> loadTransportLinesByName(string filename) {
-        OpenHash<string, clsTransportLine> transportLines;
-        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
 
-        ifstream file(filename);
-        string line;
+    static DoubleLinkedList <clsVehicle> GetTransportLines()
+    {
+        DoubleLinkedList <clsVehicle> AllLines;
 
-        while (getline(file, line)) {
-            try {
-                clsTransportLine tl = clsTransportLine::parse(line, stations);
-                string nameKey = tl.getName();
-                transportLines.insert(nameKey, tl);
+        fstream MyFile;
+        MyFile.open(clsTransportLineFileName, ios::in);
 
-                if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
-                    clsTransportLine::setNumberOfAllTransportLine(tl.getId());
-                }
+        if (MyFile.is_open())
+        {
+            string Line;
+
+            while (getline(MyFile, Line))
+            {
+                clsTransportLine Trip = parse(Line);
+                AllLines.addLast(Trip);
             }
-            catch (...) {
-                continue;
-            }
+
+            MyFile.close();
+
         }
 
-        return transportLines;
+        return AllLines;
+
     }
+
+
+
+    //template<class Item>
+    //static void saveTransportLines(string filename, OpenHash<Item, clsTransportLine>& transportLines) {
+    //    ofstream outFile(filename);
+
+    //    for (int i = 0; i < transportLines.getCapicty(); i++) {
+    //        Node<clsTransportLine>* current = transportLines.getHead(i);
+    //        while (current != nullptr) {
+    //            outFile << current->item, toString() << endl;
+    //            current = current->next;
+    //        }
+    //    }
+    //    outFile.close();
+    //}
+
+    //static OpenHash<int, clsTransportLine> loadTransportLines(string filename) {
+    //    OpenHash<int, clsTransportLine> transportLines;
+    //    OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
+
+    //    ifstream file(filename);
+    //    string line;
+
+    //    while (getline(file, line)) {
+    //        try {
+    //            clsTransportLine tl = clsTransportLine::parse(line, stations);
+    //            transportLines.insert(tl.getId(), tl);
+
+    //            if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
+    //                clsTransportLine::setNumberOfAllTransportLine(tl.getId());
+    //            }
+    //        }
+    //        catch (...) {
+    //            continue;
+    //        }
+    //    }
+
+    //    return transportLines;
+    //}
+
+    //static OpenHash<string, clsTransportLine> loadTransportLinesByName(string filename) {
+    //    OpenHash<string, clsTransportLine> transportLines;
+    //    OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
+
+    //    ifstream file(filename);
+    //    string line;
+
+    //    while (getline(file, line)) {
+    //        try {
+    //            clsTransportLine tl = clsTransportLine::parse(line, stations);
+    //            string nameKey = tl.getName();
+    //            transportLines.insert(nameKey, tl);
+
+    //            if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
+    //                clsTransportLine::setNumberOfAllTransportLine(tl.getId());
+    //            }
+    //        }
+    //        catch (...) {
+    //            continue;
+    //        }
+    //    }
+
+    //    return transportLines;
+    //}
 
 };
 

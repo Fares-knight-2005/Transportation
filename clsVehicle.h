@@ -102,6 +102,83 @@ public:
         return packageSize > currPackageSize;
     }
 
+
+    //static OpenHash<int, clsVehicle> loadVehicles(string filename) {
+    //    OpenHash<int, clsVehicle> vehicles;
+    //    OpenHash<int, clsVehicleTrip> vehicleTrip = loadVehicleTrips(Database::clsVehicleTripFileName);
+
+    //    ifstream file(filename);
+    //    string line;
+
+    //    while (getline(file, line)) {
+    //        try {
+    //            clsVehicle vehicle = clsVehicle::parse(line, vehicleTrip);
+    //            vehicles.insert(vehicle.getId(), vehicle);
+
+    //            if (clsVehicle::getNumberOfAllVehicle() < vehicle.getId()) {
+    //                clsVehicle::setNumberOfAllVehicle(vehicle.getId());
+    //            }
+    //        }
+    //        catch (...) {
+    //            continue;
+    //        }
+    //    }
+
+    //    return vehicles;
+    //}
+
+
+
+
+    static void saveVehciles(DoubleLinkedList <clsVehicle> Vehicle)
+    {
+        fstream TripsFile;
+
+        TripsFile.open(clsVehicleFileName, ios::out);
+
+        if (TripsFile.is_open())
+        {
+            for (int i = 0; i < Vehicle.size(); i++)
+            {
+                if (Vehicle[i] != nullptr)
+                {
+                    clsVehicle p = *Vehicle[i];
+                    string Line = p.toString();
+                    TripsFile << Line << endl;
+                }
+            }
+
+            TripsFile.close();
+        }
+    }
+
+
+    static DoubleLinkedList <clsVehicle> GetAllVehicles()
+    {
+        DoubleLinkedList <clsVehicle> AllVehicle;
+
+        fstream MyFile;
+        MyFile.open(clsVehicleFileName, ios::in);
+
+        if (MyFile.is_open())
+        {
+            string Line;
+
+            while (getline(MyFile, Line))
+            {
+                clsVehicle Trip = parse(Line);
+                AllVehicle.addLast(Trip);
+            }
+
+            MyFile.close();
+
+        }
+
+        return AllVehicle;
+
+    }
+
+
     /*
     void addNewVehicleTrip(clsTransportLine t,clsPassengerTrip &v){
 
@@ -228,16 +305,16 @@ public:
     }
 
 
-    static void saveVehicles(string& filename, OpenHash<int, clsVehicle> vehicles) {
-        ofstream outFile(filename);
+    //static void saveVehicles(string& filename, OpenHash<int, clsVehicle> vehicles) {
+    //    ofstream outFile(filename);
 
-        for (int i = 0; i < vehicles.getCapicty(); i++) {
-            Node<int, clsVehicle>* current = vehicles.getHead(i);
-            while (current != nullptr) {
-                outFile << current->item.toString() << endl;
-                current = current->next;
-            }
-        }
+    //    for (int i = 0; i < vehicles.getCapicty(); i++) {
+    //        Node<int, clsVehicle>* current = vehicles.getHead(i);
+    //        while (current != nullptr) {
+    //            outFile << current->item.toString() << endl;
+    //            current = current->next;
+    //        }
+    //    }
 
         outFile.close();
     }

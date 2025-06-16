@@ -73,19 +73,21 @@ public:
 	 return vehcilToDrive.getId();
  }
 
- void save()
+ static void save(DoubleLinkedList <clsVehicleDriver> Driverss)
  {
 	 fstream Drivers;
 
-	 Drivers.open(txtFile, ios::out);
+	 Drivers.open(clsVehcilDriverFileName, ios::out);
 
 	 if (Drivers.is_open())
 	 {
-		 for (clsVehicleDriver BaCl : /*from load func*/)
+		 for (int i = 0 ; i < Driverss.size() ;i++)
 		 {
-			 if (BaCl.Mode != enDriverMode::OutOfWork) {
-				 string Line = convertObjectToLine(BaCl);
-				 Drivers << Line << endl;
+			 if (Driverss[i] != nullptr)
+			 {
+				 clsVehicleDriver p = *Driverss[i];
+				 string Line = p.toString();
+				 TripsFile << Line << endl;
 			 }
 		 }
 

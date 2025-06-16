@@ -13,11 +13,11 @@ int main()
 {
   //  clsLogin::Login();
 
-	clsCard C(1, 200, 3);
+	clsVehicleTrip v(3);
 
-	clsPassenger Pa(18 , "Fares" , "Oyion" , "0981883592" , "Fares@gmail.com" , 1 , C , "1234" , 0);
 
-	cout << Pa.toString();
+
+	cout << v.getNumberOfAllVehicleTrip();
 
 }
 
