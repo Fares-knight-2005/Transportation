@@ -1,0 +1,430 @@
+﻿  A.cpp
+D:\coding files\A\A\clsPassengerTrip.h(75,16): warning C4305: '*=': truncation from 'double' to 'float'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(15,11): error C2065: 'clsVehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(15,5): error C2923: 'Queue': 'clsVehicle' is not a valid template type argument for parameter 'Item'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\clsParking.h(15,11):
+      see declaration of 'clsVehicle'
+  
+D:\coding files\A\A\clsParking.h(19,19): error C3646: 'parkingType': unknown override specifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(19,5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(24,60): error C2061: syntax error: identifier 'enVehicleType'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(29,54): error C2061: syntax error: identifier 'enVehicleType'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(25,38): error C2512: 'Queue': no appropriate default constructor available
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\DataStructures.h(144,7):
+      see declaration of 'Queue'
+  
+D:\coding files\A\A\clsParking.h(27,15): error C2039: 'parkingType': is not a member of 'clsParking'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\clsParking.h(9,7):
+      see declaration of 'clsParking'
+  
+D:\coding files\A\A\clsParking.h(27,27): error C2065: 'parkingType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(30,21): error C2065: 'parkingType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(30,68): error C2512: 'Queue': no appropriate default constructor available
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\DataStructures.h(144,7):
+      see declaration of 'Queue'
+  
+D:\coding files\A\A\clsParking.h(30,9): error C2614: 'clsParking': illegal member initialization: 'parkingType' is not a base or member
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(62,90): error C2065: 'parkingType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(69,39): error C2653: 'Database': is not a class or namespace name
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(69,49): error C3861: 'Split': identifier not found
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(78,5): error C2065: 'enVehicleType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(78,19): error C2146: syntax error: missing ';' before identifier 'type'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(78,19): error C2065: 'type': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(78,38): error C2061: syntax error: identifier 'enVehicleType'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsParking.h(95,48): error C2065: 'type': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(26,16): error C3646: 'stationType': unknown override specifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(26,2): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(76,22): error C2061: syntax error: identifier 'enVehicleType'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(82,16): error C3646: 'getStationType': unknown override specifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(82,30): error C2059: syntax error: '('
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(82,33): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(38,14): error C2065: 'stationType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(31,16): error C3078: array size must be specified in new expressions without an initializer
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(76,44): error C2065: 'stationType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(76,58): error C2065: 'type': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(219,13): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsStation.h(229,16): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(16,19): error C3646: 'vehicleType': unknown override specifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(16,5): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(20,36): error C2061: syntax error: identifier 'enVehicleType'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(25,66): error C2061: syntax error: identifier 'enVehicleType'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(55,19): error C3646: 'getVehicleType': unknown override specifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(55,33): error C2059: syntax error: '('
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(55,36): error C2334: unexpected token(s) preceding '{'; skipping apparent function body
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(21,88): error C2065: 'vehicleType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(21,76): error C2614: 'clsTransportLine': illegal member initialization: 'vehicleType' is not a base or member
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(26,64): error C2065: 'vehicleType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(26,52): error C2614: 'clsTransportLine': illegal member initialization: 'vehicleType' is not a base or member
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(86,19): error C2039: 'getVehicleType': is not a member of '`global namespace''
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(86,34): error C2065: 'vehicleType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(86,19): error C3861: 'getVehicleType': identifier not found
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(86,9): error C2593: 'operator <<' is ambiguous
+  (compiling source file 'A.cpp')
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(480,39):
+      could be 'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_streambuf<char,std::char_traits<char>> *)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(448,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(const void *)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(430,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(long double)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(412,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(double)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(394,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(float)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(376,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned __int64)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(358,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(__int64)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(340,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned long)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(322,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(long)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(303,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned int)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(277,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(int)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(258,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(unsigned short)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(224,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(short)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(206,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(bool)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(200,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::ios_base &(__cdecl *)(std::ios_base &))'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(194,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_ios<char,std::char_traits<char>> &(__cdecl *)(std::basic_ios<char,std::char_traits<char>> &))'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(189,39):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::basic_ostream<char,std::char_traits<char>>::operator <<(std::basic_ostream<char,std::char_traits<char>> &(__cdecl *)(std::basic_ostream<char,std::char_traits<char>> &))'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(1031,32):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const std::error_code &)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(947,31):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,unsigned char)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(941,31):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const unsigned char *)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(936,31):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,signed char)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(930,31):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const signed char *)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(813,31):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,char)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(768,31):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const char *)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(732,32):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,char)'
+      C:\Program Files\Microsoft Visual Studio\2022\Community\VC\Tools\MSVC\14.43.34808\include\__msvc_ostream.hpp(688,32):
+      or       'std::basic_ostream<char,std::char_traits<char>> &std::operator <<<char,std::char_traits<char>>(std::basic_ostream<char,std::char_traits<char>> &,const char *)'
+      D:\coding files\A\A\clsTransportLine.h(86,9):
+      while trying to match the argument list '(std::ostream, unknown-type)'
+  
+D:\coding files\A\A\clsTransportLine.h(113,95): error C2065: 'vehicleType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(120,43): error C2653: 'Database': is not a class or namespace name
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(120,53): error C3861: 'Split': identifier not found
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(128,9): error C2065: 'enVehicleType': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(128,23): error C2146: syntax error: missing ';' before identifier 'type'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(128,23): error C2065: 'type': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(128,42): error C2061: syntax error: identifier 'enVehicleType'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsTransportLine.h(140,50): error C2065: 'type': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsVehicleTrip.h(110,43): error C2653: 'Database': is not a class or namespace name
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsVehicleTrip.h(110,53): error C3861: 'Split': identifier not found
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsVehicleTrip.h(137,33): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsPassenger.h(73,43): error C2653: 'Database': is not a class or namespace name
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsPassenger.h(73,53): error C3861: 'Split': identifier not found
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsPassenger.h(87,22): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\clsPassenger.h(91,32): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(165,58): error C2065: 'clsVehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(165,44): error C2923: 'OpenHash': 'clsVehicle' is not a valid template type argument for parameter 'Item'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(165,58):
+      see declaration of 'clsVehicle'
+  
+D:\coding files\A\A\Database.h(179,22): error C2065: 'clsVehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(179,8): error C2923: 'OpenHash': 'clsVehicle' is not a valid template type argument for parameter 'Item'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(179,22):
+      see declaration of 'clsVehicle'
+  
+D:\coding files\A\A\Database.h(206,21): error C3878: syntax error: unexpected token '<<' following 'declaration'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(206,14):
+      missing ',' or ';' after previous declaration?
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(206,27): error C2760: syntax error: ',' was unexpected here; expected ';'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(206,41): error C2760: syntax error: '>' was unexpected here; expected ';'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(206,44): error C2065: 'current': undeclared identifier
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(207,20): error C2065: 'current': undeclared identifier
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(208,28): error C2065: 'current': undeclared identifier
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(209,17): error C2065: 'current': undeclared identifier
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(209,27): error C2065: 'current': undeclared identifier
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(202,13):
+      This diagnostic occurred in the compiler generated function 'void Database::savePassengers(std::string &,OpenHash<Item,clsPassenger> &)'
+  
+D:\coding files\A\A\Database.h(32,11): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(41,17): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(168,34): error C2662: 'int OpenHash<Key,Item>::getCapicty(void)': cannot convert 'this' pointer from 'OpenHash' to 'OpenHash<Key,Item> &'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(168,25):
+      Reason: cannot convert from 'OpenHash' to 'OpenHash<Key,Item>'
+      D:\coding files\A\A\Database.h(168,25):
+      Conversion requires a second user-defined-conversion operator or constructor
+      D:\coding files\A\A\DataStructures.h(443,9):
+      see declaration of 'OpenHash<Key,Item>::getCapicty'
+      D:\coding files\A\A\Database.h(168,34):
+      while trying to match the argument list '()'
+  
+D:\coding files\A\A\Database.h(169,20): error C2065: 'clsVehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(169,9): error C2977: 'Node': too many template arguments
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\DataStructures.h(9,8):
+      see declaration of 'Node'
+  
+D:\coding files\A\A\Database.h(169,52): error C2662: 'Node<Item> *OpenHash<Key,Item>::getHead(int)': cannot convert 'this' pointer from 'OpenHash' to 'OpenHash<Key,Item> &'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(169,43):
+      Reason: cannot convert from 'OpenHash' to 'OpenHash<Key,Item>'
+      D:\coding files\A\A\Database.h(169,43):
+      Conversion requires a second user-defined-conversion operator or constructor
+      D:\coding files\A\A\DataStructures.h(431,17):
+      see declaration of 'OpenHash<Key,Item>::getHead'
+      D:\coding files\A\A\Database.h(169,52):
+      while trying to match the argument list '(int)'
+  
+D:\coding files\A\A\Database.h(169,41): error C2440: 'initializing': cannot convert from 'Node<Item> *' to 'Node *'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(169,41):
+      Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+  
+D:\coding files\A\A\Database.h(172,30): error C2440: '=': cannot convert from 'Node<Item> *' to 'Node *'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(172,30):
+      Types pointed to are unrelated; conversion requires reinterpret_cast, C-style cast or parenthesized function-style cast
+  
+D:\coding files\A\A\Database.h(180,19): error C2065: 'clsVehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(180,5): error C2923: 'OpenHash': 'clsVehicle' is not a valid template type argument for parameter 'Item'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(180,19):
+      see declaration of 'clsVehicle'
+  
+D:\coding files\A\A\Database.h(180,31): error C2133: 'vehicles': unknown size
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(180,31): error C2512: 'OpenHash': no appropriate default constructor available
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\DataStructures.h(381,7):
+      see declaration of 'OpenHash'
+  
+D:\coding files\A\A\Database.h(181,74): error C2039: 'clsVehicleTripFileName': is not a member of 'Database'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(17,7):
+      see declaration of 'Database'
+  
+D:\coding files\A\A\Database.h(181,74): error C2065: 'clsVehicleTripFileName': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(187,13): error C2065: 'clsVehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(187,24): error C2146: syntax error: missing ';' before identifier 'vehicle'
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(187,24): error C2065: 'vehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(187,33): error C2653: 'clsVehicle': is not a class or namespace name
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(187,45): error C3861: 'parse': identifier not found
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(188,29): error C2065: 'vehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(188,46): error C2065: 'vehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(188,22): error C2662: 'void OpenHash<Key,Item>::insert(Key,Item)': cannot convert 'this' pointer from 'OpenHash' to 'OpenHash<Key,Item> &'
+  (compiling source file 'A.cpp')
+      D:\coding files\A\A\Database.h(188,13):
+      Reason: cannot convert from 'OpenHash' to 'OpenHash<Key,Item>'
+      D:\coding files\A\A\Database.h(188,13):
+      Conversion requires a second user-defined-conversion operator or constructor
+      D:\coding files\A\A\DataStructures.h(404,10):
+      see declaration of 'OpenHash<Key,Item>::insert'
+      D:\coding files\A\A\Database.h(188,22):
+      while trying to match the argument list '()'
+  
+D:\coding files\A\A\Database.h(190,17): error C2653: 'clsVehicle': is not a class or namespace name
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(190,29): error C3861: 'getNumberOfAllVehicle': identifier not found
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(190,55): error C2065: 'vehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(191,17): error C2653: 'clsVehicle': is not a class or namespace name
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(191,51): error C2065: 'vehicle': undeclared identifier
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\Database.h(191,51): error C1003: error count exceeds 100; stopping compilation
+  (compiling source file 'A.cpp')
+  
