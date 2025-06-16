@@ -3,6 +3,7 @@
 #include "Input.h"
 #include "clsScreen.h"
 #include "clsGame.h"
+//#include "clsStationServeses.h"
 
 using namespace std;
 
@@ -187,7 +188,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enAdd_Station:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   //clsStationServeses::AddStation(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -219,11 +220,14 @@ class clsAdminScreen
 
 		case enWhatToDo::enShow_Stations:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   //clsStationServeses::showStationsList(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
 
+
+
+			   //Finsh Stations
 
 		case enWhatToDo::enShow_Trips:
 			   Input::Clear();

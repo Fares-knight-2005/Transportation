@@ -1,14 +1,14 @@
 
 #include <iostream>
-#include "clsVehicle.h"
+#include "clsLogin.h"
+
 
 using namespace std;
 
-int main() {
 
-	clsVehicle ob(BUS, 2, 200, 300, 400, 50);
-
-	ob.displayVehicleInfo();
+int main()
+{
+    clsLogin::Login();
 
 }
 

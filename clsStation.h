@@ -5,7 +5,7 @@
 #include "DataStructures.h"
 #include "clsParking.h"
 #include "clsVehicle.h"
-
+#include "string"
 
 
 using namespace std;
@@ -26,16 +26,16 @@ class clsStation
 	enVehicleType stationType;
 	bool markToDelete = false;
 
-	string convertObjectToLine(clsStation s)
+	static string convertObjectToLine(clsStation s)
 	{
 		string arr[] = {
-			to_string(station_id) ,
-			station_Name ,
-			city ,
-			street ,
-			to_string(maxParkingsCapicty) , 
-			to_string(maxVehcelNumberIn1Parking) ,
-			to_string(stationType)
+			to_string(s.getid()) ,
+			s.getStationName() ,
+			s.getCity() ,
+			s.getStreet() ,
+			to_string(s.getMaxParkingsCapacity()) , 
+			to_string(s.getMaxVehicleNumber()) ,
+			to_string((int)s.getStationType())
 		};
 		return JoinString(arr ,"#//#");
 	}
@@ -44,17 +44,17 @@ class clsStation
 
 	static clsStation convertLineToObject(string Line)
 	{
-		/*DoubleLinkedList <string> ObjectList = Split(Line, "#//#");
+		DoubleLinkedList <string> ObjectList = Split(Line, "#//#");
 	    
 		clsStation St;
-		St.station_id =(int) ObjectList[0];
-		St.station_Name = ObjectList[1];
-		St.city = ObjectList[2];
-		St.street = ObjectList[3];
-		St.maxParkingsCapicty = (int)ObjectList[4];
-		St.maxVehcelNumberIn1Parking =(int) ObjectList[5];
-		St.stationType = (enVehicleType)ObjectList[6];
-		return St;*/ return clsStation();
+		St.station_id = stoi(*ObjectList[0]);
+		St.station_Name = *ObjectList[1];
+		St.city = *ObjectList[2];
+		St.street = *ObjectList[3];
+		St.maxParkingsCapicty = stoi(*ObjectList[4]);
+		St.maxVehcelNumberIn1Parking = stoi(*ObjectList[5]);
+		St.stationType = (enVehicleType) stoi(*ObjectList[7]);
+		return St;
 	}
 
 
@@ -90,25 +90,25 @@ public:
 
 
 
-	//static void save()
-	//{
-	//	fstream station;
+	static void save(DoubleLinkedList<clsStation> AllStations)
+	{
+		fstream station;
 
-	//	station.open(StationsFile, ios::out);
+		station.open(StationsFile, ios::out);
 
-	//	if (station.is_open())
-	//	{
-	//		for (clsStation BaCl : /*from load func*/)
-	//		{
-	//			if (BaCl.markToDelete == false) {
-	//				string Line = convertObjectToLine(BaCl);
-	//				station << Line << endl;
-	//			}
-	//		}
+		if (station.is_open())
+		{
+			for (int i = 0 ; i < AllStations.size() ; i++)
+			{
+				if (AllStations[i]->markToDelete == false) {
+					string Line = convertObjectToLine(*AllStations[i]);
+					station << Line << endl;
+				}
+			}
 
-	//		station.close();
-	//	}
-	//}
+			station.close();
+		}
+	}
 
 
 	static ClosedHash <int , clsStation> GetAllStations()
