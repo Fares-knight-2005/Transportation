@@ -23,7 +23,7 @@ protected:
 
 public:
 
-	clsPerson(int ID, short Age, string FirstName, string LastName, string PhoneNumber, string Eamil)
+	clsPerson(int ID, short Age, string FirstName, string LastName, string PhoneNumber, string Email)
 	{
 		this->Id = ID;
 		this->Age = Age;
@@ -40,7 +40,7 @@ public:
 		this->FirstName = FirstName;
 		this->LastName = LastName;
 		this->PhoneNumber = PhoneNumber;
-		this->Email = Email;
+		this->Email = Eamil;
 	}
 
 	string GetFirstName()
@@ -48,7 +48,7 @@ public:
 		return FirstName;
 	}
 
-        int getId(){
+    int getId(){
 	   return Id;
 	}
 

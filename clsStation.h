@@ -35,9 +35,23 @@ class clsStation
 			s.getStreet() ,
 			to_string(s.getMaxParkingsCapacity()) , 
 			to_string(s.getMaxVehicleNumber()) ,
-			to_string((int)s.getStationType())
+			to_string((int)s.getStationType()) ,
 		};
-		return JoinString(arr ,"#//#");
+
+		string* Array = arr;
+
+		for (int i = 0; i < s.parkings.size(); i++)
+		{
+			clsParking* D = s.parkings.getNode(i);
+			if (D != nullptr)
+			{
+				while (Array != nullptr)
+					Array = Array + 1;
+
+				*Array = D->getId();
+			}
+		}
+		return JoinString(Array ,"#//#");
 	}
 
 	//I Need Function in Parking Class return all station Parkings
@@ -54,6 +68,14 @@ class clsStation
 		St.maxParkingsCapicty = stoi(*ObjectList[4]);
 		St.maxVehcelNumberIn1Parking = stoi(*ObjectList[5]);
 		St.stationType = (enVehicleType) stoi(*ObjectList[7]);
+
+		if (ObjectList.size() > 7)
+		{
+			for (int i = 7; i < ObjectList.size(); i++)
+			{
+			//	St.parkings[])
+			}
+		}
 		return St;
 	}
 
@@ -61,6 +83,9 @@ class clsStation
 
 public:
 
+	bool operator==(int id) {
+		return this->station_id == id;
+	}
 	
 
 	int getid()
@@ -136,6 +161,11 @@ public:
 		return AllStations;
 
 	}
+
+	//ClosedHash <int, clsStation> GetAllParkings()
+	//{
+	//	return parkings;
+	//}
 
 
 	static OpenHash <int, clsStation> GetAllStationsOpen()

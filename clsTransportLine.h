@@ -9,6 +9,8 @@
 class clsTransportLine
 {
 private:
+    static string clsTransportLineFileName = "TransportLines.txt";
+
     DoubleLinkedList<clsStation> stations;
     string name;
     int id, numberOfVehicles;
@@ -140,6 +142,70 @@ public:
         clsTransportLine tl(id, vehicles, price, type, name, stationList);
         return tl;
     }
+
+    template<class Item>
+    static void saveTransportLines(string filename, OpenHash<Item, clsTransportLine>& transportLines) {
+        ofstream outFile(filename);
+
+        for (int i = 0; i < transportLines.getCapicty(); i++) {
+            Node<clsTransportLine>* current = transportLines.getHead(i);
+            while (current != nullptr) {
+                outFile << current->item, toString() << endl;
+                current = current->next;
+            }
+        }
+        outFile.close();
+    }
+
+    static OpenHash<int, clsTransportLine> loadTransportLines(string filename) {
+        OpenHash<int, clsTransportLine> transportLines;
+        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
+
+        ifstream file(filename);
+        string line;
+
+        while (getline(file, line)) {
+            try {
+                clsTransportLine tl = clsTransportLine::parse(line, stations);
+                transportLines.insert(tl.getId(), tl);
+
+                if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
+                    clsTransportLine::setNumberOfAllTransportLine(tl.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
+
+        return transportLines;
+    }
+
+    static OpenHash<string, clsTransportLine> loadTransportLinesByName(string filename) {
+        OpenHash<string, clsTransportLine> transportLines;
+        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
+
+        ifstream file(filename);
+        string line;
+
+        while (getline(file, line)) {
+            try {
+                clsTransportLine tl = clsTransportLine::parse(line, stations);
+                string nameKey = tl.getName();
+                transportLines.insert(nameKey, tl);
+
+                if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
+                    clsTransportLine::setNumberOfAllTransportLine(tl.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
+
+        return transportLines;
+    }
+
 };
 
 int clsTransportLine::numberOfAllTransportLines = 0;

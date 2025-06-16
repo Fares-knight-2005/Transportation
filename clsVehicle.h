@@ -1,14 +1,14 @@
-
 #pragma once
 
 #include <iostream>
 #include "DataStructures.h"
-#include "Database.h"
 #include "clsPassengerTrip.h"
 #include "clsVehicleTrip.h"
 #include <sstream>
 
 using namespace std;
+
+string clsVehicleFileName = "Vehicles.txt";
 
 enum enVehicleType {BUS=1, TRAM, FERRY, METRO};
 
@@ -32,6 +32,7 @@ enVehicleType setVehicleType(int vehicleNumber){
 
 class clsVehicle {
 private:
+
     int id, transportLineId, driverId;
     int capacity, currSeats;
     float speed;
@@ -225,6 +226,23 @@ public:
         
         return vehicle;
     }
+
+
+    static void saveVehicles(string& filename, OpenHash<int, clsVehicle> vehicles) {
+        ofstream outFile(filename);
+
+        for (int i = 0; i < vehicles.getCapicty(); i++) {
+            Node<int, clsVehicle>* current = vehicles.getHead(i);
+            while (current != nullptr) {
+                outFile << current->item.toString() << endl;
+                current = current->next;
+            }
+        }
+
+        outFile.close();
+    }
+
+
 };
 
 int clsVehicle::numberOfAllVehicle = 0;

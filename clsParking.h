@@ -6,12 +6,17 @@
 #include "clsPassengerTrip.h"
 #include <sstream>
 
+
+ string clsParkingFileName = "Parkings.txt";
+
+
+
 class clsParking{
 
 
 
 private:
-
+   
     Queue<clsVehicle> Vehicle;
     Queue<clsPassengerTrip> passengers;
     int id, stationId, idTransportLine;
@@ -94,6 +99,48 @@ private:
          
     return clsParking(id, distance, stationId, type, idTransportLine, passengers);
     }
+
+
+
+    static void saveParkings(string& filename, OpenHash<int, clsParking>& parkings) {
+        ofstream outFile(filename);
+
+        for (int i = 0; i < parkings.getCapicty(); i++) {
+            Node<clsParking>* current = parkings.getHead(i);
+            while (current != nullptr) {
+                outFile << current->item.toString() << endl;
+                current = current->next;
+            }
+        }
+
+        outFile.close();
+    }
+
+
+    static OpenHash<int, clsParking> loadParkings(string filename) {
+        OpenHash<int, clsParking> parkings;
+        ifstream file(filename);
+        string line;
+
+        while (getline(file, line)) {
+            try {
+                clsParking parking = clsParking::parse(line);
+                parkings.insert(parking.getId(), parking);
+
+                if (clsParking::getNumberOfAllParking() < parking.getId()) {
+                    clsParking::setNumberOfAllParking(parking.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
+
+        return parkings;
+    }
+
+
+
 };
 int clsParking::numberOfAllParking=0;
 

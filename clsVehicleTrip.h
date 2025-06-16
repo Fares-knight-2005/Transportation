@@ -2,14 +2,18 @@
 
 #include<iostream>
 #include "clsPassengerTrip.h"
+#include "DataStructures.h"
 #include <sstream>
 #include <string>
-#include "Database.h"
 
 
 using namespace std;
+string clsVehicleTripFileName = "VehicleTrips.txt";
+
 
 class clsVehicleTrip {
+
+ 
     struct strVehicleMovements {
         int idStation;
         int currDisabilitSeat, currPackageSize;
@@ -107,7 +111,7 @@ public:
     }
 
     static clsVehicleTrip parse(string line) {
-        DoubleLinkedList<string> tokens = Database::Split(line, ",,,");
+        DoubleLinkedList<string> tokens = Split(line, ",,,");
         if (tokens.size() < 4) {
             throw invalid_argument("Not enough tokens in line");
         }
@@ -148,6 +152,69 @@ public:
         
         return trip;
     }
+
+
+    static OpenHash<int, clsVehicle> loadVehicles(string filename) {
+        OpenHash<int, clsVehicle> vehicles;
+        OpenHash<int, clsVehicleTrip> vehicleTrip = loadVehicleTrips(Database::clsVehicleTripFileName);
+
+        ifstream file(filename);
+        string line;
+
+        while (getline(file, line)) {
+            try {
+                clsVehicle vehicle = clsVehicle::parse(line, vehicleTrip);
+                vehicles.insert(vehicle.getId(), vehicle);
+
+                if (clsVehicle::getNumberOfAllVehicle() < vehicle.getId()) {
+                    clsVehicle::setNumberOfAllVehicle(vehicle.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
+
+        return vehicles;
+    }
+
+
+    static void saveVehicleTrips(const string& filename, OpenHash<int, clsVehicleTrip>& trips) {
+        ofstream outFile(filename);
+
+        for (int i = 0; i < trips.capacity; i++) {
+            Node<int, clsVehicleTrip>* current = trips.getHead(i);
+            while (current != nullptr) {
+                outFile << current->item.toString() << endl;
+                current = current->next;
+            }
+        }
+
+        outFile.close();
+    }
+
+    static OpenHash<int, clsVehicleTrip> loadVehicleTrips(const string& filename) {
+        OpenHash<int, clsVehicleTrip> trips;
+        ifstream file(filename);
+        string line;
+
+        while (getline(file, line)) {
+            try {
+                clsVehicleTrip trip = clsVehicleTrip::parse(line);
+                trips.insert(trip.getId(), trip);
+
+                if (clsVehicleTrip::getNumberOfAllVehicleTrip() < trip.getId()) {
+                    clsVehicleTrip::setNumberOfAllVehicleTrip(trip.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
+
+        return trips;
+    }
+
 };
 
 int clsVehicleTrip::numberOfAllVehicleTrip = 0;

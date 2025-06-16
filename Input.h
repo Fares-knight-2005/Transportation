@@ -5,6 +5,8 @@
 #include <limits>
 #include <string>
 #include <cctype>
+#include "DataStructures.h"
+
 
 using namespace std;
 
@@ -41,6 +43,49 @@ public:
 
       return input;
   }
+
+
+
+
+   //static string JoinString(string* ArrString, string Delim)
+   //{
+   //    string Results = "";
+
+   //    if (ArrString != nullptr)
+   //        for (int i = 0; ArrString != nullptr; i++)
+   //        {
+   //            Results += Delim + ArrString[i];
+   //        }
+
+   //    return Results.substr(Delim.length(), Results.length() - Delim.length());
+   //}
+
+
+
+   static DoubleLinkedList <string> Split(string s, string delim)
+   {
+       string Word = "";
+
+       DoubleLinkedList <string> Words;
+
+       short pos = s.find(delim);
+
+       while (pos != string::npos)
+       {
+           Word = s.substr(0, pos);
+           s.erase(0, pos + delim.length());
+
+           if (Word != "")
+               Words.addLast(Word);
+           pos = s.find(delim);
+       }
+
+       if (s != "")
+           Words.addLast(s);
+
+       return Words;
+   }
+
 
     static float readFloat(string message="Please enter a number: ") {
         float input;

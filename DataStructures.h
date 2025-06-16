@@ -1,4 +1,3 @@
-
 #pragma once
 
 #include <iostream>
@@ -68,7 +67,7 @@ public:
         return true;
     }
 
-   Item removeFirstWithReturnItem() {
+   Item *removeFirstWithReturnItem() {
 
         if (isEmpty())
             return nullptr;
@@ -195,7 +194,7 @@ public:
     while(!isEmpty())
         q.enqueue(pop());
     }
-    
+
 };
 
 template<class Item>
@@ -238,7 +237,7 @@ public:
     }
 
     DoubleNode<Item>* getHead(){
-          return head;   
+          return head;
     }
 
     void addFirst(Item item) {
@@ -428,7 +427,7 @@ public:
         return result;
     }
 
-    Node<Item>* getHead(int index){
+    Node <Item>* getHead(int index){
          return array[index].getHead();
     }
 
@@ -444,8 +443,8 @@ public:
     {
         return capacity;
     }
-          
-        
+
+
 };
 
 
@@ -567,7 +566,7 @@ public:
         return nullptr;
     }
 
-    
+
 
     Item *getNode(int index){
         if (array[index].nodeType == ClosedNode <Key, Item>::EMPTY)
@@ -597,5 +596,6 @@ public:
         return false;
     }
 
-
 };
+
+

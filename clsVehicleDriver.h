@@ -13,6 +13,9 @@ string txtFile = "VehcilDrivers.txt";
 
 class clsVehicleDriver : clsPerson
 {
+	static string clsVehcilDriverFileName = "VehcilDrivers.txt";
+
+
 
 public:
 
