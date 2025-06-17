@@ -58,6 +58,8 @@ public:
         destination = false;
     }
 
+    clsVehicle(){}
+
     clsVehicle(enVehicleType type, int lineId, int cap, float spd, int disabilitySeats, int pkgSize) {
         id = ++numberOfAllVehicle;
         vehicleType = type;

@@ -43,6 +43,8 @@ public:
 		this->Email = Eamil;
 	}
 
+	clsPerson(){}
+
 	string GetFirstName()
 	{
 		return FirstName;

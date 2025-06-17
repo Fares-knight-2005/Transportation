@@ -72,9 +72,9 @@ class clsStation
 
 		if (ObjectList.size() > 7)
 		{
-			for (int i = 7; i < ObjectList.size(); i++)
+			for (int i = 0; i < ObjectList.size() - 7; i++)
 			{
-			//	St.parkings[])
+				*St.parkings[i];//= (clsParking) stoi(*ObjectList[i + 7]);
 			}
 		}
 		return St;
