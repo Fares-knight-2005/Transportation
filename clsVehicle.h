@@ -103,32 +103,42 @@ public:
     }
 
 
-    //static OpenHash<int, clsVehicle> loadVehicles(string filename) {
-    //    OpenHash<int, clsVehicle> vehicles;
-    //    OpenHash<int, clsVehicleTrip> vehicleTrip = loadVehicleTrips(Database::clsVehicleTripFileName);
+    static OpenHash<int, clsVehicle> loadVehicles() {
+        OpenHash<int, clsVehicle> vehicles;
+        OpenHash<int, clsVehicleTrip> vehicleTrip = clsVehicleTrip::loadVehicleTrips();
 
-    //    ifstream file(filename);
-    //    string line;
+        ifstream file(clsVehicleFileName);
+        string line;
 
-    //    while (getline(file, line)) {
-    //        try {
-    //            clsVehicle vehicle = clsVehicle::parse(line, vehicleTrip);
-    //            vehicles.insert(vehicle.getId(), vehicle);
+        while (getline(file, line)) {
+            try {
+                clsVehicle vehicle = clsVehicle::parse(line, vehicleTrip);
+                vehicles.insert(vehicle.getId(), vehicle);
 
-    //            if (clsVehicle::getNumberOfAllVehicle() < vehicle.getId()) {
-    //                clsVehicle::setNumberOfAllVehicle(vehicle.getId());
-    //            }
-    //        }
-    //        catch (...) {
-    //            continue;
-    //        }
-    //    }
+                if (clsVehicle::getNumberOfAllVehicle() < vehicle.getId()) {
+                    clsVehicle::setNumberOfAllVehicle(vehicle.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
 
-    //    return vehicles;
-    //}
+        return vehicles;
+    }
 
 
+    void Add()
+    {
+        fstream MyFile;
+        MyFile.open(clsVehicleFileName, ios::out | ios::app);
 
+        if (MyFile.is_open())
+        {
+            MyFile << this->toString() << endl;
+            MyFile.close();
+        }
+    }
 
     static void saveVehciles(DoubleLinkedList <clsVehicle> Vehicle)
     {
@@ -153,9 +163,32 @@ public:
     }
 
 
+    template <typename Key>
+    static void saveVehcilsFromOpenHash(OpenHash <Key, clsVehicle> Vehciles)
+    {
+        fstream ParhingsFile;
+
+        ParhingsFile.open(clsVehicleFileName, ios::out);
+
+        if (ParhingsFile.is_open())
+        {
+            for (int i = 0; i < Vehciles.getCapicty(); i++) {
+                Node <HashNode<Key, clsVehicle>>* d = Vehciles.getHead(i);
+                while (d != nullptr) {
+                    ParhingsFile << d->item.item.toString() << endl;
+                    d = d->next;
+                }
+            }
+
+            ParhingsFile.close();
+        }
+    }
+
+
     static DoubleLinkedList <clsVehicle> GetAllVehicles()
     {
         DoubleLinkedList <clsVehicle> AllVehicle;
+        OpenHash<int, clsVehicleTrip> vehicleTrip = clsVehicleTrip::loadVehicleTrips();
 
         fstream MyFile;
         MyFile.open(clsVehicleFileName, ios::in);
@@ -166,7 +199,7 @@ public:
 
             while (getline(MyFile, Line))
             {
-                clsVehicle Trip = parse(Line);
+                clsVehicle Trip = parse(Line , vehicleTrip);
                 AllVehicle.addLast(Trip);
             }
 
@@ -276,7 +309,7 @@ public:
     }
 
     static clsVehicle parse(string line, OpenHash<int, clsVehicleTrip> vehicleTripHash) {
-        DoubleLinkedList<string> tokens = Database::Split(line, ",,,");
+        DoubleLinkedList<string> tokens = Input::Split(line, ",,,");
         if (tokens.size() < 8) {
             throw invalid_argument("Not enough tokens in line");
         }
@@ -302,21 +335,6 @@ public:
         }
         
         return vehicle;
-    }
-
-
-    //static void saveVehicles(string& filename, OpenHash<int, clsVehicle> vehicles) {
-    //    ofstream outFile(filename);
-
-    //    for (int i = 0; i < vehicles.getCapicty(); i++) {
-    //        Node<int, clsVehicle>* current = vehicles.getHead(i);
-    //        while (current != nullptr) {
-    //            outFile << current->item.toString() << endl;
-    //            current = current->next;
-    //        }
-    //    }
-
-        outFile.close();
     }
 
 

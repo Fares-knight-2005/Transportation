@@ -3,7 +3,9 @@
 #include "Input.h"
 #include "clsScreen.h"
 #include "clsGame.h"
-//#include "clsStationServeses.h"
+#include "clsStationServeses.h"
+#include "PassengerService.h"
+
 
 using namespace std;
 
@@ -107,14 +109,14 @@ class clsAdminScreen
 
 		case enWhatToDo::enAdd_Passenger:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   PassengerService::addNewPassenger(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
 
 		case enWhatToDo::enUpdate_Passenger:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   PassengerService::updatePassenger(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -122,14 +124,14 @@ class clsAdminScreen
 
 		case enWhatToDo::enDelete_Passenger:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   PassengerService::deletePassenger(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
 
 		case enWhatToDo::enShow_Passenger:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   PassengerService::printAllPassengers();  //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -188,7 +190,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enAdd_Station:
 			   Input::Clear();
-			   //clsStationServeses::AddStation(); //Here Your Function Don't Touch Other Things
+			   clsStationServeses::AddStation(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -220,7 +222,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enShow_Stations:
 			   Input::Clear();
-			   //clsStationServeses::showStationsList(); //Here Your Function Don't Touch Other Things
+			   clsStationServeses::showStationsList(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;

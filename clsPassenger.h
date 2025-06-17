@@ -7,6 +7,7 @@
 #include <sstream>
 #include <string>
 #include <fstream>
+#include "Input.h"
 
 using namespace std;
 
@@ -149,7 +150,8 @@ public:
     }
 
 
-    static void savePassengersFromOpenHash(OpenHash <int ,clsPassenger> Passengers)
+    template <typename Key>
+    static void savePassengersFromOpenHash(OpenHash <Key ,clsPassenger> Passengers)
     {
         fstream PassengerFile;
 
@@ -157,8 +159,8 @@ public:
 
         if (PassengerFile.is_open())
         {
-            for (int i = 0; i < Passengers.size(); i++) {
-                Node <HashNode<int, clsPassenger>>* d = Passengers.getHead(i);
+            for (int i = 0; i < Passengers.getCapicty(); i++) {
+                Node <HashNode<Key, clsPassenger>>* d = Passengers.getHead(i);
                 while (d != nullptr) {
                     PassengerFile << d->item.item.toString() << endl;
                     d = d->next;
@@ -168,6 +170,11 @@ public:
             PassengerFile.close();
         }
     }
+
+
+
+
+
 
 
     static DoubleLinkedList <clsPassenger> GetAllPassengers()
@@ -211,9 +218,9 @@ public:
     //    outFile.close();
     //}
 
-   /* static OpenHash<int, clsPassenger> loadPassengers(string filename) {
+  static OpenHash<int, clsPassenger> loadPassengers() {
         OpenHash<int, clsPassenger> passengers;
-        ifstream file(filename);
+        ifstream file(clsPassengerFileName);
         string line;
 
         while (getline(file, line)) {
@@ -233,28 +240,88 @@ public:
         return passengers;
     }
 
-    static OpenHash<string, clsPassenger> loadPassengersByName(string filename) {
-        OpenHash<string, clsPassenger> passengers;
-        ifstream file(filename);
-        string line;
 
-        while (getline(file, line)) {
-            try {
-                clsPassenger passenger = clsPassenger::parse(line);
-                string fullNameKey = passenger.GetFullName();
-                passengers.insert(fullNameKey, passenger);
+  void Add()
+  {
+      fstream MyFile;
+      MyFile.open(clsPassengerFileName, ios::out | ios::app);
 
-                if (clsPassenger::getNumberOfAllPassenger() < passenger.getId()) {
-                    clsPassenger::setNumberOfAllPassenger(passenger.getId());
-                }
-            }
-            catch (...) {
-                continue;
-            }
-        }
+      if (MyFile.is_open())
+      {
+          MyFile << this->toString() << endl;
+          MyFile.close();
+      }
+  }
 
-        return passengers;
-    }*/
+  void updateCardInfo() {
+      cout << "\nCurrent Card Information:";
+      cout << "\nType: " << (Card.isPremium() ? "Premium" : "Regular");
+      cout << "\nBalance: " << Card.getBalance();
+      if (Card.isPremium()) {
+          cout << "\nFree Trips: " << Card.getFreeTrips();
+      }
+
+      cout << "\n\nWhat would you like to update?\n";
+      cout << "1. Card Type\n";
+      cout << "2. Recharge\n";
+      cout << "0. Cancel\n";
+
+      int choice = Input::ReadIntNumberBetween(0, 2, "Invalid choice. Enter 0-2: ");
+      if (choice == 0)
+          return;
+
+      switch (choice) {
+      case 1: {
+          cout << "\nCard Types:\n";
+          cout << "1. Regular\n";
+          cout << "2. Premium\n";
+          cout << "Converting the card to Premium requires $500.\n";
+          int cardChoice = Input::ReadIntNumberBetween(1, 2, "Invalid choice. Enter 1-2: ");
+          Card.setType(cardChoice == 2);
+          break;
+      }
+      case 2: {
+        //  if (Card.isPremium())
+        //      cout << "You can get a free trips if you add an amount $" + clsCard::getAmountForFreeTrip();
+          double amount = Input::readDouble("Enter amount: ");
+          Card.recharge(amount);
+          break;
+      }
+      }
+  }
+
+  clsCard *getCard() {
+      return &Card;
+  }
+
+  void setDisabled(bool d) {
+      isDisabled = d;
+  }
+  
+  
+
+  static OpenHash<string, clsPassenger> loadPassengersByName() {
+      OpenHash<string, clsPassenger> passengers;
+      ifstream file(clsPassengerFileName);
+      string line;
+
+      while (getline(file, line)) {
+          try {
+              clsPassenger passenger = clsPassenger::parse(line);
+              string fullNameKey = passenger.GetFullName();
+              passengers.insert(fullNameKey, passenger);
+
+              if (clsPassenger::getNumberOfAllPassenger() < passenger.getId()) {
+                  clsPassenger::setNumberOfAllPassenger(passenger.getId());
+              }
+          }
+          catch (...) {
+              continue;
+          }
+      }
+
+      return passengers;
+  }
 
 };
 

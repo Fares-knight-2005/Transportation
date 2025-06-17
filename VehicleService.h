@@ -2,15 +2,16 @@
 #pragma once
 
 #include "clsVehicle.h"
-#include "Database.h"
+#include "DataStructures.h"
+#include "clsTransportLine.h"
 #include "Input.h"
 
 using namespace std;
 
 class VehicleService {
 public:
-    void printAllVehicles() {
-        OpenHash<int, clsVehicle> vehicles = Database::loadVehicles(Database::clsVehicleFileName);
+    static void printAllVehicles() {
+        DoubleLinkedList<clsVehicle> vehicles = clsVehicle::GetAllVehicles();
 
         if (vehicles.isEmpty()) {
             cout << "\nNo Vehicles Found!\n";
@@ -20,20 +21,24 @@ public:
         cout << "\n===========================================\n";
         cout << "        All Vehicles (" << vehicles.size() << ")";
         cout << "\n===========================================\n"; 
-
-        for (int i = 0; i < vehicles.capacity; i++) {
-            HashNode<int, clsVehicle>* current = vehicles.getHead(i);
+        DoubleNode<clsVehicle>* current = vehicles.getHead();
             while (current != nullptr) {
-                current->data.item.displayVehicleInfo();
+                current->item.displayVehicleInfo();
                 current = current->next;
             }
-        }
+        
     }
 
-    void addNewVehicle() {
-        OpenHash<int, clsVehicle> vehicles = Database::loadVehicles(Database::clsVehicleFileName);
-        OpenHash<int, clsTransportLine> transportLines = Database::loadTransportLines(Database::clsTransportLineFileName);
+    static void addNewVehicle() {
+        OpenHash<int, clsVehicle> vehicles = clsVehicle::loadVehicles();
+        OpenHash<int, clsTransportLine> transportLines = clsTransportLine::loadTransportLines();
         
+        if (transportLines.isEmpty())
+        {
+            cout << "There is no TransportLines. ";
+            return;
+        }
+
         cout << "\n===========================================\n";
         cout << "        Add New Vehicle";
         cout << "\n===========================================\n";
@@ -43,27 +48,31 @@ public:
         cout << "2. TRAM\n";
         cout << "3. FERRY\n";
         cout << "4. METRO\n";
-                
-        int typeChoice = Input::ReadIntNumberBetween(1, 4, "Invalid choice. Enter 1-4: ");
+        int lineId = 0;
+        int typeChoice = Input::ReadIntNumberBetween(1, 4, "Invalid choice. Enter 1-4: ","Enter Vehicle Type: ");
         enVehicleType vehicleType = static_cast<enVehicleType>(typeChoice - 1);
         while(true){
-        int lineId = Input::readInt("Enter Transport Line ID: ");
-        clsTransportLine  line=*transportLines[lineId];
-        if(line==nullptr)
-            cout<< "There is no line with this ID. \n";
-        else if(vehicleType!=line.getVehicleType())
+        lineId = Input::readInt("Invalid input. Please enter a number : ","Enter Transport Line ID:");
+        clsTransportLine  *line=transportLines[lineId];
+        if (line == nullptr)
+        {
+            cout << "There is no line with this ID. \n";
+            continue;
+        }
+        else if(vehicleType!=line->getVehicleType())
             cout<< "The Transport line type does not match the added vehicle. \n";
         else 
         {
-            line.setNumberOfVehicles(getNumberOfVehicles()++);
+            line->setNumberOfVehicles(line->getNumberOfVehicles()+1);
             break;
         }    
         }
-        int capacity = Input::readInt("Enter Vehicle Capacity: ");
+
+        int capacity = Input::readInt("Invalid input. Please enter a number : ","Enter Vehicle Capacity: ");
         float speed = Input::readFloat("Enter Vehicle Speed (km/h): ");
-        int disabilitySeats = Input::readInt("Enter Disability Seats Count: ");
-        int packageSize = Input::readInt("Enter Package Size Capacity: ");
-        int driverId = Input::readInt("Enter Driver ID (0 if none): ");
+        int disabilitySeats = Input::readInt("Invalid input. Please enter a number : ","Enter Disability Seats Count: ");
+        int packageSize = Input::readInt("Invalid input. Please enter a number : ","Enter Package Size Capacity: ");
+        int driverId = Input::readInt("Invalid input. Please enter a number : ","Enter Driver ID (0 if none): ");
 
         clsVehicle newVehicle(vehicleType, lineId, capacity, speed, disabilitySeats, packageSize);
         if (driverId > 0) {
@@ -73,45 +82,47 @@ public:
         vehicles.insert(newVehicle.getId(), newVehicle);
 
         cout << "\nVehicle added successfully with ID: " << newVehicle.getId() << "\n";
-        Database::saveVehicles(Database::clsVehicleFileName, vehicles);
-        Database::saveTransportLines(Database::clsTransportLineFileName,transportLines);
+        clsVehicle::saveVehcilsFromOpenHash(vehicles);
+        clsTransportLine::saveTransportLinesFromOpenHash(transportLines);
     }
 
-    void deleteVehicle() {
+    static void deleteVehicle() {
         cout << "\n===========================================\n";
         cout << "        Delete Vehicle";
         cout << "\n===========================================\n";
 
-        int id = Input::readInt("Enter Vehicle ID to delete (0 to cancel): ");
+        int id = Input::readInt("Invalid input. Please enter a number : ","Enter Vehicle ID to delete (0 to cancel): ");
         if (id == 0) 
             return;
 
-        OpenHash<int, clsVehicle> vehicles = Database::loadVehicles(Database::clsVehicleFileName);
-        OpenHash<int, clsTransportLine> transportLines = Database::loadTransportLines(Database::clsTransportLineFileName);
+        OpenHash<int, clsVehicle> vehicles = clsVehicle::loadVehicles();
+        OpenHash<int, clsTransportLine> transportLines = clsTransportLine::loadTransportLines();
         
         bool success = vehicles.remove(id);
 
         if (success) {
-            int lineId=vehicles[id]->getIdTransportLine();
-            transportLines[lineId]->setNumberOfVehicles(getNumberOfVehicles()++);
-            Database::saveVehicles(Database::clsVehicleFileName, vehicles);
-            Database::saveTransportLines(Database::clsTransportLineFileName,transportLines);
+            int lineId = vehicles[id]->getTransportLineId();
+            clsTransportLine *line=transportLines[lineId];
+            transportLines[lineId]->setNumberOfVehicles(line->getNumberOfVehicles()+1);
+            clsVehicle::saveVehcilsFromOpenHash(vehicles);
+            clsTransportLine::saveTransportLinesFromOpenHash(transportLines);
             cout << "\nVehicle deleted successfully.\n";
         } else {
             cout << "\nVehicle not found!\n";
         }
+    
     }
 
-    void updateVehicle() {
+    static void updateVehicle() {
         cout << "\n===========================================\n";
         cout << "        Update Vehicle";
         cout << "\n===========================================\n";
 
-        int id = Input::readInt("Enter Vehicle ID to update (0 to cancel): ");
+        int id = Input::readInt("Invalid input. Please enter a number : ","Enter Vehicle ID to update (0 to cancel): ");
         if (id == 0) 
             return;
 
-        OpenHash<int, clsVehicle> vehicles = Database::loadVehicles(Database::clsVehicleFileName);
+        OpenHash<int, clsVehicle> vehicles = clsVehicle::loadVehicles();
         clsVehicle* vehicle = vehicles[id];
 
         if (vehicle == nullptr) {
@@ -134,20 +145,20 @@ public:
 
         switch (choice) {
             case 1: {
-           OpenHash<int, clsTransportLine> transportLines = Database::loadTransportLines(Database::clsTransportLineFileName);
+           OpenHash<int, clsTransportLine> transportLines = clsTransportLine::loadTransportLines();
            while(true){
-             int lineId = Input::readInt("Enter Transport Line ID: ");
+             int lineId = Input::readInt("Invalid input. Please enter a number : ","Enter Transport Line ID: ");
              clsTransportLine  line=*transportLines[lineId];
              if(line==nullptr)
                  cout<< "There is no line with this ID. \n";
-            else if(vehicle.getVehicleType()!=line.getVehicleType())
+            else if(vehicle->getVehicleType()!=line.getVehicleType())
                   cout<< "The Transport line type does not match the added vehicle. \n";
             else {
-            line.setNumberOfVehicles(getNumberOfVehicles()++);
+            line.setNumberOfVehicles(line.getNumberOfVehicles()+1);
             break; }}
             }
             case 2: {
-                int newCapacity = Input::readInt("Enter new Capacity: ");
+                int newCapacity = Input::readInt("Invalid input. Please enter a number : ","Enter new Capacity: ");
                 vehicle->setCapacity(newCapacity);
                 break;
             }
@@ -157,23 +168,23 @@ public:
                 break;
             }
             case 4: {
-                int newDisabilitySeats = Input::readInt("Enter new Disability Seats count: ");
+                int newDisabilitySeats = Input::readInt("Invalid input. Please enter a number : ","Enter new Disability Seats count: ");
                 vehicle->setDisabilitySeats(newDisabilitySeats);
                 break;
             }
             case 5: {
-                int newPackageSize = Input::readInt("Enter new Package Size: ");
+                int newPackageSize = Input::readInt("Invalid input. Please enter a number : ","Enter new Package Size: ");
                 vehicle->setPackageSize(newPackageSize);
                 break;
             }
             case 6: {
-                int newDriverId = Input::readInt("Enter new Driver ID (0 to remove): ");
+                int newDriverId = Input::readInt("Invalid input. Please enter a number : ","Enter new Driver ID (0 to remove): ");
                 vehicle->setDriverId(newDriverId);
                 break;
             }
         }
 
-        Database::saveVehicles(Database::clsVehicleFileName, vehicles);
+        clsVehicle::saveVehcilsFromOpenHash(vehicles);
         cout << "\nVehicle updated successfully.\n";
     }
 

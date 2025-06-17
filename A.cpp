@@ -11,13 +11,6 @@ using namespace std;
 
 int main()
 {
-  //  clsLogin::Login();
-
-	clsVehicleTrip v(3);
-
-
-
-	cout << v.getNumberOfAllVehicleTrip();
-
+    clsLogin::Login();
 }
 

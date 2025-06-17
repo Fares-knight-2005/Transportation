@@ -20,14 +20,14 @@ class SingleLinkedList {
 public:
     SingleLinkedList() :head(nullptr), tail(nullptr), length(0) {}
 
-    ~SingleLinkedList() {
-        Node<Item>* curr = head;
-        while (curr != nullptr) {
-            Node<Item>* next = curr->next;
-            delete curr;
-            curr = next;
-        }
-    }
+    //~SingleLinkedList() {
+    //    Node<Item>* curr = head;
+    //    while (curr != nullptr) {
+    //        Node<Item>* next = curr->next;
+    //        delete curr;
+    //        curr = next;
+    //    }
+    //}
 
     Node<Item>* getHead() {
     return head;
@@ -71,7 +71,7 @@ public:
 
         if (isEmpty())
             return nullptr;
-        Item *item=head->item;
+        Item *item=&head->item;
         head = head->next;
         --length;
         return item;
@@ -398,7 +398,7 @@ class OpenHash {
 
 public:
     OpenHash(int capacity = 20) :capacity(capacity), length(0) { array = new SingleLinkedList<HashNode<Key, Item>>[capacity]; }
-    ~OpenHash() { delete[] array; }
+  /*  ~OpenHash() { delete[] array; }*/
 
     void insert(Key key, Item item) {
         int index = hashCode(key);
@@ -415,7 +415,10 @@ public:
 
     Item* operator[](Key key) {
         int index = hashCode(key);
-        return &array[index].find(key)->item;
+        HashNode<Key, Item>* node = array[index].find(key);
+        if (node == nullptr)
+            return nullptr;
+        return &node->item;
     }
 
 
@@ -427,7 +430,7 @@ public:
         return result;
     }
 
-    Node <Item>* getHead(int index){
+    Node <HashNode<Key,Item>>* getHead(int index){
          return array[index].getHead();
     }
 
@@ -521,10 +524,10 @@ public:
         array = new ClosedNode<Key, Item>[capacity];
     }
 
-    ~ClosedHash()
-    {
-        delete[]array;
-    }
+    //~ClosedHash()
+    //{
+    //    delete[]array;
+    //}
 
     void insert(Key key, Item item)
     {

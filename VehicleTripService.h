@@ -2,17 +2,17 @@
 #pragma once
 
 #include "clsVehicleTrip.h"
+#include "DataStructures.h"
 #include "clsVehicle.h"
 #include "clsTransportLine.h"
-#include "Database.h"
 #include "Input.h"
 
 using namespace std;
 
 class VehicleTripService {
 public:
-    void printAllVehicleTrips() {
-        OpenHash<int, clsVehicleTrip> trips = Database::loadVehicleTrips(Database::clsVehicleTripFileName);
+    static void printAllVehicleTrips() {
+        DoubleLinkedList<clsVehicleTrip> trips = clsVehicleTrip::GetAllVehicleTrips();
 
         if (trips.isEmpty()) {
             cout << "\nNo Vehicle Trips Found!\n";
@@ -23,26 +23,31 @@ public:
         cout << "        All Vehicle Trips (" << trips.size() << ")";
         cout << "\n===========================================\n"; 
 
-        for (int i = 0; i < trips.capacity; i++) {
-            HashNode<int, clsVehicleTrip>* current = trips.getHead(i);
+            DoubleNode<clsVehicleTrip>* current = trips.getHead();
             while (current != nullptr) {
-                current->data.item.displayInfo();
+                current->item.displayInfo();
                 cout << "-------------------------\n";
                 current = current->next;
             }
-        }
     }
 
-    void addNewVehicleTrip() {
-        OpenHash<int, clsVehicleTrip> trips = Database::loadVehicleTrips(Database::clsVehicleTripFileName);
-        OpenHash<int, clsVehicle> vehicles = Database::loadVehicles(Database::clsVehicleFileName);
-        OpenHash<int, clsTransportLine> transportLines = Database::loadTransportLines(Database::clsTransportLineFileName);
+    static void addNewVehicleTrip() {
+        OpenHash<int, clsVehicle> vehicles = clsVehicle::loadVehicles();
+        OpenHash<int, clsTransportLine> transportLines = clsTransportLine::loadTransportLines();
         
         cout << "\n===========================================\n";
         cout << "        Add New Vehicle Trip";
         cout << "\n===========================================\n";
+        if (vehicles.isEmpty()){
+            cout << "There is no Vehicles. ";
+            return;
+        }
+        if (transportLines.isEmpty()) {
+            cout << "There is no Transport Line. ";
+            return;
+        }
 
-        int idVehicle;
+        int idVehicle=0;
         while (true) {
             idVehicle = Input::readInt("Enter Vehicle ID: ");
             clsVehicle* vehicle = vehicles[idVehicle];
@@ -53,11 +58,12 @@ public:
             break;
         }
 
-        int idTransportLine;
+        int idTransportLine=0;
         int numberOfStations = 0;
         while (true) {
             idTransportLine = Input::readInt("Enter Transport Line ID: ");
             clsTransportLine* line = transportLines[idTransportLine];
+
             if (line == nullptr) {
                 cout << "Error: No transport line found with this ID!\n";
                 continue;
@@ -78,14 +84,15 @@ public:
             break;
         }
 
-        clsVehicleTrip newTrip(numberOfStations);
-        newTrip.idVehicle = idVehicle;
-        newTrip.idTransportLine = idTransportLine;
+        
+        clsVehicleTrip newTrip(numberOfStations, idVehicle, idTransportLine);
+      
+ 
 // هون ضل تابع صغير مشان نحفظ تحركات المركبة
-        trips.insert(newTrip.getId(), newTrip);
+        newTrip.Add();
 
         cout << "\nVehicle Trip added successfully with ID: " << newTrip.getId() << "\n";
-        Database::saveVehicleTrips(Database::clsVehicleTripFileName, trips);
+ 
     }
 
 };

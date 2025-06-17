@@ -2,7 +2,7 @@
 #pragma once
 
 #include "clsTransportLine.h"
-#include "Database.h"
+#include "DataStructures.h"
 #include "Input.h"
 
 using namespace std;
@@ -12,7 +12,7 @@ class TransportLineService {
 
 public:
     static void printAllTransportLines() {
-        OpenHash<int, clsTransportLine> transportLines = Database::loadTransportLines(Database::clsTransportLineFileName);
+        DoubleLinkedList<clsTransportLine> transportLines = clsTransportLine::GetTransportLines();
 
         if (transportLines.isEmpty()) {
             cout << "\nNo Transport Lines Found!\n";
@@ -23,26 +23,26 @@ public:
         cout << "        All Transport Lines (" << transportLines.size() << ")";
         cout << "\n===========================================\n"; 
 
-        for (int i = 0; i < transportLines.capacity; i++) {
-            HashNode<clsTransportLine> *current = transportLines.getHead(i);
+            DoubleNode<clsTransportLine> *current = transportLines.getHead();
             while (current != nullptr) {
-                current->data.item.display();
+                current->item.display();
                 current = current->next;
             }
-        }
+
     }
 
     static void addNewTransportLine() {
-        OpenHash<string, clsTransportLine> transportLines=Database::loadTransportLinesByName(Database::clsTransportLineFileName);
-        OpenHash<int, clsStation> stations = Database::loadStations(Database::clsStationFileName);
+        OpenHash<string, clsTransportLine> transportLines= clsTransportLine::loadTransportLinesByName();
+        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
       
         cout << "\n===========================================\n";
         cout << "        Add New Transport Line";
         cout << "\n===========================================\n";
-        
+        string name=" ";
+
         while(true){
-        string name = Input::readString("Enter Transport Line Name: ");
-        if(transportLines[name]!=nullptr)
+        name = Input::readString("Enter Transport Line Name: ");
+        if(transportLines[name]==nullptr)
                 cout << "This name is already in use. You should use a unique name. \n";
         else
                 break;
@@ -62,10 +62,10 @@ public:
         DoubleLinkedList<clsStation> lineStations;
         if (!stations.isEmpty()) {// طباعة كل المحطات من كلاس خدمات المحطة 
             cout << "\nAvailable Stations:\n";
-            for (int i = 0; i < stations.capacity; i++) {
-                DoubleNode<clsStation> *current = stations.getHead(i);
+            for (int i = 0; i < stations.getCapicty(); i++) {
+                Node<HashNode<int,clsStation>> *current = stations.getHead(i);
                 while (current != nullptr) {
-                    cout << current->data.item.getId() << " - " << current->data.item.getName() << endl;
+                    cout << current->item.item.getid();
                     current = current->next;
                 }
             }
@@ -85,10 +85,10 @@ public:
         }
 
         clsTransportLine newLine(price, vehicleType, name, lineStations);
-        transportLines.insert(newLine.getId(), newLine);
+        transportLines.insert(name, newLine);
 
         cout << "\nTransport Line added successfully with ID: " << newLine.getId() << "\n";
-        Database::saveTransportLines(Database::clsTransportLineFileName, transportLines);
+        clsTransportLine::saveTransportLinesFromOpenHash(transportLines);
     }
 
     static void deleteTransportLine() {
@@ -106,35 +106,36 @@ public:
 
         switch(choice){
             case 1:{
-        OpenHash<int, clsTransportLine> transportLines=Database::loadTransportLines(Database::clsTransportLineFileName);
+        OpenHash<int, clsTransportLine> transportLines= clsTransportLine::loadTransportLines();
+
         int id = Input::readInt("Enter Transport Line ID to delete (0 to cancel): ");
         if (id == 0) 
             return;
 
-        clsTransportLine* line = remove(id);
-        if (line == nullptr) {
+        bool s = transportLines.remove(id);
+        if (s) {
             cout << "\nTransport Line not found!\n";
             return;
         }
-        else if{
+        else{
             cout << "\nTransport Line deleted successfully.\n";
-            Database::saveTransportLines(Database::clsTransportLineFileName, transportLines);
+            clsTransportLine::saveTransportLinesFromOpenHash(transportLines);
             return;
         }
         break;
         }
             case 2:{
-        OpenHash<string, clsTransportLine> transportLines=Database::loadTransportLinesByName(Database::clsTransportLineFileName);
+        OpenHash<string, clsTransportLine> transportLines= clsTransportLine::loadTransportLinesByName();
         string name = Input::readString("Enter Transport Line Name to delete : ");
 
-        clsTransportLine* line = remove(name);
-        if (line == nullptr) {
+        bool s = transportLines.remove(name);
+        if (!s) {
             cout << "\nTransport Line not found!\n";
             return;
         }
-        else if{
+        else{
             cout << "\nTransport Line deleted successfully.\n";
-             Database::saveTransportLines(Database::clsTransportLineFileName, transportLines);
+            clsTransportLine::saveTransportLinesFromOpenHash(transportLines);
             return;
         }  
         }  
@@ -160,12 +161,12 @@ public:
         OpenHash<string, clsTransportLine> transportLinesByName;
 
         if (choice == 1) {
-            transportLinesById = Database::loadTransportLines(Database::clsTransportLineFileName);
+            transportLinesById = clsTransportLine::loadTransportLines();
             int id = Input::readInt("Enter Transport Line ID to update: ");
             lineToUpdate = transportLinesById[id];
         }
         else {
-            transportLinesByName = Database::loadTransportLinesByName(Database::clsTransportLineFileName);
+            transportLinesByName = clsTransportLine::loadTransportLinesByName();
             string name = Input::readString("Enter Transport Line Name to update: ");
             lineToUpdate = transportLinesByName[name];
         }
@@ -205,10 +206,10 @@ public:
 
     
         if (choice == 1) {
-            Database::saveTransportLines(Database::clsTransportLineFileName, transportLinesById);
+            clsTransportLine::saveTransportLinesFromOpenHash(transportLinesById);
         }
         else {
-            Database::saveTransportLines(Database::clsTransportLineFileName,transportLinesByName);
+            clsTransportLine::saveTransportLinesFromOpenHash(transportLinesByName);
         }
 
         cout << "\nTransport Line updated successfully.\n";
@@ -216,13 +217,13 @@ public:
 
 private:
     static void updateStations(clsTransportLine& line) {
-        OpenHash<int, clsStation> stations = Database::loadStations(Database::clsStationFileName);
+        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
         
         while (true) {
             cout << "\nCurrent Stations in this line:\n";
             DoubleNode<clsStation> *currentStation = line.getFirstStation();
             while (currentStation != nullptr) {
-                cout << currentStation->item.getId() << " - " << currentStation->item.getName() << endl;
+                cout << currentStation->item.getid() << endl;
                 currentStation = currentStation->next;
             }
 
@@ -237,10 +238,10 @@ private:
 
             if (choice == 1) {
                 cout << "\nAvailable Stations:\n";// طباعة كل المحطات بكلاس طلاعة تبع الخدمات
-                for (int i = 0; i < stations.capacity; i++) {
-                    HashNode<clsStation> *current = stations.getHead(i);
+                for (int i = 0; i < stations.getCapicty(); i++) {
+                    Node<HashNode<int,clsStation>> *current = stations.getHead(i);
                     while (current != nullptr) {
-                        cout << current->data.item.getId() << " - " << current->data.item.getName() << endl;
+                        cout << current->item.item.getid() << endl;
                         current = current->next;
                     }
                 }

@@ -1,16 +1,20 @@
 
 #pragma once
 
+#include <iostream>
 #include "clsPassenger.h"
-#include "Database.h"
+#include "DataStructures.h"
 #include "Input.h"
 
 using namespace std;
 
 class PassengerService {
+
 public:
+
     static void printAllPassengers() {
-        OpenHash<int , clsPassenger> passengers = Database::loadPassengersByName(Database::clsPassengerFileName);
+
+        DoubleLinkedList<clsPassenger> passengers = clsPassenger::GetAllPassengers();
 
         if (passengers.isEmpty()) {
             cout << "\nNo Passengers Found!\n";
@@ -21,31 +25,34 @@ public:
         cout << "        All Passengers (" << passengers.size() << ")";
         cout << "\n===========================================\n"; 
 
-        for (int i = 0; i < passengers.capacity; i++) {
-            HashNode<int, clsPassenger>* current = passengers.getHead(i);
+        DoubleNode<clsPassenger> *current = passengers.getHead();
             while (current != nullptr) {
-                current->data.item.printPassengerInfo();
+                current->item.printPassengerInfo();
                 current = current->next;
             }
-        }
-    }
+     }
+    
 
     static void addNewPassenger() {
-        OpenHash<string, clsPassenger> passengers = Database::loadPassengersByName(Database::clsPassengerFileName);
+        OpenHash<string, clsPassenger> passengers =clsPassenger::loadPassengersByName();
       
         cout << "\n===========================================\n";
         cout << "        Add New Passenger";
         cout << "\n===========================================\n";
+        string firstName=" ";
+        string lastName = " ";
+
         while(true){
         string firstName = Input::readString("Enter First Name: ");
         string lastName = Input::readString("Enter Last Name: ");
         string fullName=firstName +" "+lastName;
-        if(passengers[fullName]!=nullptr)
+        if(passengers[fullName] == nullptr)
              cout<<" This name is already in use. You must use a unique name. \n";
         else
             break;
         }
-        short age = Input::readInt("Enter Age: ");
+
+        short age = Input::readInt("Invalid input. Please enter a number : ","Enter Age: ");
         string phone = Input::readString("Enter Phone Number: ");
         string email = Input::readString("Enter Email: ");
         string password = Input::readPassword("Enter Password: ");
@@ -63,10 +70,11 @@ public:
         passengers.insert(newPassenger.GetFullName(), newPassenger);
 
         cout << "\nPassenger added successfully with ID: " << newPassenger.getId() << "\n";
-        Database::savePassengers(Database::clsPassengerFileName, passengers);
+        clsPassenger::savePassengersFromOpenHash(passengers);
     }
 
     static void deletePassenger() {
+
         cout << "\n===========================================\n";
         cout << "        Delete Passenger";
         cout << "\n===========================================\n";
@@ -82,21 +90,21 @@ public:
 
         bool success = false;
         if (choice == 1) {
-            OpenHash<int, clsPassenger> passengers = Database::loadPassengers(Database::clsPassengerFileName);
-            int id = Input::readInt("Enter Passenger ID to delete: ");
+            OpenHash<int, clsPassenger> passengers = clsPassenger::loadPassengers();
+            int id = Input::readInt("Invalid input. Please enter a number : ","Enter Passenger ID to delete: ");
             success = passengers.remove(id);
             if (success) {
                 cout<< "The deletion process was completed successfully." <<endl;
-                Database::savePassengers(Database::clsPassengerFileName, passengers);
+                clsPassenger::savePassengersFromOpenHash(passengers);
             }
         }
         else {
-            OpenHash<string, clsPassenger> passengers = Database::loadPassengersByName(Database::clsPassengerFileName);
+            OpenHash<string, clsPassenger> passengers=clsPassenger::loadPassengersByName();
             string name = Input::readString("Enter Passenger Full Name to delete: ");
             success = passengers.remove(name);
             if (success) {
                 cout<< "The deletion process was completed successfully." <<endl;
-                Database::savePassengers(Database::clsPassengerFileName, tempHash);
+                clsPassenger::savePassengersFromOpenHash(passengers);
                 }  
             }   
     }
@@ -116,16 +124,16 @@ public:
               return;
 
         clsPassenger* passengerToUpdate = nullptr;
-        OpenHash<int, clsPassenger> passengersById;
-        OpenHash<string, clsPassenger> passengersByName;
+        OpenHash<int, clsPassenger> passengersById(100);
+        OpenHash<string, clsPassenger> passengersByName(100);
 
         if (choice == 1) {
-            passengersById = Database::loadPassengers(Database::clsPassengerFileName);
+            passengersById = clsPassenger::loadPassengers();
             int id = Input::readInt("Enter Passenger ID to update: ");
             passengerToUpdate = passengersById[id];
         }
         else {
-            passengersByName = Database::loadPassengersByName(Database::clsPassengerFileName);
+            passengersByName = clsPassenger::loadPassengersByName();
             string name = Input::readString("Enter Passenger Full Name to update: ");
             passengerToUpdate = passengersByName[name];
         }
@@ -135,7 +143,7 @@ public:
             return;
         }
 
-        printPassengerInfo(*passengerToUpdate);
+        passengerToUpdate->printPassengerInfo();
         cout << "\nWhat would you like to update?\n";
         cout << "1. First Name\n";
         cout << "2. Last Name\n";
@@ -182,7 +190,7 @@ public:
                 break;
             }
             case 7: {
-                PassengerService::updateCardInfo(passengerToUpdate->Card);
+                passengerToUpdate->updateCardInfo();
                 break;
             }
             case 8: {
@@ -192,52 +200,13 @@ public:
             }
         }
 
-        if (choice == 1) 
-            Database::savePassengers(Database::clsPassengerFileName, passengersById);
+        if (choice == 1)
+            clsPassenger::savePassengersFromOpenHash(passengersById);
         else 
-            Database::savePassengers(Database::clsPassengerFileName, passengersByName);
+            clsPassenger::savePassengersFromOpenHash(passengersByName);
            
-        }
+        
 
         cout << "\nPassenger updated successfully.\n";
-    }
-
-private:
-
-    static void updateCardInfo(clsCard& card) {
-        cout << "\nCurrent Card Information:";
-        cout << "\nType: " << (card.isPremium() ? "Premium" : "Regular");
-        cout << "\nBalance: " << card.getBalance();
-        if (card.isPremium()) {
-            cout << "\nFree Trips: " << card.getFreeTrips();
-        }
-
-        cout << "\n\nWhat would you like to update?\n";
-        cout << "1. Card Type\n";
-        cout << "2. Recharge\n";
-        cout << "0. Cancel\n";
-
-        int choice = Input::ReadIntNumberBetween(0, 2, "Invalid choice. Enter 0-" + to_string(maxChoice) + ": ");
-        if (choice == 0) 
-          return;
-
-        switch (choice) {
-            case 1: {
-                cout << "\nCard Types:\n";
-                cout << "1. Regular\n";
-                cout << "2. Premium\n";
-                cout << "Converting the card to Premium requires $500.\n";
-                int cardChoice = Input::ReadIntNumberBetween(1, 2, "Invalid choice. Enter 1-2: ");
-                card.setType(cardChoice == 2);
-                break;
-            }
-            case 2: {
-                if(card.isPremium())
-                    cout << "You can get a free trips if you add an amount $"+clsCard::getAmountForFreeTrip();
-                double amount = Input::readDouble("Enter amount: ");
-                card.Recharge(amount);
-                break;
-            }
-        }
     }
 };

@@ -7,10 +7,14 @@
 #include <sstream>
 #include "Input.h"
 
+using namespace std;
+
+string clsTransportLineFileName = "TransportLines.txt";
+
 class clsTransportLine
 {
 private:
-    static string clsTransportLineFileName = "TransportLines.txt";
+
 
     DoubleLinkedList<clsStation> stations;
     string name;
@@ -26,8 +30,8 @@ public:
     }
 
     clsTransportLine(int id, int numberOfVehicles, double price, enVehicleType vehicleType, string name, DoubleLinkedList<clsStation> stations) :
-         id(id), stations(stations), price(price), vehicleType(vehicleType),
-         numberOfVehicles(numberOfVehicles), name(name) {
+        id(id), stations(stations), price(price), vehicleType(vehicleType),
+        numberOfVehicles(numberOfVehicles), name(name) {
     }
 
     clsTransportLine() : id(0), numberOfVehicles(0), price(0) {}
@@ -43,23 +47,23 @@ public:
             cout << "The station ID number you entered is not available.\n";
     }
 
-    DoubleNode<clsStation>* getFirstStation(){
-            return  stations.getHead();
+    DoubleNode<clsStation>* getFirstStation() {
+        return  stations.getHead();
     }
 
     bool operator==(int id) {
         return this->id == id;
     }
 
-    bool operator==(string name){
-       return this->name==name;      
+    bool operator==(string name) {
+        return this->name == name;
     }
 
     enVehicleType getVehicleType() {
         return vehicleType;
     }
 
-    int getId(){
+    int getId() {
         return id;
     }
 
@@ -67,16 +71,20 @@ public:
         this->id = id;
     }
 
-    DoubleNode<clsStation> *getStations(){
-         return stations.getHead();
+    int getPirce() {
+        return pirce;
     }
 
-    void setNumberOfVehicles(int n){
-         numberOfVehicles=n;     
+    DoubleLinkedList<clsStation> getStations() {
+        return stations;
     }
 
-    int getNumberOfVehicles(){
-        return numberOfVehicles;      
+    void setNumberOfVehicles(int n) {
+        numberOfVehicles = n;
+    }
+
+    int getNumberOfVehicles() {
+        return numberOfVehicles;
     }
 
     void display() {
@@ -99,12 +107,20 @@ public:
         cout << "--------------------------\n";
     }
 
-    static int getNumberOfAllTransportLine(){
-          return numberOfAllTransportLines;     
+    static int getNumberOfAllTransportLine() {
+        return numberOfAllTransportLines;
     }
 
-    static void setNumberOfAllTransportLine(int n){
-          numberOfAllTransportLines=n;
+    static void setNumberOfAllTransportLine(int n) {
+        numberOfAllTransportLines = n;
+    }
+
+    void setName(string name) {
+        this->name = name;
+    }
+
+    void setPrice(int p) {
+        price = p;
     }
 
     string getName() {
@@ -120,7 +136,7 @@ public:
     }
 
     static clsTransportLine parse(string line, OpenHash<int, clsStation>& stations) {
-        DoubleLinkedList<string> tokens = Input::Split(line,",,,");
+        DoubleLinkedList<string> tokens = Input::Split(line, ",,,");
         if (tokens.size() < 5) {
             throw invalid_argument("Not enough tokens in line");
         }
@@ -129,8 +145,8 @@ public:
         int vehicles = stoi(*tokens[1]);
         double price = stod(*tokens[2]);
         enVehicleType type = static_cast<enVehicleType>(stoi(*tokens[3]));
-        string name= *tokens[4];
-        
+        string name = *tokens[4];
+
         DoubleLinkedList<clsStation> stationList;
         for (int i = 5; i < tokens.size(); i++) {
             int stationId = stoi(*tokens[i]);
@@ -169,9 +185,33 @@ public:
     }
 
 
-    static DoubleLinkedList <clsVehicle> GetTransportLines()
+    template <typename Key>
+    static void saveTransportLinesFromOpenHash(OpenHash <Key, clsTransportLine> Transports)
     {
-        DoubleLinkedList <clsVehicle> AllLines;
+        fstream PassengerFile;
+
+
+        PassengerFile.open(clsTransportLineFileName, ios::out);
+
+        if (PassengerFile.is_open())
+        {
+            for (int i = 0; i < Transports.getCapicty(); i++) {
+                Node <HashNode<Key, clsTransportLine>>* d = Transports.getHead(i);
+                while (d != nullptr) {
+                    PassengerFile << d->item.item.toString() << endl;
+                    d = d->next;
+                }
+            }
+
+            PassengerFile.close();
+        }
+    }
+
+
+
+    static DoubleLinkedList <clsTransportLine> GetTransportLines()
+    {
+        DoubleLinkedList <clsTransportLine> AllLines;
 
         fstream MyFile;
         MyFile.open(clsTransportLineFileName, ios::in);
@@ -179,10 +219,11 @@ public:
         if (MyFile.is_open())
         {
             string Line;
+            OpenHash<int, clsStation> s = clsStation::GetAllStationsOpen();
 
             while (getline(MyFile, Line))
             {
-                clsTransportLine Trip = parse(Line);
+                clsTransportLine Trip = parse(Line, s);
                 AllLines.addLast(Trip);
             }
 
@@ -194,70 +235,67 @@ public:
 
     }
 
+    void Add()
+    {
+        fstream MyFile;
+        MyFile.open(clsTransportLineFileName, ios::out | ios::app);
+
+        if (MyFile.is_open())
+        {
+            MyFile << this->toString() << endl;
+            MyFile.close();
+        }
+    }
 
 
-    //template<class Item>
-    //static void saveTransportLines(string filename, OpenHash<Item, clsTransportLine>& transportLines) {
-    //    ofstream outFile(filename);
+    static OpenHash<int, clsTransportLine> loadTransportLines() {
+        OpenHash<int, clsTransportLine> transportLines;
+        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
 
-    //    for (int i = 0; i < transportLines.getCapicty(); i++) {
-    //        Node<clsTransportLine>* current = transportLines.getHead(i);
-    //        while (current != nullptr) {
-    //            outFile << current->item, toString() << endl;
-    //            current = current->next;
-    //        }
-    //    }
-    //    outFile.close();
-    //}
+        ifstream file(clsTransportLineFileName);
+        string line;
 
-    //static OpenHash<int, clsTransportLine> loadTransportLines(string filename) {
-    //    OpenHash<int, clsTransportLine> transportLines;
-    //    OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
+        while (getline(file, line)) {
+            try {
+                clsTransportLine tl = clsTransportLine::parse(line, stations);
+                transportLines.insert(tl.getId(), tl);
 
-    //    ifstream file(filename);
-    //    string line;
+                if (clsTransportLine::getNumberOfAllTransportLine() > tl.getId()) {
+                    clsTransportLine::setNumberOfAllTransportLine(tl.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
 
-    //    while (getline(file, line)) {
-    //        try {
-    //            clsTransportLine tl = clsTransportLine::parse(line, stations);
-    //            transportLines.insert(tl.getId(), tl);
+        return transportLines;
+    }
 
-    //            if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
-    //                clsTransportLine::setNumberOfAllTransportLine(tl.getId());
-    //            }
-    //        }
-    //        catch (...) {
-    //            continue;
-    //        }
-    //    }
+    static OpenHash<string, clsTransportLine> loadTransportLinesByName() {
+        OpenHash<string, clsTransportLine> transportLines;
+        OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
 
-    //    return transportLines;
-    //}
+        ifstream file(clsTransportLineFileName);
+        string line;
 
-    //static OpenHash<string, clsTransportLine> loadTransportLinesByName(string filename) {
-    //    OpenHash<string, clsTransportLine> transportLines;
-    //    OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
+        while (getline(file, line)) {
+            try {
+                clsTransportLine tl = clsTransportLine::parse(line, stations);
+                string nameKey = tl.getName();
+                transportLines.insert(nameKey, tl);
 
-    //    ifstream file(filename);
-    //    string line;
+                if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
+                    clsTransportLine::setNumberOfAllTransportLine(tl.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
 
-    //    while (getline(file, line)) {
-    //        try {
-    //            clsTransportLine tl = clsTransportLine::parse(line, stations);
-    //            string nameKey = tl.getName();
-    //            transportLines.insert(nameKey, tl);
-
-    //            if (clsTransportLine::getNumberOfAllTransportLine() < tl.getId()) {
-    //                clsTransportLine::setNumberOfAllTransportLine(tl.getId());
-    //            }
-    //        }
-    //        catch (...) {
-    //            continue;
-    //        }
-    //    }
-
-    //    return transportLines;
-    //}
+        return transportLines;
+    }
 
 };
 

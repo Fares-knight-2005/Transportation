@@ -26,6 +26,12 @@ private:
      
     public:
    
+        clsParking()
+        {
+            id = 0;
+        }
+
+
     clsParking(int id, double distanceToNext,int stationId,enVehicleType parkingType,int idTransportLine, Queue<clsPassengerTrip> passengers) :id(id), distanceToNext(distanceToNext),stationId(stationId),
     idTransportLine(idTransportLine) {
         this->passengers = passengers;
@@ -71,7 +77,7 @@ private:
     }
 
     static clsParking parse(string line) {
-    DoubleLinkedList<string> tokens = Database::Split(line,",,,");
+    DoubleLinkedList<string> tokens = Input::Split(line,",,,");
          
     if (tokens.size() < 5) {
         throw invalid_argument("Not enough tokens in line");
@@ -125,10 +131,42 @@ private:
         }
     }
 
-
-    static DoubleLinkedList <clsVehicle> GetAllParkings()
+    void Add()
     {
-        DoubleLinkedList <clsVehicle> AllParkings;
+        fstream MyFile;
+        MyFile.open(clsParkingFileName, ios::out | ios::app);
+
+        if (MyFile.is_open())
+        {
+            MyFile << this->toString() << endl;
+            MyFile.close();
+        }
+    }
+
+    template <typename Key>
+    static void saveParkingsFromOpenHash(OpenHash <Key, clsParking> Parkings)
+    {
+        fstream ParhingsFile;
+
+        ParhingsFile.open(clsParkingFileName, ios::out);
+
+        if (ParhingsFile.is_open())
+        {
+            for (int i = 0; i < Parkings.getCapicty(); i++) {
+                Node <HashNode<Key, clsParking>>* d = Parkings.getHead(i);
+                while (d != nullptr) {
+                    ParhingsFile << d->item.item.toString() << endl;
+                    d = d->next;
+                }
+            }
+
+            ParhingsFile.close();
+        }
+    }
+
+    static DoubleLinkedList <clsParking> GetAllParkings()
+    {
+        DoubleLinkedList <clsParking> AllParkings;
 
         fstream MyFile;
         MyFile.open(clsParkingFileName, ios::in);
@@ -147,47 +185,33 @@ private:
 
         }
 
+
         return AllParkings;
 
     }
 
 
-    //static void saveParkings(string& filename, OpenHash<int, clsParking>& parkings) {
-    //    ofstream outFile(filename);
+    static OpenHash<int, clsParking> loadParkings() {
+        OpenHash<int, clsParking> parkings;
+        ifstream file(clsParkingFileName);
+        string line;
 
-    //    for (int i = 0; i < parkings.getCapicty(); i++) {
-    //        Node<clsParking>* current = parkings.getHead(i);
-    //        while (current != nullptr) {
-    //            outFile << current->item.toString() << endl;
-    //            current = current->next;
-    //        }
-    //    }
+        while (getline(file, line)) {
+            try {
+                clsParking parking = clsParking::parse(line);
+                parkings.insert(parking.getId(), parking);
 
-    //    outFile.close();
-    //}
+                if (clsParking::getNumberOfAllParking() < parking.getId()) {
+                    clsParking::setNumberOfAllParking(parking.getId());
+                }
+            }
+            catch (...) {
+                continue;
+            }
+        }
 
-
-    //static OpenHash<int, clsParking> loadParkings(string filename) {
-    //    OpenHash<int, clsParking> parkings;
-    //    ifstream file(filename);
-    //    string line;
-
-    //    while (getline(file, line)) {
-    //        try {
-    //            clsParking parking = clsParking::parse(line);
-    //            parkings.insert(parking.getId(), parking);
-
-    //            if (clsParking::getNumberOfAllParking() < parking.getId()) {
-    //                clsParking::setNumberOfAllParking(parking.getId());
-    //            }
-    //        }
-    //        catch (...) {
-    //            continue;
-    //        }
-    //    }
-
-    //    return parkings;
-    //}
+        return parkings;
+    }
 
 
 

@@ -4,6 +4,7 @@
 #include <fstream>
 #include "DataStructures.h"
 #include "clsParking.h"
+#include "clsPassengerTrip.h"
 #include "clsVehicle.h"
 #include "string"
 
@@ -51,7 +52,7 @@ class clsStation
 				*Array = D->getId();
 			}
 		}
-		return JoinString(Array ,"#//#");
+		return JoinString(Array , s.parkings.size() + 7, "#//#");
 	}
 
 	//I Need Function in Parking Class return all station Parkings
@@ -67,7 +68,7 @@ class clsStation
 		St.street = *ObjectList[3];
 		St.maxParkingsCapicty = stoi(*ObjectList[4]);
 		St.maxVehcelNumberIn1Parking = stoi(*ObjectList[5]);
-		St.stationType = (enVehicleType) stoi(*ObjectList[7]);
+		St.stationType = (enVehicleType) stoi(*ObjectList[6]);
 
 		if (ObjectList.size() > 7)
 		{
@@ -106,6 +107,12 @@ public:
 	int getMaxVehicleNumber() { return maxVehcelNumberIn1Parking; }
 	enVehicleType getStationType() { return stationType; }
 	bool isMarkedToDelete() { return markToDelete; }
+
+
+
+	void addPassengerTrip(int lineId, clsPassengerTrip p) {
+		parkings[lineId]->addPassengerTrip(p);
+	}
 
 
 
@@ -267,12 +274,12 @@ public:
 
 	
 
-	static string JoinString(string* ArrString, string Delim)
+	static string JoinString(string* ArrString, int ArraySize , string Delim)
 	{
 		string Results = "";
 
-		if (ArrString != nullptr)
-			for (int i = 0; ArrString != nullptr; i++)
+	      	if (ArrString != nullptr)
+			for (int i = 0; i < ArraySize ; i++)
 			{
 				Results += Delim + ArrString[i];
 			}
