@@ -10,6 +10,7 @@
 #include "PassengerTripService.h"
 #include "TransportLineService.h"
 #include "clsVehicleDriverServeses.h"
+#include "VehicleTripService.h"
 
 
 using namespace std;
@@ -37,10 +38,9 @@ class clsAdminScreen
 		case enWhatToDo::enAdd_Employee:
 		    	Input::Clear();
 				clsVehicleDriverServeses::AddDriver(); //Here Your Function Don't Touch Other Things
-		    	Input::pressAnyKeyToContinue();
 		    	AdminMenu();
 		    	break;
-			
+
 		case enWhatToDo::enShow_Employyes:
 		    	Input::Clear();
 				clsVehicleDriverServeses::showDriversList();  //Here Your Function Don't Touch Other Things
@@ -196,7 +196,6 @@ class clsAdminScreen
 		case enWhatToDo::enAdd_Station:
 			   Input::Clear();
 			   clsStationServeses::AddStation(); //Here Your Function Don't Touch Other Things
-			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
 
@@ -239,7 +238,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enShow_Trips:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   VehicleTripService::printAllVehicleTrips(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -247,7 +246,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enSearch_Trip:
 		       Input::Clear();
-		       //Here Your Function Don't Touch Other Things
+		       VehicleTripService::search(); //Here Your Function Don't Touch Other Things
 		       Input::pressAnyKeyToContinue();
 		       AdminMenu();
 		       break;
@@ -281,7 +280,7 @@ public:
 	{
 		Input::Clear();
 
-		
+
 
 		clsScreen::NewMenu("             The Admin Menu ", 43);
 
@@ -293,7 +292,7 @@ public:
 		cout << setw(37) << left << "" << " Delete Transp Line   [3]  | Delete Passenger     [8]\n";
 		cout << setw(37) << left << "" << " Update Transp Line   [4]  | Update Passenger     [9]\n";
 		cout << setw(37) << left << "" << " Find Transp Line     [5]  | Find Passenger      [10]\n";
-		cout << setw(37) << left << "" << "       ------------------------------------------\n";    
+		cout << setw(37) << left << "" << "       ------------------------------------------\n";
 		cout << setw(37) << left << "" << " Show Vehcils Info   [11]  | Show Stations Info  [16]\n";
 		cout << setw(37) << left << "" << " Add New Vehcil      [12]  | Add New Station     [17]\n";
 		cout << setw(37) << left << "" << " Delete Vehcil       [13]  | Delete Station      [18]\n";
@@ -301,8 +300,8 @@ public:
 		cout << setw(37) << left << "" << " Find Vehcil         [15]  | Find Station        [20]\n";
 		cout << setw(37) << left << "" << "       ------------------------------------------\n";
 		cout << setw(37) << left << "" << " Show Employees Info [21]  | Other Serveses  :)      \n";
-		cout << setw(37) << left << "" << " Add New Employee    [22]  | Show All Trips Data [26]\n";
-		cout << setw(37) << left << "" << " Delete Employee     [23]  | Search For Trip     [27]\n";
+		cout << setw(37) << left << "" << " Add New Employee    [22]  | Show All V Trips    [26]\n";
+		cout << setw(37) << left << "" << " Delete Employee     [23]  | Search For V Trip   [27]\n";
 		cout << setw(37) << left << "" << " Update Employee     [24]  | Enter To Play Gmae  [28]\n";
 		cout << setw(37) << left << "" << " Find Employee       [25]  | Logout              [29]\n";
 		cout << setw(37) << left << "" << "=======================================================" << endl;

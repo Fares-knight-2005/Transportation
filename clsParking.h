@@ -68,10 +68,6 @@ private:
         Vehicle.enqueue(v);
     }
 
-    int getnumberOfAllVehicle(){
-        return this->Vehicle.size();
-    }
-
     int getLineId()
     {
         return this->idTransportLine;
@@ -141,7 +137,7 @@ private:
                      bool destination = (*tokens[i++] == "1");
                      float price = stof(*tokens[i++]);
           
-                     clsPassengerTrip trip(start, end, passengerId, heading, disabled, items, destination , price);
+                     clsPassengerTrip trip(start, end, passengerId, disabled, items, destination , price);
                      passengers.enqueue(trip);
              }
           
@@ -204,6 +200,14 @@ private:
 
             ParhingsFile.close();
         }
+    }
+
+    void removeVehicle() {
+        Vehicle.dequeue();
+    }
+
+    int getnumberOfAllVehicle() {
+        return this->Vehicle.size();
     }
 
     static DoubleLinkedList <clsParking> GetAllParkings()

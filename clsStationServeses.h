@@ -34,8 +34,8 @@ private:
 		cout << "Id : " << St.getid() << endl;
 		cout << "City : " << St.getCity() << endl;
 		cout << "Street : " << St.getStreet() << endl;
-		cout << "Max Vehcils In 1 Parking : " << St.getMaxVehicleNumber();
-		cout << "Max Parkings Num : " << St.getMaxParkingsCapacity();
+		cout << "Max Vehcils In 1 Parking : " << St.getMaxVehicleNumber() << endl;
+		cout << "Max Parkings Num : " << St.getMaxParkingsCapacity() << endl;
 		cout << endl << endl;
 
 	}
@@ -48,8 +48,8 @@ private:
 		cout << "-------------------------------" << endl;
 		cout << "[2] City : " << St.getCity() << endl;
 		cout << "[3] Street : " << St.getStreet() << endl;
-		cout << "[4] Max Vehcils In 1 Parking : " << St.getMaxVehicleNumber();
-		cout << "[5] Max Parkings Num : " << St.getMaxParkingsCapacity();
+		cout << "[4] Max Vehcils In 1 Parking : " << St.getMaxVehicleNumber() << endl;
+		cout << "[5] Max Parkings Num : " << St.getMaxParkingsCapacity() << endl;
 		cout << "[6] to Add Parkings : " << endl;
 		cout << endl << endl;
 
@@ -83,7 +83,7 @@ public:
 			{
 				$printStation(*AllStationData[i]);
 			}
-		cout << "       __________________________________________________________________________________________________________\n\n\n\n";
+		cout << "       __________________________________________________________________________________________________________\nTo See All Parkings Of A Station Use Find Go Back And Press [20]\n\n\n";
 
 
 		Input::pressAnyKeyToContinue();
@@ -122,17 +122,21 @@ public:
 
 		if (Input::readBool("Do You Want To Add Parkings : ", "y", "n"))
 		{
-			cout << "Okay Then Press 0 to stop any time : ";
-
 			while (true) {
-				int id = (Input::readInt("Enter Number Not Text ", "Enter Id : "));
-				if (id == 0)
+
+				int LineID = Input::readInt("No Number Only Text", "Enter The Line Id : ");
+
+				cout << "Enter Type Of The Parking : [1]Bus | [2]Tram | [3]Ferry | [4]Metro : ";
+				enVehicleType T = (enVehicleType) Input::ReadIntNumberBetween(1, 4);
+
+				StToAdd.addNewParking(LineID, T);
+				if (!Input::readBool("Enter More Parkings ? "))
+				{
 					break;
-				StToAdd.AddParkingbyId(id);
+				}
 			}
 		}
 
-		
 		PrintOneStatio(StToAdd);
 
 
@@ -253,13 +257,18 @@ public:
 
 			if (Input::readBool("Do You Want To Add Parkings : ", "y", "n"))
 			{
-				cout << "Okay Then Press 0 to stop any time : ";
-
 				while (true) {
-					int id = (Input::readInt("Enter Number Not Text ", "Enter Id : "));
-					if (id == 0)
+
+					int LineID = Input::readInt("No Number Only Text", "Enter The Line Id : ");
+
+					cout << "Enter Type Of The Parking : [1]Bus | [2]Tram | [3]Ferry | [4]Metro : ";
+					enVehicleType T = (enVehicleType)Input::ReadIntNumberBetween(1, 4);
+
+					ToUpdate->addNewParking(LineID, T);
+					if (!Input::readBool("Enter More Parkings ? "))
+					{
 						break;
-					ToUpdate->AddParkingbyId(id);
+					}
 				}
 			}
 		}
@@ -270,7 +279,7 @@ public:
 		if (Input::readBool("Are You Sure Update To This [Y/N] : ", "Y", "N"))
 		{
 			ToUpdate->Update();
-			cout << "\n\n Station Updated Succesfully :)";
+			cout << "\n\n Station Updated Succesfully :)\n";
 		}
 
 		else { cout << "\n\nan Error Ocured Didn't Update Station\n\n"; }

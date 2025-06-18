@@ -177,7 +177,7 @@ public:
             system("color");
             cout << "\033[1;31mInvalid input. Please enter either " << trueInput << " or " << falseInput << "\033[0m\n";
         }
-    
+
     }
 
 
@@ -188,9 +188,9 @@ public:
     }
 
 
-    static int ReadIntNumberBetween(int From, int To, string ErrorMessage = "Number is not within range, Enter again:\n", string ErrorMessageLetters = "You Can't Enter Text Enter Number : ")
+    static int ReadIntNumberBetween(int From, int To, string ErrorMessage = "Number is not within range, Enter again:\n", string ErrorMessageLetters = "You Can't Enter Text Enter Number : ",string message="Please enter a number : ")
     {
-        int Number = readInt(ErrorMessageLetters , "");
+        int Number = readInt(ErrorMessageLetters,message);
 
         while (!(Number >= From && Number <= To))
         {

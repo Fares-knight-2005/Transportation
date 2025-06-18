@@ -29,20 +29,28 @@ public:
         stations(stations), price(price), id(++numberOfAllTransportLines), vehicleType(vehicleType),
         numberOfVehicles(0), name(name) {}
 
+    clsTransportLine(double price, enVehicleType vehicleType, string name) :
+        price(price), id(++numberOfAllTransportLines), vehicleType(vehicleType),
+        numberOfVehicles(0), name(name) {}
+
     clsTransportLine(int id, int numberOfVehicles, double price, enVehicleType vehicleType, string name, DoubleLinkedList<clsStation> stations) :
         id(id),numberOfVehicles(numberOfVehicles), price(price), vehicleType(vehicleType),name(name),stations(stations) {}
 
     clsTransportLine() : id(0), numberOfVehicles(0), price(0) {}
 
-    void addStation(clsStation station, int stationNumber) {
+    bool addStation(clsStation station, int stationNumber) {
+        if(stations.find(station.getid()))
+        {
+            cout<<"The station is on this line. \n";
+            return false;
+        }
+
         stations.add(stationNumber - 1, station);
+    return true;
     }
 
     void removeStation(int stationId) {
-        if (stations.remove(stationId))
-            cout << "The deletion process was completed successfully.\n";
-        else
-            cout << "The station ID number you entered is not available.\n";
+        stations.remove(stationId);
     }
 
     DoubleNode<clsStation>* getFirstStation() {
@@ -67,6 +75,10 @@ public:
 
     void setId(int id) {
         this->id = id;
+    }
+
+    int numberOfStations(){
+       return stations.size();
     }
 
     double getPirce() {
@@ -147,6 +159,7 @@ public:
         string name = *tokens[4];
 
         DoubleLinkedList<clsStation> stationList;
+        if(tokens.size() > 5)
         for (int i = 5; i < tokens.size(); i++) {
             int stationId = stoi(*tokens[i]);
             clsStation* station = stations[stationId];

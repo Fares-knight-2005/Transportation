@@ -15,14 +15,13 @@ private:
 
     int idStarStation,idEndStation,idPassenger;
     float price;
-    bool isHeadingToEnd,isDisabled,hasItems,destination;
+    bool isDisabled,hasItems,destination;
 
 public:
-    clsPassengerTrip(int start, int end, int id, bool heading, bool disabled, bool items,bool destination,float price) {
+    clsPassengerTrip(int start, int end, int id, bool disabled, bool items,bool destination,float price) {
         idStarStation = start;
         idEndStation = end;
         idPassenger = id;
-        isHeadingToEnd = heading;
         isDisabled = disabled;
         hasItems = items;
         this->price=price;
@@ -33,7 +32,6 @@ public:
     int getStartStation() { return idStarStation; }
     int getEndStation() { return idEndStation; }
     int getPassengerId() { return idPassenger; }
-    bool getHeadingStatus() { return isHeadingToEnd; }
     bool getDisabilityStatus() { return isDisabled; }
     bool getItemsStatus() { return hasItems; }
     bool getDestination() {return destination;}
@@ -41,7 +39,6 @@ public:
     void setStartStation(int start) { idStarStation = start; }
     void setEndStation(int end) { idEndStation = end; }
     void setPassengerId(int id) { idPassenger = id; }
-    void setHeadingStatus(bool heading) { isHeadingToEnd = heading; }
     void setDisabilityStatus(bool disabled) { isDisabled = disabled; }
     void setItemsStatus(bool items) { hasItems = items; }
 
@@ -51,7 +48,7 @@ public:
         cout << "Start Station: " << idStarStation << endl;
         cout << "End Station: " << idEndStation << endl;
         cout << "Price: "<< price << endl;
-        cout << "Heading to end: " << (isHeadingToEnd ? "Yes" : "No") << endl;
+        cout << "Heading to end: " << (destination ? "Yes" : "No") << endl;
         cout << "Disabled: " << (isDisabled ? "Yes" : "No") << endl;
         cout << "Has items: " << (hasItems ? "Yes" : "No") << endl;
     }
@@ -85,7 +82,7 @@ public:
     string toString() {
         ostringstream oss;
         oss << idStarStation << ",,," << idEndStation << ",,,"
-            << idPassenger << ",,," << (isHeadingToEnd ? "1" : "0") << ",,,"
+            << idPassenger << ",,,"  << ",,,"
             << (isDisabled ? "1" : "0") << ",,," << (hasItems ? "1" : "0")<< ",,," <<(destination ? "1" : "0") << ",,," << price;
 
         return oss.str();

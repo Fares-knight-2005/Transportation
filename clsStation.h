@@ -121,11 +121,14 @@ public:
 		return parkings;
 	}
 
-	void AddParkingbyId(int id)
+	bool AddParkingbyId(int id)
 	{
 		clsParking *P = clsParking::Find(id);
-
-		this->parkings.insert(P->getLineId(), *P);
+		if (P != nullptr) {
+			this->parkings.insert(P->getLineId(), *P);
+			return true;
+		}
+		return false;
 	}
 
 
@@ -166,6 +169,31 @@ public:
 		}
 	}
 
+	void addNewParking(int lineId, enVehicleType type) {
+
+		OpenHash<int, clsParking> parkings = clsParking::loadParkings();
+
+		cout << "\n===========================================\n";
+		cout << "              Add New Parking";
+		cout << "\n===========================================\n";
+
+		double distance = Input::readDouble("Enter Distance To Next Parking: ");
+
+		clsParking newParking(distance, station_id, type, lineId);
+		parkings.insert(lineId, newParking);
+		clsParking::saveParkingsFromOpenHash(parkings);
+		cout << "\nParking added successfully with ID: " << newParking.getId() << "\n";
+	}
+
+	void removeParking(int lineId) {
+
+		OpenHash<int, clsParking> p = clsParking::loadParkings();
+		clsParking* p2 = p[lineId];
+		int id = p2->getId();
+		parkings.remove(lineId);
+		p.remove(id);
+		clsParking::saveParkingsFromOpenHash(p);
+	}
 
 	static ClosedHash <int , clsStation> GetAllStations()
 	{

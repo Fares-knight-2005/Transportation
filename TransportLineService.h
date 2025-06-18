@@ -3,6 +3,7 @@
 
 #include "clsTransportLine.h"
 #include "DataStructures.h"
+#include "ParkingService.h"
 #include "Input.h"
 
 using namespace std;
@@ -60,6 +61,7 @@ public:
         enVehicleType vehicleType = static_cast<enVehicleType>(typeChoice - 1);
         DoubleLinkedList<clsStation> lineStations;
 
+        clsTransportLine newLine(price, vehicleType, name);
 
         if (!stations.isEmpty()) {
 
@@ -79,16 +81,21 @@ public:
                 int stationId = Input::readInt("Invalid input. Please enter a number : ","Enter Station ID to add to line: ");
                 clsStation* station = stations[stationId];
                 if (station != nullptr) {
-                    lineStations.addLast(*station);
+                    cout<<"Enter position .Enter 1-"<<newLine.numberOfStations()+1<<". \n";
+                    int position = Input::ReadIntNumberBetween(1,newLine.numberOfStations()+1,"Invalid choice. ","You Can't Enter Text Enter Number : ");
+                    bool s=newLine.addStation(*station, position);
+                    if(s){
+                    station->addNewParking(newLine.getId(),newLine.getVehicleType());
                     cout << "Station added successfully.\n";
+                    }
                 } else {
                     cout << "Station not found!\n";
                 }
                 addMore = Input::readBool("Add another station? (yes/no): ", "yes", "no");
+                cout<<addMore;
             }
         }
 
-        clsTransportLine newLine(price, vehicleType, name, lineStations);
         transportLines.insert(name, newLine);
 
         cout << "\nTransport Line added successfully with ID: " << newLine.getId() << "\n";
@@ -283,7 +290,7 @@ private:
             cout << "\nCurrent Stations in this line:\n";
             DoubleNode<clsStation> *currentStation = line.getFirstStation();
             while (currentStation != nullptr) {
-                cout << currentStation->item.getid() << endl;
+                cout << currentStation->item.getid() << ",";
                 currentStation = currentStation->next;
             }
 
@@ -309,16 +316,29 @@ private:
                 int stationId = Input::readInt("Invalid input. Please enter a number : ","Enter Station ID to add: ");
                 clsStation* station = stations[stationId];
                 if (station != nullptr) {
-                    int position = Input::readInt("Invalid input. Please enter a number : ","Enter position (1 for first): ");
-                    line.addStation(*station, position);
+                    cout<<"Enter position .Enter 1-"<<line.numberOfStations()+1<<". \n";
+                    int position = Input::ReadIntNumberBetween(1,line.numberOfStations()+1,"Invalid choice. ","You Can't Enter Text Enter Number : ");
+                    bool s=line.addStation(*station, position);
+                    if(s){
+                    station->addNewParking(line.getId(),line.getVehicleType());
                     cout << "Station added successfully.\n";
+                    }
                 } else {
                     cout << "Station not found!\n";
                 }
             }
             else {
                 int stationId = Input::readInt("Invalid input. Please enter a number : ","Enter Station ID to remove: ");
-                line.removeStation(stationId);
+                clsStation* station = stations[stationId];
+
+                if (station!=nullptr){
+                 line.removeStation(stationId);
+                 station->removeParking(stationId);
+                 cout << "The deletion process was completed successfully.\n";
+                 }
+                else
+                  cout << "The station ID number you entered is not available.\n";
+
             }
         }
     }

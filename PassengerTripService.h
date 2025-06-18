@@ -41,11 +41,23 @@ public:
         int startStation;
         int endStation,passengerId;
 
+        cout << "\nCurrent Stations in this line:\n";
+            DoubleNode<clsStation> *currentStation = stations.getHead();
+            while (currentStation != nullptr) {
+                cout << currentStation->item.getid() << ",";
+                currentStation = currentStation->next;
+        }
+        cout<<endl;
+
         while(true){
         startStation = Input::readInt("Invalid input. Please enter a number : ","Enter Start Station ID (0 to cancel): ");
+        if(startStation==0)
+            return;
         endStation = Input::readInt("Invalid input. Please enter a number : ","Enter End Station ID (0 to cancel): ");
+        if(endStation==0)
+            return;
         passengerId = Input::readInt("Invalid input. Please enter a number : ","Enter Passenger ID (0 to cancel): ");
-        if(startStation==0||endStation==0||passengerId==0)
+        if(passengerId==0)
             return;
         passenger = passengers[passengerId];
         if(stations.find(startStation)==nullptr||stations.find(endStation)==nullptr||passenger==nullptr)
@@ -60,7 +72,7 @@ public:
         bool hasItems = Input::readBool("Does he own things? ");
         bool transportingItems = Input::readBool("Do you want to move things for $5 ? ");
 
-        clsPassengerTrip newTrip(startStation, endStation, passengerId, isHeading, isDisabled, hasItems, transportingItems , 0.0);
+        clsPassengerTrip newTrip(startStation, endStation, passengerId , isDisabled, hasItems, isHeading , 0.0);
         clsCard *c = passenger->getCard();
         bool r= newTrip.setPrice(transportLine->getPirce(),c, transportingItems);
         if(r)

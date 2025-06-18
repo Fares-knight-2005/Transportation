@@ -150,6 +150,12 @@ public:
         singleLinkedList.addLast(item);
     }
 
+    void addQueue(Queue<Item> q){
+        while(!q.isEmpty()){
+            enqueue(*q.dequeue());
+        }
+    }
+
     Item* dequeue() {
         return singleLinkedList.removeFirstWithReturnItem();
     }
@@ -219,14 +225,14 @@ private:
 public:
     DoubleLinkedList() : head(nullptr), tail(nullptr), length(0) {}
 
-    ~DoubleLinkedList() {
+   /* ~DoubleLinkedList() {
         DoubleNode<Item>* curr = head;
         while (curr != nullptr) {
             DoubleNode<Item>* next = curr->next;
             delete curr;
             curr = next;
         }
-    }
+    }*/
 
     bool isEmpty() {
         return head == nullptr;
@@ -446,8 +452,6 @@ public:
     }
 
     Node <HashNode<Key,Item>>* getHead(int index){
-        if (&array[index] == nullptr)
-            return nullptr;
          return array[index].getHead();
     }
 

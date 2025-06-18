@@ -34,16 +34,18 @@ class clsVehicle {
 private:
 
     int id, transportLineId, driverId;
-    int capacity, currSeats;
+    int capacity;
     float speed;
-    int seatsForPeopleWithDisabilities, currDisabilitySeats;
-    int packageSize, currPackageSize;
+    int seatsForPeopleWithDisabilities;
+    int packageSize;
     bool destination;
     SingleLinkedList<clsVehicleTrip> vehicleTrips;
     static int numberOfAllVehicle;
     enVehicleType vehicleType;
 
 public:
+    int currSeats,currDisabilitySeats,currPackageSize;
+
     clsVehicle(int id, enVehicleType type, int lineId, int cap, float spd, int disabilitySeats, int pkgSize) {
         this->id = id;
         vehicleType = type;
@@ -82,6 +84,7 @@ public:
     int getPackageSize() { return packageSize; }
     int getId() { return id; }
     int getDriverId() { return driverId; }
+    bool getDestination(){return destination;}
 
     void setVehicleType(enVehicleType type) { vehicleType = type; }
     void setTransportLineId(int lineId) { transportLineId = lineId; }
@@ -91,6 +94,7 @@ public:
     void setPackageSize(int size) { packageSize = size; }
     void setId(int id) { this->id = id; }
     void setDriverId(int id) { driverId = id; }
+    void setDestination(int d) {destination=d; }
 
     bool hasDisabilityAccess() {
         return seatsForPeopleWithDisabilities > currDisabilitySeats;
@@ -108,10 +112,11 @@ public:
     {
         OpenHash <int, clsVehicle> AllVehicles = loadVehicles();
 
-        if (AllVehicles[id] == nullptr)
-            return clsVehicle();
-
         return *AllVehicles[id];
+    }
+
+    void addVehicleTrip(clsVehicleTrip trip){
+         vehicleTrips.addFirst(trip);
     }
 
     static OpenHash<int, clsVehicle> loadVehicles() {
@@ -223,72 +228,6 @@ public:
     }
 
 
-
-    //void addNewVehicleTrip(clsTransportLine line,clsVehicleTrip &trip){
-
-
-    //DoubleNode<clsStation> *station=line.getFirstStation();
-    //destination=true;// Heading to the end of the line
-
-    //while(station!=nullptr||destination){
-    //  
-    //  clsParking *parking= station->item.getParking(line.getId());
-    //  Stack<clsPassengerTrip> s;
-    //  parking->addVehicle(*this);
-
-    //  if(parking->getnumberOfAllVehicle()==1){
-
-    //  while(hasCapacity()&&parking->hasPassengers()){
-    //  clsPassengerTrip *passenger= parking->getPassengerTrip();
-    //  strVehicleMovements *movement=trip.insertVehicleMovements(passenger->getStartStation());
-
-    //  if(passenger->getDestination()==destination&&(!passenger->getDisabilityStatus()||hasDisabilityAccess())&&(!passenger->getItemsStatus()||hasPackageSpace())){
-
-
-    //  currSeats++;
-    //  if(passenger->getDisabilityStatus())
-    //  {
-    //  movement->currDisabilitSeat++;
-    //  currDisabilitySeats++;
-    //  }
-    //  if(passenger->getItemsStatus())
-    //  {
-    //  movement->currPackageSize++;
-    //  currPackageSize++;
-    //  }
-    //  }
-    //  else
-    //      s.push(*passenger);
-    //  }
-
-    //  if(!s.isEmpty())
-    //      s.toQueue(parking->GetAllParkings());
-
-    //  strVehicleMovements *curr=trip.getVehicleMovements(station->item.getid());
-    //  if(curr!=nullptr)
-    //  {
-    //  currSeats-=movement->passengers.size();
-    //  currDisabilitySeats-=movement->CurrDisability;
-    //  movement->CurrDisability=0;
-    //  currPackageSize-=movement->CurrPackageSize;
-    //  movement->CurrPackageSize=0;
-    //  }
-    //  if(station->next==nullptr)
-    //      destination=false;
-    //  if(destination)
-    //      station=station->next;
-    //  else
-    //      station=station->previous;
-
-    //  parking->vehicle.dequeue();
-    //  }
-    //}
-
-    //vehicleTrips.addFirst(trip);
-    //}
-
-
-
    static int getNumberOfAllVehicle(){
           return numberOfAllVehicle;
     }
@@ -352,6 +291,9 @@ public:
 
         return vehicle;
     }
+
+
+
 
 
 };

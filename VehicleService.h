@@ -2,8 +2,10 @@
 #pragma once
 
 #include "clsVehicle.h"
+#include "clsVehicleTrip.h"
 #include "DataStructures.h"
 #include "clsTransportLine.h"
+#include "clsVehicleDriver.h"
 #include "Input.h"
 #include "TransportLineService.h"
 
@@ -33,12 +35,19 @@ public:
     static void addNewVehicle() {
         OpenHash<int, clsVehicle> vehicles = clsVehicle::loadVehicles();
         OpenHash<int, clsTransportLine> transportLines = clsTransportLine::loadTransportLines();
+        OpenHash<int, clsVehicleDriver> vehicleDrivers = clsVehicleDriver::GetAllDriversOpen();
 
         if (transportLines.isEmpty())
         {
-            cout << "There is no TransportLines. ";
+            cout << "There is no TransportLines. \n";
             return;
         }
+
+      //  if(vehicleDrivers.isEmpty())
+      //  {
+      //      cout << "There is no vehicle Drivers. \n";
+      //      return;
+      //  }
 
         cout << "\n===========================================\n";
         cout << "        Add New Vehicle";
@@ -57,6 +66,7 @@ public:
         lineId = Input::readInt("Invalid input. Please enter a number : ","Enter Transport Line ID (0 to cancel):");
         if(lineId==0)
             return;
+
         clsTransportLine  *line=transportLines[lineId];
         if (line == nullptr)
         {
@@ -72,20 +82,37 @@ public:
         }
         }
 
+        clsVehicleDriver  *driver;
+        int driverId;
+        while(true){
+        driverId = Input::readInt("Invalid input. Please enter a number : ","Enter Driver ID (0 to cancel): ");
+        if(driverId==0)
+            return;
+        driver=vehicleDrivers[driverId];
+        if (driver == nullptr)
+        {
+            cout << "There is no driver with this ID. \n";
+        }
+        else
+            break;
+        }
+
         int capacity = Input::readInt("Invalid input. Please enter a number : ","Enter Vehicle Capacity: ");
         float speed = Input::readFloat("Enter Vehicle Speed (km/h): ");
         int disabilitySeats = Input::readInt("Invalid input. Please enter a number : ","Enter Disability Seats Count: ");
         int packageSize = Input::readInt("Invalid input. Please enter a number : ","Enter Package Size Capacity: ");
-        int driverId = Input::readInt("Invalid input. Please enter a number : ","Enter Driver ID : ");
+
 
         clsVehicle newVehicle(vehicleType, lineId, capacity, speed, disabilitySeats, packageSize);
         newVehicle.setDriverId(driverId);
-
+        driver->SetVehicleByID(newVehicle.getId());
+//        driver->setMode(enDriverMode::Working);
         vehicles.insert(newVehicle.getId(), newVehicle);
 
         cout << "\nVehicle added successfully with ID: " << newVehicle.getId() << "\n";
         clsVehicle::saveVehcilsFromOpenHash(vehicles);
         clsTransportLine::saveTransportLinesFromOpenHash(transportLines);
+        clsVehicleDriver::SaveAllFromOpenHash(vehicleDrivers);
     }
 
     static void deleteVehicle() {
@@ -152,6 +179,7 @@ public:
             return;
 
         OpenHash<int, clsVehicle> vehicles = clsVehicle::loadVehicles();
+        OpenHash<int, clsVehicleDriver> vehicleDrivers = clsVehicleDriver::GetAllDriversOpen();
         clsVehicle* vehicle = vehicles[id];
 
         if (vehicle == nullptr) {
@@ -213,14 +241,31 @@ public:
                 break;
             }
             case 6: {
-                int newDriverId = Input::readInt("Invalid input. Please enter a number : ","Enter new Driver ID (0 to remove): ");
-                vehicle->setDriverId(newDriverId);
+
+           clsVehicleDriver  *driver;
+           while(true){
+           int driverId = Input::readInt("Invalid input. Please enter a number : ","Enter new Driver ID (0 to cancel): ");
+           if(driverId==0)
+                 return;
+           driver=vehicleDrivers[driverId];
+           if (driver == nullptr)
+            {
+            cout << "There is no driver with this ID. \n";
+            }
+            else
+                 break;
+            }
+            driver->SetVehicleByID(vehicle->getId());
                 break;
             }
-        }
+            }
 
         clsVehicle::saveVehcilsFromOpenHash(vehicles);
+        clsVehicleDriver::SaveAllFromOpenHash(vehicleDrivers);
         cout << "\nVehicle updated successfully.\n";
     }
+
+
+
 
 };

@@ -51,7 +51,7 @@ public:
     }
 
     clsVehicleTrip() {
-        
+
     }
 
     clsVehicleTrip(int id,int numberOfStations, int idVehicle, int idTransportLine)
@@ -170,13 +170,12 @@ public:
                     int start = stoi(*tokens[tokenIndex++]);
                     int end = stoi(*tokens[tokenIndex++]);
                     int pid = stoi(*tokens[tokenIndex++]);
-                    bool heading = *tokens[tokenIndex++] == "1";
                     bool disabled = *tokens[tokenIndex++] == "1";
                     bool items = *tokens[tokenIndex++] == "1";
                     bool destenation = *tokens[tokenIndex++] == "1";
                     float price = stoi(*tokens[tokenIndex++]);
 
-                    clsPassengerTrip passenger(start, end, pid, heading, disabled, items, destenation ,price);
+                    clsPassengerTrip passenger(start, end, pid , disabled, items, destenation ,price);
                     movement.passengers.addLast(passenger);
                 } catch (...) {
                     break;
