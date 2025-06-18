@@ -16,16 +16,16 @@ class clsParking{
 
 
 private:
-   
+
     Queue<clsVehicle> Vehicle;
     Queue<clsPassengerTrip> passengers;
     int id, stationId, idTransportLine;
     double distanceToNext;
     enVehicleType parkingType;
     static int numberOfAllParking;
-     
+
     public:
-   
+
         clsParking()
         {
             id = 0;
@@ -39,7 +39,7 @@ private:
     }
     clsParking(double distanceToNext, int stationId, enVehicleType parkingType, int idTransportLine) :id(++numberOfAllParking), distanceToNext(distanceToNext), stationId(stationId),
         parkingType(parkingType), idTransportLine(idTransportLine) {}
-          
+
     double getDistanceToNext(){
         return distanceToNext;
     }
@@ -49,11 +49,11 @@ private:
     }
 
     int getStationId(){
-        return stationId;    
+        return stationId;
     }
 
     int getId(){
-       return id;    
+       return id;
     }
 
     void addPassengerTrip(clsPassengerTrip trip) {
@@ -61,13 +61,20 @@ private:
     }
 
    static int getNumberOfAllParking(){
-          return numberOfAllParking;     
+          return numberOfAllParking;
     }
 
     static void setNumberOfAllParking(int n){
           numberOfAllParking=n;
     }
-         
+
+    void printParkingInfo(){
+        cout << "\nID: " << getId();
+        cout << "\nStation ID: " << getStationId();
+        cout << "\nDistance To Next: " << getDistanceToNext();
+        cout << "\n-------------------------------------------\n";
+    }
+
     string toString() {
     ostringstream oss;
     oss<< id<< ",,,"<< stationId<< ",,," << distanceToNext << ",,,"  << static_cast<int>(parkingType)<< ",,," << idTransportLine;
@@ -78,7 +85,7 @@ private:
 
     static clsParking parse(string line) {
     DoubleLinkedList<string> tokens = Input::Split(line,",,,");
-         
+
     if (tokens.size() < 5) {
         throw invalid_argument("Not enough tokens in line");
     }
@@ -90,7 +97,7 @@ private:
     int idTransportLine= stoi(*tokens[4]);
     Queue<clsPassengerTrip> passengers;
     for (int i = 5; i < tokens.size(); ) {
-            
+
             int start = stoi(*tokens[i++]);
             int end = stoi(*tokens[i++]);
             int passengerId = stoi(*tokens[i++]);
@@ -98,11 +105,11 @@ private:
             bool disabled = (*tokens[i++] == "1");
             bool items = (*tokens[i++] == "1");
             float price = stof(*tokens[i++]);
-            
+
             clsPassengerTrip trip(start, end, passengerId, heading, disabled, items, price);
             passengers.enqueue(trip);
     }
-         
+
     return clsParking(id, distance, stationId, type, idTransportLine, passengers);
     }
 

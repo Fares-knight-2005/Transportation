@@ -1,6 +1,7 @@
 
 #pragma once
 
+#include <iostream>
 #include "DataStructures.h"
 #include "clsStation.h"
 #include "clsVehicle.h"
@@ -26,13 +27,10 @@ private:
 public:
     clsTransportLine(double price, enVehicleType vehicleType, string name, DoubleLinkedList<clsStation> stations) :
         stations(stations), price(price), id(++numberOfAllTransportLines), vehicleType(vehicleType),
-        numberOfVehicles(numberOfVehicles), name(name) {
-    }
+        numberOfVehicles(0), name(name) {}
 
     clsTransportLine(int id, int numberOfVehicles, double price, enVehicleType vehicleType, string name, DoubleLinkedList<clsStation> stations) :
-        id(id), stations(stations), price(price), vehicleType(vehicleType),
-        numberOfVehicles(numberOfVehicles), name(name) {
-    }
+        id(id),numberOfVehicles(numberOfVehicles), price(price), vehicleType(vehicleType),name(name),stations(stations) {}
 
     clsTransportLine() : id(0), numberOfVehicles(0), price(0) {}
 
@@ -71,8 +69,8 @@ public:
         this->id = id;
     }
 
-    int getPirce() {
-        return pirce;
+    double getPirce() {
+        return price;
     }
 
     DoubleLinkedList<clsStation> getStations() {
@@ -94,7 +92,7 @@ public:
         cout << "Line Name: " << name << "\n";
         cout << "Number of Vehicles: " << numberOfVehicles << "\n";
         cout << "Price : " << price << " $\n";
-        cout << ::getVehicleType(vehicleType) << "\n";
+        cout << "vehicle Type : " <<::getVehicleType(vehicleType) << "\n";
         if (stations.size() > 0) {
             cout << "Stations IDs: ";
             for (int i = 0; i < stations.size(); i++) {
@@ -127,6 +125,7 @@ public:
         return name;
     }
 
+
     string toString() {
         ostringstream oss;
         oss << id << ",,," << numberOfVehicles << ",,," << price << ",,," << static_cast<int>(vehicleType) << ",,," << name;
@@ -155,9 +154,9 @@ public:
                 stationList.addLast(*station);
             }
         }
+        clsTransportLine t(id,vehicles,price, type, name, stationList);
 
-        clsTransportLine tl(id, vehicles, price, type, name, stationList);
-        return tl;
+        return t;
     }
 
 
@@ -249,20 +248,26 @@ public:
 
 
     static OpenHash<int, clsTransportLine> loadTransportLines() {
+
         OpenHash<int, clsTransportLine> transportLines;
         OpenHash<int, clsStation> stations = clsStation::GetAllStationsOpen();
 
-        ifstream file(clsTransportLineFileName);
+        fstream file;
+        file.open(clsTransportLineFileName, ios::in);
         string line;
+
 
         while (getline(file, line)) {
             try {
-                clsTransportLine tl = clsTransportLine::parse(line, stations);
-                transportLines.insert(tl.getId(), tl);
 
-                if (clsTransportLine::getNumberOfAllTransportLine() > tl.getId()) {
-                    clsTransportLine::setNumberOfAllTransportLine(tl.getId());
-                }
+                clsTransportLine t1=clsTransportLine::parse(line,stations);
+
+                transportLines.insert(t1.getId(),t1);
+
+
+                if (clsTransportLine::getNumberOfAllTransportLine() < t1.getId()) {
+                    clsTransportLine::setNumberOfAllTransportLine(t1.getId());
+               }
             }
             catch (...) {
                 continue;
@@ -298,5 +303,4 @@ public:
     }
 
 };
-
 int clsTransportLine::numberOfAllTransportLines = 0;

@@ -12,7 +12,7 @@ using namespace std;
 
 int main()
 {
-    //clsLogin::Login();
+    clsLogin::Login();
     
 }
 

@@ -240,6 +240,21 @@ public:
           return head;
     }
 
+    bool isBigger(int i1,int i2){
+
+    DoubleNode<Item> *curr=head;
+    while(curr!=nullptr)
+    {
+    if(curr->item==i1)
+        return false;
+    if(curr->item==i2)
+        return true;
+    curr=curr->next;
+    }
+
+    return false;
+    }
+
     void addFirst(Item item) {
         if (isEmpty())
             head = tail = new DoubleNode<Item>(item, nullptr, nullptr);

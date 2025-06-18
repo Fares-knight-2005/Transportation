@@ -104,6 +104,12 @@ public:
         return packageSize > currPackageSize;
     }
 
+    static clsVehicle getVehicleByID(int id)
+    {
+        OpenHash <int, clsVehicle> AllVehicles = loadVehicles();
+
+        return *AllVehicles[id];
+    }
 
     static OpenHash<int, clsVehicle> loadVehicles() {
         OpenHash<int, clsVehicle> vehicles;

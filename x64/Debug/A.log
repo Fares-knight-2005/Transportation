@@ -11,10 +11,10 @@ D:\coding files\A\A\clsPassengerTrip.h(75,16): warning C4305: '*=': truncation f
 D:\coding files\A\A\clsVehicleTrip.h(161,33): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'A.cpp')
   
-D:\coding files\A\A\clsStation.h(249,13): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+D:\coding files\A\A\clsStation.h(256,13): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
   (compiling source file 'A.cpp')
   
-D:\coding files\A\A\clsStation.h(259,16): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+D:\coding files\A\A\clsStation.h(266,16): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
   (compiling source file 'A.cpp')
   
 D:\coding files\A\A\clsPassenger.h(94,22): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
@@ -32,4 +32,5 @@ D:\coding files\A\A\clsPassenger.h(120,25): warning C4267: '=': conversion from 
 D:\coding files\A\A\PassengerService.h(68,33): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   (compiling source file 'A.cpp')
   
+D:\coding files\A\A\clsGame.h(41,1): warning C4715: 'clsGame::whatIsTheChoice': not all control paths return a value
   A.vcxproj -> D:\coding files\A\x64\Debug\A.exe

@@ -88,7 +88,7 @@ public:
 	     St.Mode = (enDriverMode) stoi(*ObjectList[5]);
 	     St.Salary = stoi(*ObjectList[6]);
 		 St.PhoneNumber = (*ObjectList[7]);
-		 St.vehcilToDrive.setId(stoi(*ObjectList[8]));
+		 St.vehcilToDrive = clsVehicle::getVehicleByID(stoi(*ObjectList[8]));
 
 		 return St;
     }

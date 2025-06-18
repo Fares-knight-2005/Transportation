@@ -72,9 +72,11 @@ class clsStation
 
 		if (ObjectList.size() > 7)
 		{
+			OpenHash <int, clsParking> AllParkings = clsParking::loadParkings();
+
 			for (int i = 0; i < ObjectList.size() - 7; i++)
 			{
-				*St.parkings[i];//= (clsParking) stoi(*ObjectList[i + 7]);
+				*St.parkings[i] = *AllParkings[stoi(*ObjectList[i + 7])];
 			}
 		}
 		return St;

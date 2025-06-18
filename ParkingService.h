@@ -1,56 +1,42 @@
 
 #pragma once
 
+
 #include "clsParking.h"
-#include "Database.h"
 #include "Input.h"
+#include "clsStation.h"
 #include <iostream>
+#include"DataStructures.h"
 
 class ParkingService {
 public:
 
-    void addNewParking() {
-        OpenHash<int, clsParking> parkings = Database::loadParkings(Database::clsParkingFileName);
+    static void addNewParking(int lineId,clsStation &s) {
+
+        OpenHash<int,clsParking> parkings=clsParking::loadParkings();
 
         cout << "\n===========================================\n";
         cout << "           Add New Parking";
         cout << "\n===========================================\n";
 
         double distance = Input::readDouble("Enter Distance To Next Parking: ");
-        int stationId = Input::readInt("Enter Station ID: ");
-        int typeChoice = Input::ReadIntNumberBetween(1, 3, "Enter Parking Type (1: Bus, 2: Train, 3: Tram): ");
+        cout<<"Enter Parking Type (1: BUS, 2: TRAM, 3: FERRY, 4: METRO): \n";
+        int typeChoice = Input::ReadIntNumberBetween(1, 3);
         enVehicleType parkingType = static_cast<enVehicleType>(typeChoice);
-        int transportLineId = Input::readInt("Enter Transport Line ID: ");
 
-        clsParking newParking(distance, stationId, parkingType, transportLineId);
-        parkings.insert(newParking.getId(), newParking);
-
-        Database::saveParkings(Database::clsParkingFileName, parkings);
-
+        clsParking newParking(distance,s.getid(),parkingType,lineId);
+        s.addParking(lineId,newParking);
+        parkings.insert(newParking.getId(),newParking);
+        clsParking::saveParkingsFromOpenHash(parkings);
         cout << "\nParking added successfully with ID: " << newParking.getId() << "\n";
     }
 
-    void deleteParking() {
-        OpenHash<int, clsParking> parkings = Database::loadParkings(Database::clsParkingFileName);
-
-        cout << "\n===========================================\n";
-        cout << "           Delete Parking";
-        cout << "\n===========================================\n";
-
-        int id = Input::readInt("Enter Parking ID to delete: ");
-
-        if (parkings.remove(id)) {
-            Database::saveParkings(Database::clsParkingFileName, parkings);
-            cout << "\nParking deleted successfully.\n";
-        }
-        else {
-            cout << "\nParking with ID " << id << " not found.\n";
-        }
+    static void deleteParking(int lineId,clsStation &s) {
+        s.removeParking(lineId);
     }
 
-    void printAllParkings() {
-        OpenHash<int, clsParking> parkings = Database::loadParkings(Database::clsParkingFileName);
-
+    static void printAllParkings() {
+        DoubleLinkedList<clsParking> parkings = clsParking::GetAllParkings();
         if (parkings.isEmpty()) {
             cout << "\nNo Parkings Found!\n";
             return;
@@ -60,20 +46,12 @@ public:
         cout << "           All Parkings (" << parkings.size() << ")";
         cout << "\n===========================================\n";
 
-        for (int i = 0; i < parkings.capacity; i++) {
-            HashNode<int, clsParking>* current = parkings.getHead(i);
+            DoubleNode<clsParking>* current = parkings.getHead();
             while (current != nullptr) {
-                printParkingInfo(current->data.item);
+                current->item.printParkingInfo();
                 current = current->next;
             }
-        }
+
     }
 
-private:
-    void printParkingInfo(const clsParking& parking) {
-        cout << "\nID: " << parking.getId();
-        cout << "\nStation ID: " << parking.getStationId();
-        cout << "\nDistance To Next: " << parking.getDistanceToNext();
-        cout << "\n-------------------------------------------\n";
-    }
 };

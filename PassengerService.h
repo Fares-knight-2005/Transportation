@@ -20,10 +20,10 @@ public:
             cout << "\nNo Passengers Found!\n";
             return;
         }
-      
+
         cout << "\n===========================================\n";
         cout << "        All Passengers (" << passengers.size() << ")";
-        cout << "\n===========================================\n"; 
+        cout << "\n===========================================\n";
 
         DoubleNode<clsPassenger> *current = passengers.getHead();
             while (current != nullptr) {
@@ -31,11 +31,11 @@ public:
                 current = current->next;
             }
      }
-    
+
 
     static void addNewPassenger() {
         OpenHash<string, clsPassenger> passengers =clsPassenger::loadPassengersByName();
-      
+
         cout << "\n===========================================\n";
         cout << "        Add New Passenger";
         cout << "\n===========================================\n";
@@ -46,7 +46,7 @@ public:
         string firstName = Input::readString("Enter First Name: ");
         string lastName = Input::readString("Enter Last Name: ");
         string fullName=firstName +" "+lastName;
-        if(passengers[fullName] == nullptr)
+        if(passengers[fullName] != nullptr)
              cout<<" This name is already in use. You must use a unique name. \n";
         else
             break;
@@ -83,9 +83,9 @@ public:
         cout << "1. ID\n";
         cout << "2. Name\n";
         cout << "3. Exit\n";
-        
+
         int choice = Input::ReadIntNumberBetween(1, 3, "Invalid choice. Enter 1-3: ");
-        if (choice == 3) 
+        if (choice == 3)
           return;
 
         bool success = false;
@@ -105,8 +105,64 @@ public:
             if (success) {
                 cout<< "The deletion process was completed successfully." <<endl;
                 clsPassenger::savePassengersFromOpenHash(passengers);
-                }  
-            }   
+                }
+            }
+    }
+
+    static void search(){
+
+        cout << "\n===========================================\n";
+        cout << "        Search Passenger";
+        cout << "\n===========================================\n";
+
+        cout << "\nSearch by:\n";
+        cout << "1. ID\n";
+        cout << "2. Name\n";
+        cout << "3. Exit\n";
+
+        int choice = Input::ReadIntNumberBetween(1, 3, "Invalid choice. Enter 1-2: ");
+
+        if(choice==3)
+            return;
+
+        switch(choice){
+        case 1:{
+        OpenHash<int, clsPassenger> passengers= clsPassenger::loadPassengers();
+
+        int id = Input::readInt("Invalid input. Please enter a number : ","Enter Passenger ID to delete (0 to cancel): ");
+        if (id == 0)
+            return;
+
+        clsPassenger *s = passengers[id];
+        if (s==nullptr) {
+            cout << "\nPassenger not found!\n";
+            return;
+        }
+        else{
+            s->printPassengerInfo();
+            return;
+        }
+        break;
+        }
+            case 2:{
+        OpenHash<string, clsPassenger> passengers= clsPassenger::loadPassengersByName();
+        string name = Input::readString("Enter Passenger Name to delete : ");
+
+        clsPassenger *s= passengers[name];
+        if (s==nullptr) {
+            cout << "\nPassenger not found!\n";
+            return;
+        }
+        else{
+            s->printPassengerInfo();
+            return;
+        }
+        }
+
+
+        }
+
+
     }
 
     static void updatePassenger() {
@@ -118,9 +174,9 @@ public:
         cout << "1. ID\n";
         cout << "2. Name\n";
         cout << "3. Exit\n";
-        
+
         int choice = Input::ReadIntNumberBetween(1, 3, "Invalid choice. Enter 1-3: ");
-        if (choice == 3) 
+        if (choice == 3)
               return;
 
         clsPassenger* passengerToUpdate = nullptr;
@@ -129,7 +185,7 @@ public:
 
         if (choice == 1) {
             passengersById = clsPassenger::loadPassengers();
-            int id = Input::readInt("Enter Passenger ID to update: ");
+            int id = Input::readInt("Invalid input. Please enter a number : ","Enter Passenger ID to update: ");
             passengerToUpdate = passengersById[id];
         }
         else {
@@ -170,7 +226,7 @@ public:
                 break;
             }
             case 3: {
-                short newAge = Input::readInt("Enter new Age: ");
+                short newAge = Input::readInt("Invalid input. Please enter a number : ","Enter new Age: ");
                 passengerToUpdate->SetAge(newAge);
                 break;
             }
@@ -202,10 +258,10 @@ public:
 
         if (choice == 1)
             clsPassenger::savePassengersFromOpenHash(passengersById);
-        else 
+        else
             clsPassenger::savePassengersFromOpenHash(passengersByName);
-           
-        
+
+
 
         cout << "\nPassenger updated successfully.\n";
     }
