@@ -50,6 +50,7 @@ private:
 		cout << "[3] Street : " << St.getStreet() << endl;
 		cout << "[4] Max Vehcils In 1 Parking : " << St.getMaxVehicleNumber();
 		cout << "[5] Max Parkings Num : " << St.getMaxParkingsCapacity();
+		cout << "[6] to Add Parkings : " << endl;
 		cout << endl << endl;
 
 	}
@@ -74,7 +75,7 @@ public:
 
 		if (AllStationData.size() == 0)
 		{
-			cout << "  No Stations Exist " << endl;
+			cout << "                                                  No Stations Exist " << endl;
 		}
 
 		else
@@ -98,7 +99,18 @@ public:
 
 		cout << "Enter Info For Station You Want To Add : \n";
 
-		StToAdd.setStationName(Input::readString("Station Name : "));
+		StToAdd.setStationName(Input::readString("Station Name (To Go Back Enter 0) : "));
+		if (StToAdd.getStationName() == "0")
+			return;
+		OpenHash <string, clsStation> oh = clsStation::GetAllStationsOpenByName();
+		while (oh[StToAdd.getStationName()] != nullptr)
+		{
+			cout << "\nSorry Name Is Already In Use \n";
+			StToAdd.setStationName(Input::readString("Station Name (To Cancel Enter 0) : "));
+			if (StToAdd.getStationName() == "0")
+				return;
+		}
+
 		StToAdd.setCity(Input::readString("City Located in : "));
 		StToAdd.setStreet(Input::readString("Street Name : "));
 		StToAdd.setStationType( (enVehicleType) Input::readInt("Enter Number Not Text :(  ", "Enter Type Of Station Vehcils (Number) : BUS = 1 | TRAM = 2 | FERRY = 3 | METRO = 4 :"));
@@ -107,11 +119,22 @@ public:
 
 		cout << endl << endl;
 
-		PrintOneStatio(StToAdd);
 
-	
+		if (Input::readBool("Do You Want To Add Parkings : ", "y", "n"))
+		{
+			cout << "Okay Then Press 0 to stop any time : ";
+
+			while (true) {
+				int id = (Input::readInt("Enter Number Not Text ", "Enter Id : "));
+				if (id == 0)
+					break;
+				StToAdd.AddParkingbyId(id);
+			}
+		}
 
 		
+		PrintOneStatio(StToAdd);
+
 
 		if (Input::readBool("Are You Sure To Add This Station : " , "y" , "n"))
 		{
@@ -155,11 +178,14 @@ public:
 
         cout << "For Searching By Id Enter [1]" << endl;
 		cout << "For Searching By Name Enter [2]" << endl;
-		cout << "________________________________";
+		cout << "To Cancel Enter [0]" << endl;
+		cout << "________________________________" << endl;
 		cout << "Enter Number Of Search : ";
-		Search = Input::ReadIntNumberBetween(1 ,2);
+		Search = Input::ReadIntNumberBetween(0 ,2);
 
 		cout << endl << endl << endl;
+		if (Search == 0)
+			return;
 
 		clsStation *ToFind = nullptr;
 
@@ -176,50 +202,74 @@ public:
 		if (ToFind != nullptr)
 		{
 			PrintOneStatio(*ToFind);
+			cout << endl << "Parkings Of This Statin Are : ";
+
+			for (int i = 0; i < ToFind->getAllParkings().size(); i++) {
+				ToFind->getAllParkings()[i]->printParkingInfo();
+			}
 		}
 
 
 		else { cout << "\n\n No Station was Found :( \n\n"; }
 	}
 
-
+	
 
 
 	static void Update()
 	{
 		clsScreen::NewMenu("\t         Updating A Station", 43);
 
-		clsStation ToUpdate = *clsStation::Find(Input::readInt("U Can't Enter Text Enter Number : ", "Enter the ID Of The Station : "));
+		clsStation *ToUpdate = clsStation::Find(Input::readInt("U Can't Enter Text Enter Number : ", "Enter the ID Of The Station : "));
+		if (ToUpdate == nullptr)
+		{
+			cout << "\n\nStation Was Not Found :(\n";
+			return;
+		}
 
-		PrintOneStatioUpdate(ToUpdate);
+		PrintOneStatioUpdate(*ToUpdate);
 
 		cout << "Choose What To Update : ";
 
-		int up = Input::ReadIntNumberBetween(1 , 5);
+		int up = Input::ReadIntNumberBetween(1 , 6);
 
 		switch (up)
 		{
 		case 1:
-			ToUpdate.setStationName(Input::readString("Enter The New Name Of Station : "));
+			ToUpdate->setStationName(Input::readString("Enter The New Name Of Station : "));
 			break;
 		case 2:
-			ToUpdate.setCity(Input::readString("Enter The New City : "));
+			ToUpdate->setCity(Input::readString("Enter The New City : "));
 			break;
 		case 3:
-			ToUpdate.setStreet(Input::readString("Enter The New Street : "));
+			ToUpdate->setStreet(Input::readString("Enter The New Street : "));
 			break;
 		case 4:
-			ToUpdate.setMaxVehicleNumber(Input::readInt("U Can't Enter Text Enter Number : ", "Enter Max Vehicles Number :"));
+			ToUpdate->setMaxVehicleNumber(Input::readInt("U Can't Enter Text Enter Number : ", "Enter Max Vehicles Number :"));
 		case 5:
-			ToUpdate.setMaxParkingsCapacity(Input::readInt("U Can't Enter Text Enter Number : ", "Enter Max Parkings Number :"));
+			ToUpdate->setMaxParkingsCapacity(Input::readInt("U Can't Enter Text Enter Number : ", "Enter Max Parkings Number :"));
+			break;
+		case 6:
+
+			if (Input::readBool("Do You Want To Add Parkings : ", "y", "n"))
+			{
+				cout << "Okay Then Press 0 to stop any time : ";
+
+				while (true) {
+					int id = (Input::readInt("Enter Number Not Text ", "Enter Id : "));
+					if (id == 0)
+						break;
+					ToUpdate->AddParkingbyId(id);
+				}
+			}
 		}
 
 
-		PrintOneStatio(ToUpdate);
+		PrintOneStatio(*ToUpdate);
 
 		if (Input::readBool("Are You Sure Update To This [Y/N] : ", "Y", "N"))
 		{
-			ToUpdate.Update();
+			ToUpdate->Update();
 			cout << "\n\n Station Updated Succesfully :)";
 		}
 

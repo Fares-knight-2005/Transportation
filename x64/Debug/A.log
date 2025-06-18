@@ -11,10 +11,10 @@ D:\coding files\A\A\clsPassengerTrip.h(79,16): warning C4305: '*=': truncation f
 D:\coding files\A\A\clsVehicleTrip.h(177,33): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'A.cpp')
   
-D:\coding files\A\A\clsStation.h(340,13): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+D:\coding files\A\A\clsStation.h(356,13): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
   (compiling source file 'A.cpp')
   
-D:\coding files\A\A\clsStation.h(350,16): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+D:\coding files\A\A\clsStation.h(366,16): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
   (compiling source file 'A.cpp')
   
 D:\coding files\A\A\clsPassenger.h(94,22): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data

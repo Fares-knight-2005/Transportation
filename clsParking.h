@@ -72,6 +72,18 @@ private:
         return this->Vehicle.size();
     }
 
+    int getLineId()
+    {
+        return this->idTransportLine;
+    }
+
+    static clsParking *Find(int id)
+    {
+        OpenHash <int ,clsParking> oh = clsParking::loadParkings();
+
+        return oh[id];
+    }
+
     bool hasPassengers(){
         return !passengers.isEmpty();
     }

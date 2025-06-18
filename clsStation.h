@@ -116,7 +116,23 @@ public:
 		parkings[lineId]->addPassengerTrip(p);
 	}
 
+	ClosedHash <int, clsParking> getAllParkings()
+	{
+		return parkings;
+	}
 
+	void AddParkingbyId(int id)
+	{
+		clsParking *P = clsParking::Find(id);
+
+		this->parkings.insert(P->getLineId(), *P);
+	}
+
+
+	void AddParking(clsParking P)
+	{
+		this->parkings.insert(P.getLineId(), P);
+	}
 
 
 	clsParking* getParking(int lineId) {
