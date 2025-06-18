@@ -12,7 +12,7 @@ using namespace std;
 
 string txtFile = "VehcilDrivers.txt";
 
-class clsVehicleDriver : clsPerson
+class clsVehicleDriver : public clsPerson
 {
 	
 
@@ -103,6 +103,11 @@ public:
 	    return this->vehcilToDrive.getId();
     }
 
+	void SetVehicleByID(int id)
+	{
+		vehcilToDrive = clsVehicle::getVehicleByID(id);
+	}
+
 	static void save(DoubleLinkedList <clsVehicleDriver> Driverss)
 	{
 
@@ -169,6 +174,116 @@ public:
 
 		return AllDrivers;
 
+	}
+
+
+	static OpenHash <int, clsVehicleDriver> GetAllDriversOpen()
+	{
+
+		OpenHash <int, clsVehicleDriver> AllDrivers;
+
+		fstream MyFile;
+		MyFile.open(txtFile, ios::in);
+
+		if (MyFile.is_open())
+		{
+			string Line;
+
+			while (getline(MyFile, Line))
+			{
+				clsVehicleDriver driver = convertLineToObject(Line);
+				AllDrivers.insert(driver.getId(), driver);
+			}
+
+			MyFile.close();
+
+		}
+		return AllDrivers;
+
+	}
+
+
+
+	void Update()
+	{
+		OpenHash <int, clsVehicleDriver> AllDrivers = GetAllDriversOpen();
+
+		*AllDrivers[this->getId()] = *this;
+
+		SaveAllFromOpenHash(AllDrivers);
+	}
+
+
+	static OpenHash <string, clsVehicleDriver> GetAllDriversOpenByName()
+	{
+
+		OpenHash <string, clsVehicleDriver> AllDrivers;
+
+		fstream MyFile;
+		MyFile.open(txtFile, ios::in);
+
+		if (MyFile.is_open())
+		{
+			string Line;
+
+			while (getline(MyFile, Line))
+			{
+				clsVehicleDriver driver = convertLineToObject(Line);
+				AllDrivers.insert(driver.GetFullName(), driver);
+			}
+
+			MyFile.close();
+
+		}
+		return AllDrivers;
+
+	}
+	
+
+	template <typename T>
+	static void SaveAllFromOpenHash(OpenHash <T, clsVehicleDriver> AllDrivers)
+	{
+		fstream File;
+
+		File.open(txtFile, ios::out);
+
+		if (File.is_open())
+		{
+			for (int i = 0; i < AllDrivers.getCapicty(); i++) {
+				Node <HashNode<T, clsVehicleDriver>>* d = AllDrivers.getHead(i);
+				while (d != nullptr) {
+					File << convertObjectToLine(d->item.item) << endl;
+					d = d->next;
+				}
+			}
+
+			File.close();
+		}
+	}
+
+	void Delete()
+	{
+		OpenHash <int, clsVehicleDriver> AllDrivers = GetAllDriversOpen();
+
+		AllDrivers[this->getId()]->Mode = enDriverMode::OutOfWork;
+
+		SaveAllFromOpenHash(AllDrivers);
+	}
+
+
+	static clsVehicleDriver* Find(int id)
+	{
+		OpenHash <int, clsVehicleDriver> AllDrivers = GetAllDriversOpen();
+
+		return AllDrivers[id];
+	}
+
+
+	static clsVehicleDriver* Find(string FullName)
+	{
+		OpenHash <string, clsVehicleDriver> AllDrivers = GetAllDriversOpenByName();
+
+		return AllDrivers[Name];
 	}
 
 };

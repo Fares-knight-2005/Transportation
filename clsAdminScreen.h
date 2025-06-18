@@ -9,6 +9,7 @@
 #include "VehicleTripService.h"
 #include "PassengerTripService.h"
 #include "TransportLineService.h"
+#include "clsVehicleDriverServeses.h"
 
 
 using namespace std;
@@ -35,35 +36,35 @@ class clsAdminScreen
 
 		case enWhatToDo::enAdd_Employee:
 		    	Input::Clear();
-		    	//Here Your Function Don't Touch Other Things
+				clsVehicleDriverServeses::AddDriver(); //Here Your Function Don't Touch Other Things
 		    	Input::pressAnyKeyToContinue();
 		    	AdminMenu();
 		    	break;
 			
 		case enWhatToDo::enShow_Employyes:
 		    	Input::Clear();
-		    	//Here Your Function Don't Touch Other Things
+				clsVehicleDriverServeses::showDriversList();  //Here Your Function Don't Touch Other Things
 		    	Input::pressAnyKeyToContinue();
 		    	AdminMenu();
 		    	break;
 
 		case enWhatToDo::enDelete_Employye:
 				Input::Clear();
-				//Here Your Function Don't Touch Other Things
+				clsVehicleDriverServeses::DeleteDriver(); //Here Your Function Don't Touch Other Things
 				Input::pressAnyKeyToContinue();
 				AdminMenu();
 				break;
 
 		case enWhatToDo::enUpdate_Employye:
 				Input::Clear();
-				//Here Your Function Don't Touch Other Things
+				clsVehicleDriverServeses::Update();  //Here Your Function Don't Touch Other Things
 				Input::pressAnyKeyToContinue();
 				AdminMenu();
 				break;
 
 		case enWhatToDo::enFind_Employye:
 				Input::Clear();
-				//Here Your Function Don't Touch Other Things
+				clsVehicleDriverServeses::FindDriver(); //Here Your Function Don't Touch Other Things
 				Input::pressAnyKeyToContinue();
 				AdminMenu();
 				break;
