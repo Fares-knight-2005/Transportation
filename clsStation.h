@@ -177,6 +177,27 @@ public:
 	//}
 
 
+	template <typename T>
+	static void SaveAllFromOpenHash(OpenHash <T , clsStation> AllStatitons)
+	{
+		fstream File;
+
+		File.open(StationsFile, ios::out);
+
+		if (File.is_open())
+		{
+			for (int i = 0; i < AllStatitons.getCapicty(); i++) {
+				Node <HashNode<T, clsStation>>* d = AllStatitons.getHead(i);
+				while (d != nullptr) {
+					File << convertObjectToLine(d->item.item) << endl;
+					d = d->next;
+				}
+			}
+
+			File.close();
+		}
+	}
+
 	static OpenHash <int, clsStation> GetAllStationsOpen()
 	{
 
@@ -198,11 +219,51 @@ public:
 			MyFile.close();
 
 		}
-
 		return AllStations;
 
 	}
 
+
+
+	static OpenHash <string, clsStation> GetAllStationsOpenByName()
+	{
+
+		OpenHash <string, clsStation> AllStations;
+
+		fstream MyFile;
+		MyFile.open(StationsFile, ios::in);
+
+		if (MyFile.is_open())
+		{
+			string Line;
+
+			while (getline(MyFile, Line))
+			{
+				clsStation station = convertLineToObject(Line);
+				AllStations.insert(station.getStationName() , station);
+			}
+
+			MyFile.close();
+
+		}
+		return AllStations;
+
+	}
+
+	static clsStation* Find(int id)
+	{
+		OpenHash <int, clsStation> AllStations = GetAllStationsOpen();
+
+		return AllStations[id];
+	}
+
+
+	static clsStation* Find(string Station_Name)
+	{
+		OpenHash <string, clsStation> AllStations = GetAllStationsOpenByName();
+
+		return AllStations[Station_Name];
+	}
 
 	static DoubleLinkedList <clsStation> GetAllStationsList()
 	{
@@ -244,9 +305,22 @@ public:
 
 	void Delete()
 	{
-		markToDelete = true;
+		OpenHash <int, clsStation> AllStations = clsStation::GetAllStationsOpen();
+
+		AllStations[this->getid()]->markToDelete = true;
+
+		SaveAllFromOpenHash(AllStations);
 	}
 
+
+	void Update()
+	{
+		OpenHash <int, clsStation> AllStations = clsStation::GetAllStationsOpen();
+
+		*AllStations[this->getid()] = *this;
+
+		SaveAllFromOpenHash(AllStations);
+	}
 
 
 	static DoubleLinkedList <string> Split(string s, string delim)
