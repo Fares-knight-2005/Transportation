@@ -131,11 +131,6 @@ public:
 		}
 	}
 
-	void Delete()
-	{
-		this->Mode = enDriverMode::OutOfWork;
-	}
-
 
 	void Add()
 	{
@@ -283,7 +278,7 @@ public:
 	{
 		OpenHash <string, clsVehicleDriver> AllDrivers = GetAllDriversOpenByName();
 
-		return AllDrivers[Name];
+		return AllDrivers[FullName];
 	}
 
 };

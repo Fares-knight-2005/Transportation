@@ -119,6 +119,12 @@ public:
 
 
 
+	clsParking* getParking(int lineId) {
+		return  parkings[lineId];
+	}
+
+
+
 
 	clsStation(){}
 

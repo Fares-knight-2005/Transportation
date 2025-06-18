@@ -220,69 +220,74 @@ public:
     }
 
 
-    /*
-    void addNewVehicleTrip(clsTransportLine t,clsPassengerTrip &v){
+
+    //void addNewVehicleTrip(clsTransportLine line,clsVehicleTrip &trip){
 
 
-    DoubleNode<clsStation> *station=t.getFirstStation.getHead();
-    destination=true;
-    
-    while(station!=nullptr||destination){
-      clsParking *parking=station->item->parkings[t.getId()];
-      parking->vehicle.enqueue(this);
-      Stack<clsPassengerTrip> s;
-        
-      if(parking->vehicle.size()==1){
-          
-      while(hasCapacity()&&!(parking->passengers.isEmpty())){
-      passengerTrip trip=parking->passengers.dequeue();
-      if(trip.getDestination()==destination&&(!trip.getDisability||hasDisabilityAccess())&&(!tripe.getThings()||hasPackageSize())){
-      if(v.m[tripe.getIdEndStation()]==nullptr)
-          v.m[tripe.getIdEndStation()]=ClosedHash<int,SingleLinkedList<VehicleMovements>>();
-          
-      v.m[tripe.getIdEndStation()].p.addFirst(trip);
-      currSeats++; 
-      if(trip.getDisability)
-      {
-      v.m[tripe.getIdEndStation()].currDisability++;
-      currDisabilitySeats++;
-      }
-      if(trip.getThings())
-      {
-      v.m[tripe.getIdEndStation()].currPackageSize++;
-      currPackageSize++;
-      }
-      }
-      else
-          s.push(trip);
-      }
-      if(!s.isEmpty())
-          s.toQueue(parking->passengers);
-      if(v.m[parking.getIdStation()]!=nullptr)
-      {
-      currSeats-=v.m[parking.getIdStation()].p.size();
-      currDisabilitySeats-=v.m[parking.getIdStation()].CurrDisability;
-      v.m[parking.getIdStation()].CurrDisability=0;
-      currPackageSize-=v.m[parking.getIdStation()].CurrPackageSize;
-      currPackageSize-=v.m[parking.getIdStation()].CurrPackageSize=0;
-      } 
-     if(station->next==nullptr)
-          destination=false;  
-      if(destination)
-          station=station->next;
-      else
-          station=station->previous;
-      parking->vehicle.dequeue();   
-      }   
-    }
+    //DoubleNode<clsStation> *station=line.getFirstStation();
+    //destination=true;// Heading to the end of the line
 
-    vehicleTripId.addFirst(v.getId());
-    }
-    */
+    //while(station!=nullptr||destination){
+    //  
+    //  clsParking *parking= station->item.getParking(line.getId());
+    //  Stack<clsPassengerTrip> s;
+    //  parking->addVehicle(*this);
+
+    //  if(parking->getnumberOfAllVehicle()==1){
+
+    //  while(hasCapacity()&&parking->hasPassengers()){
+    //  clsPassengerTrip *passenger= parking->getPassengerTrip();
+    //  strVehicleMovements *movement=trip.insertVehicleMovements(passenger->getStartStation());
+
+    //  if(passenger->getDestination()==destination&&(!passenger->getDisabilityStatus()||hasDisabilityAccess())&&(!passenger->getItemsStatus()||hasPackageSpace())){
+
+
+    //  currSeats++;
+    //  if(passenger->getDisabilityStatus())
+    //  {
+    //  movement->currDisabilitSeat++;
+    //  currDisabilitySeats++;
+    //  }
+    //  if(passenger->getItemsStatus())
+    //  {
+    //  movement->currPackageSize++;
+    //  currPackageSize++;
+    //  }
+    //  }
+    //  else
+    //      s.push(*passenger);
+    //  }
+
+    //  if(!s.isEmpty())
+    //      s.toQueue(parking->GetAllParkings());
+
+    //  strVehicleMovements *curr=trip.getVehicleMovements(station->item.getid());
+    //  if(curr!=nullptr)
+    //  {
+    //  currSeats-=movement->passengers.size();
+    //  currDisabilitySeats-=movement->CurrDisability;
+    //  movement->CurrDisability=0;
+    //  currPackageSize-=movement->CurrPackageSize;
+    //  movement->CurrPackageSize=0;
+    //  }
+    //  if(station->next==nullptr)
+    //      destination=false;
+    //  if(destination)
+    //      station=station->next;
+    //  else
+    //      station=station->previous;
+
+    //  parking->vehicle.dequeue();
+    //  }
+    //}
+
+    //vehicleTrips.addFirst(trip);
+    //}
+
 
 
    static int getNumberOfAllVehicle(){
-          return numberOfAllVehicle;     
+          return numberOfAllVehicle;
     }
 
     static void setNumberOfAllVehicle(int n){
@@ -303,16 +308,16 @@ public:
 
     string toString() {
         ostringstream oss;
-        oss << static_cast<int>(vehicleType) << ",,," << transportLineId << ",,," 
-            << capacity << ",,," << speed << ",,," << seatsForPeopleWithDisabilities 
+        oss << static_cast<int>(vehicleType) << ",,," << transportLineId << ",,,"
+            << capacity << ",,," << speed << ",,," << seatsForPeopleWithDisabilities
             << ",,," << packageSize << ",,," << id << ",,," << driverId;
-        
+
         Node<clsVehicleTrip>* current = vehicleTrips.getHead();
         while (current != nullptr) {
             oss << ",,," << current->item.getId();
             current = current->next;
         }
-        
+
         return oss.str();
     }
 
@@ -333,7 +338,7 @@ public:
 
         clsVehicle vehicle(id, type, lineId, cap, spd, disabilitySeats, pkgSize);
         vehicle.setDriverId(driverId);
-        
+
         for (int i = 8; i < tokens.size(); i++) {
             int tripId = stoi(*tokens[i]);
             clsVehicleTrip* trip = vehicleTripHash[tripId];
@@ -341,7 +346,7 @@ public:
                 vehicle.vehicleTrips.addLast(*trip);
             }
         }
-        
+
         return vehicle;
     }
 

@@ -128,7 +128,7 @@ public:
 
     string toString() {
         ostringstream oss;
-        oss << id << ",,," << numberOfVehicles << ",,," << price << ",,," << static_cast<int>(vehicleType) << ",,," << name;
+        oss << id << ",,," << numberOfVehicles << ",,," << price << ",,," << (int)vehicleType << ",,," << name;
         for (int i = 0; i < stations.size(); i++)
             oss << ",,," << stations[i]->getid();
         return oss.str();

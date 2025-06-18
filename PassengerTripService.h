@@ -60,7 +60,7 @@ public:
         bool hasItems = Input::readBool("Does he own things? ");
         bool transportingItems = Input::readBool("Do you want to move things for $5 ? ");
 
-        clsPassengerTrip newTrip(startStation, endStation, passengerId, isHeading, isDisabled, hasItems, 0.0);
+        clsPassengerTrip newTrip(startStation, endStation, passengerId, isHeading, isDisabled, hasItems, transportingItems , 0.0);
         clsCard *c = passenger->getCard();
         bool r= newTrip.setPrice(transportLine->getPirce(),c, transportingItems);
         if(r)

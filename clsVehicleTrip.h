@@ -11,10 +11,6 @@
 using namespace std;
 string clsVehicleTripFileName = "VehicleTrips.txt";
 
-
-class clsVehicleTrip {
-
- 
     struct strVehicleMovements {
         int idStation;
         int currDisabilitSeat, currPackageSize;
@@ -26,34 +22,36 @@ class clsVehicleTrip {
         string toString() {
             ostringstream oss;
             oss << idStation;
-            
+
             Node<clsPassengerTrip>* current = passengers.getHead();
             while (current != nullptr) {
                 oss << ",,," << current->item.toString();
                 current = current->next;
             }
-            
+
             return oss.str();
         }
     };
 
+class clsVehicleTrip {
+
     int id, numberOfStations, idVehicle, idTransportLine;
-    ClosedHash<int, strVehicleMovements> *vehicleMovements;
+    ClosedHash<int, strVehicleMovements> vehicleMovements;
     static int numberOfAllVehicleTrip;
 
 public:
 
-    clsVehicleTrip(int numberOfStations,int idVehicle,int idTransportLine) 
+    clsVehicleTrip(int numberOfStations,int idVehicle,int idTransportLine)
     {
         this->id = ++numberOfAllVehicleTrip;
         this->idVehicle = idVehicle;
         this->idTransportLine = idTransportLine;
         this->numberOfStations = numberOfStations;
-        vehicleMovements =new ClosedHash<int, strVehicleMovements>(numberOfStations);
+        vehicleMovements=ClosedHash<int, strVehicleMovements>(numberOfStations);
     }
 
     clsVehicleTrip() {
-
+        
     }
 
     clsVehicleTrip(int id,int numberOfStations, int idVehicle, int idTransportLine)
@@ -62,11 +60,24 @@ public:
         this->idVehicle = idVehicle;
         this->idTransportLine = idTransportLine;
         this->numberOfStations = numberOfStations;
-        vehicleMovements = new ClosedHash<int, strVehicleMovements>(numberOfStations);
+        vehicleMovements=ClosedHash<int, strVehicleMovements>(numberOfStations);
     }
 
     static int getNumberOfAllVehicleTrip(){
-          return numberOfAllVehicleTrip;     
+          return numberOfAllVehicleTrip;
+    }
+
+
+    strVehicleMovements *insertVehicleMovements(int idStation){
+
+        strVehicleMovements *curr=this->vehicleMovements[idStation];
+
+        if(curr!=nullptr)
+            return curr;
+
+        strVehicleMovements movement(idStation);
+        vehicleMovements.insert(idStation,movement);
+        return &movement;
     }
 
 
@@ -88,13 +99,17 @@ public:
     void setNumberOfStations(int numberOfStations) {
         this -> numberOfStations = numberOfStations;
     }
- 
+
+    strVehicleMovements *getVehicleMovements(int idStation){
+        return vehicleMovements[idStation];
+    }
+
     string toString() {
         ostringstream oss;
         oss << id << ",,," << numberOfStations << ",,," << idVehicle << ",,," << idTransportLine;
-            
-        for(int i = 0; i < vehicleMovements->size(); i++) {
-            strVehicleMovements *curr = vehicleMovements->getNode(i);
+
+        for(int i = 0; i < vehicleMovements.size(); i++) {
+            strVehicleMovements *curr = vehicleMovements.getNode(i);
             if (curr != nullptr) {
                 oss << ",,," << curr->toString();
             }
@@ -111,8 +126,8 @@ public:
         cout << "Vehicle ID: "<< idVehicle << "\n";
         cout << "number of stations: " << numberOfStations << "\n\n";
 
-        for (int i = 0; i < vehicleMovements->size(); i++) {
-            strVehicleMovements *node = vehicleMovements->getNode(i);
+        for (int i = 0; i < vehicleMovements.size(); i++) {
+            strVehicleMovements *node = vehicleMovements.getNode(i);
             if (node != nullptr) {
                 cout << "Current Station: " << node->idStation << "\n";
                 cout << "Passengers List:\n";
@@ -120,7 +135,7 @@ public:
 
                 Node<clsPassengerTrip>* current = node->passengers.getHead();
                 int passengerCount = 1;
-                
+
                 while (current != nullptr) {
                     cout << passengerCount++ << ". ";
                     current->item.displayInfo();
@@ -137,19 +152,19 @@ public:
         if (tokens.size() < 4) {
             throw invalid_argument("Not enough tokens in line");
         }
-        
+
         int id = stoi(*tokens[0]);
         int numberOfStations = stoi(*tokens[1]);
         int idVehicle = stoi(*tokens[2]);
         int idTransportLine = stoi(*tokens[3]);
-        
+
         clsVehicleTrip trip(id, numberOfStations, idVehicle, idTransportLine);
-        
+
         int tokenIndex = 4;
         while (tokenIndex < tokens.size()) {
             int stationId = stoi(*tokens[tokenIndex++]);
-            strVehicleMovements movement=(stationId);
-           
+            strVehicleMovements movement(stationId);
+
             while (tokenIndex + 5 < tokens.size()) {
                 try {
                     int start = stoi(*tokens[tokenIndex++]);
@@ -158,18 +173,19 @@ public:
                     bool heading = *tokens[tokenIndex++] == "1";
                     bool disabled = *tokens[tokenIndex++] == "1";
                     bool items = *tokens[tokenIndex++] == "1";
+                    bool destenation = *tokens[tokenIndex++] == "1";
                     float price = stoi(*tokens[tokenIndex++]);
-                    
-                    clsPassengerTrip passenger(start, end, pid, heading, disabled, items ,price);
+
+                    clsPassengerTrip passenger(start, end, pid, heading, disabled, items, destenation ,price);
                     movement.passengers.addLast(passenger);
                 } catch (...) {
                     break;
                 }
             }
-            
-            trip.vehicleMovements->insert(stationId, movement);
+
+            trip.vehicleMovements.insert(stationId, movement);
         }
-        
+
         return trip;
     }
 

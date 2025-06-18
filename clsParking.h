@@ -60,6 +60,27 @@ private:
         passengers.enqueue(trip);
     }
 
+    clsPassengerTrip* getPassengerTrip(){
+        return passengers.dequeue();
+    }
+
+    void addVehicle(clsVehicle v){
+        Vehicle.enqueue(v);
+    }
+
+    int getnumberOfAllVehicle(){
+        return this->Vehicle.size();
+    }
+
+    bool hasPassengers(){
+        return !passengers.isEmpty();
+    }
+
+    Queue <clsPassengerTrip>* GetPassengerQueue()
+    {
+        return &passengers;
+    }
+
    static int getNumberOfAllParking(){
           return numberOfAllParking;
     }
@@ -84,33 +105,35 @@ private:
     }
 
     static clsParking parse(string line) {
-    DoubleLinkedList<string> tokens = Input::Split(line,",,,");
+             DoubleLinkedList<string> tokens = Input::Split(line,",,,");
+          
+             if (tokens.size() < 5) {
+                 throw invalid_argument("Not enough tokens in line");
+             }
+          
+             int id = stoi(*tokens[0]);
+             int stationId = stoi(*tokens[1]);
+             double distance = stoi(*tokens[2]);
+             enVehicleType type = static_cast<enVehicleType>(stoi(*tokens[3]));
+             int idTransportLine= stoi(*tokens[4]);
+             Queue<clsPassengerTrip> passengers;
 
-    if (tokens.size() < 5) {
-        throw invalid_argument("Not enough tokens in line");
-    }
-
-    int id = stoi(*tokens[0]);
-    int stationId = stoi(*tokens[1]);
-    double distance = stoi(*tokens[2]);
-    enVehicleType type = static_cast<enVehicleType>(stoi(*tokens[3]));
-    int idTransportLine= stoi(*tokens[4]);
-    Queue<clsPassengerTrip> passengers;
-    for (int i = 5; i < tokens.size(); ) {
-
-            int start = stoi(*tokens[i++]);
-            int end = stoi(*tokens[i++]);
-            int passengerId = stoi(*tokens[i++]);
-            bool heading = (*tokens[i++] == "1");
-            bool disabled = (*tokens[i++] == "1");
-            bool items = (*tokens[i++] == "1");
-            float price = stof(*tokens[i++]);
-
-            clsPassengerTrip trip(start, end, passengerId, heading, disabled, items, price);
-            passengers.enqueue(trip);
-    }
-
-    return clsParking(id, distance, stationId, type, idTransportLine, passengers);
+             for (int i = 5; i < tokens.size(); ) {
+          
+                     int start = stoi(*tokens[i++]);
+                     int end = stoi(*tokens[i++]);
+                     int passengerId = stoi(*tokens[i++]);
+                     bool heading = (*tokens[i++] == "1");
+                     bool disabled = (*tokens[i++] == "1");
+                     bool items = (*tokens[i++] == "1");
+                     bool destination = (*tokens[i++] == "1");
+                     float price = stof(*tokens[i++]);
+          
+                     clsPassengerTrip trip(start, end, passengerId, heading, disabled, items, destination , price);
+                     passengers.enqueue(trip);
+             }
+          
+             return clsParking(id, distance, stationId, type, idTransportLine, passengers);
     }
 
 

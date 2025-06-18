@@ -25,7 +25,7 @@ private:
 	static void PrintOneDriver(clsVehicleDriver driver)
 	{
 		cout << "\n\n----------------------------------" << endl;
-		cout << "  Driver Full Name = " << driver.GetFullName << endl;
+		cout << "  Driver Full Name = " << driver.GetFullName() << endl;
 		cout << "----------------------------------" << endl;
 		cout << "Id : " << driver.getId() << endl;
 		cout << "Age : " << driver.GetAge() << endl;
@@ -43,7 +43,7 @@ private:
 	static void PrintOneDriverToUpdate(clsVehicleDriver driver)
 	{
 		cout << "\n\n----------------------------------" << endl;
-		cout << "  Driver Full Name = " << driver.GetFullName << endl;
+		cout << "  Driver Full Name = " << driver.GetFullName() << endl;
 		cout << "----------------------------------" << endl;
 		cout << "[1] Age : " << driver.GetAge() << endl;
 		cout << "[2] Email : " << driver.GetEmail() << endl;
@@ -220,7 +220,7 @@ public:
 			break;
 		case 3:
 			cout << "Enter [1] Working , [2] Tacking Rest , [3] Out Of Work : ";
-			ToUpdate.setMode(Input::ReadIntNumberBetween(1 , 3));
+			ToUpdate.setMode( (clsVehicleDriver::enDriverMode)Input::ReadIntNumberBetween(1, 3));
 			break;
 		case 4:
 			ToUpdate.SetPhoneNumber(Input::readString("Enter The New Phone Number : "));
