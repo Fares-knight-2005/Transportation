@@ -161,7 +161,7 @@ public:
 
 		cout << endl << endl << endl;
 
-		clsStation *ToFind;
+		clsStation *ToFind = nullptr;
 
 		switch (Search)
 		{
