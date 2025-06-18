@@ -5,6 +5,10 @@
 #include "clsGame.h"
 #include "clsStationServeses.h"
 #include "PassengerService.h"
+#include "VehicleService.h"
+#include "VehicleTripService.h"
+#include "PassengerTripService.h"
+#include "TransportLineService.h"
 
 
 using namespace std;
@@ -69,7 +73,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enAdd_Line:
 			    Input::Clear();
-			    //Here Your Function Don't Touch Other Things
+				TransportLineService::addNewTransportLine(); //Here Your Function Don't Touch Other Things
 			    Input::pressAnyKeyToContinue();
 			    AdminMenu();
 			    break;
@@ -77,28 +81,28 @@ class clsAdminScreen
 
 		case enWhatToDo::enDelete_Line:
 				Input::Clear();
-				//Here Your Function Don't Touch Other Things
+				TransportLineService::deleteTransportLine(); //Here Your Function Don't Touch Other Things
 				Input::pressAnyKeyToContinue();
 				AdminMenu();
 				break;
 
 		case enWhatToDo::enUpdat_Line:
 				Input::Clear();
-				//Here Your Function Don't Touch Other Things
+				TransportLineService::updateTransportLine(); //Here Your Function Don't Touch Other Things
 				Input::pressAnyKeyToContinue();
 				AdminMenu();
 				break;
 
 		case enWhatToDo::enFind_Line:
 				Input::Clear();
-				//Here Your Function Don't Touch Other Things
+				TransportLineService::search(); //Here Your Function Don't Touch Other Things
 				Input::pressAnyKeyToContinue();
 				AdminMenu();
 				break;
 
 		case enWhatToDo::enShow_Line:
 				Input::Clear();
-				//Here Your Function Don't Touch Other Things
+				TransportLineService::printAllTransportLines(); //Here Your Function Don't Touch Other Things
 				Input::pressAnyKeyToContinue();
 				AdminMenu();
 				break;
@@ -138,7 +142,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enFind_Passenger:
 			  Input::Clear();
-			  //Here Your Function Don't Touch Other Things
+			  PassengerService::search(); //Here Your Function Don't Touch Other Things
 			  Input::pressAnyKeyToContinue();
 			  AdminMenu();
 			  break;
@@ -148,14 +152,14 @@ class clsAdminScreen
 
 		case  enWhatToDo::enAdd_Vehcile:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   VehicleService::addNewVehicle();  //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			  break;
 
 		case enWhatToDo::enDelete_Vehcile:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   VehicleService::deleteVehicle();  //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -163,14 +167,14 @@ class clsAdminScreen
 
 		case enWhatToDo::enUpdate_Vehcile:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   VehicleService::updateVehicle();  //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
 
 		case enWhatToDo::enFind_Vehcile:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   VehicleService::search();  //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -178,7 +182,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enShow_Vehcils:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   VehicleService::printAllVehicles();  //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -198,7 +202,7 @@ class clsAdminScreen
 
 		case enWhatToDo::enDelete_Station:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   clsStationServeses::DeleteStation(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -207,14 +211,14 @@ class clsAdminScreen
 
 		case enWhatToDo::enUpdate_Station:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   clsStationServeses::Update(); //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
 
 		case enWhatToDo::enFind_Station:
 			   Input::Clear();
-			   //Here Your Function Don't Touch Other Things
+			   clsStationServeses::FindStation();  //Here Your Function Don't Touch Other Things
 			   Input::pressAnyKeyToContinue();
 			   AdminMenu();
 			   break;
@@ -230,6 +234,7 @@ class clsAdminScreen
 
 
 			   //Finsh Stations
+
 
 		case enWhatToDo::enShow_Trips:
 			   Input::Clear();
