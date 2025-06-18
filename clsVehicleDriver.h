@@ -23,7 +23,7 @@ public:
 
 
 private:
-
+	static int idCounter;
 	clsVehicle vehcilToDrive;
 	int Salary;
 	enDriverMode Mode;
@@ -88,8 +88,9 @@ public:
 	     St.Mode = (enDriverMode) stoi(*ObjectList[5]);
 	     St.Salary = stoi(*ObjectList[6]);
 		 St.PhoneNumber = (*ObjectList[7]);
-		 St.vehcilToDrive = clsVehicle::getVehicleByID(stoi(*ObjectList[8]));
-
+		 int a = stoi(*ObjectList[8]);
+		 if(a != 0)
+		  St.vehcilToDrive = clsVehicle::getVehicleByID(0);
 		 return St;
     }
 
@@ -108,6 +109,12 @@ public:
 		vehcilToDrive = clsVehicle::getVehicleByID(id);
 	}
 
+
+	static void setIdCounter(int ID)
+	{
+		clsVehicleDriver::idCounter = ID;
+	}
+
 	static void save(DoubleLinkedList <clsVehicleDriver> Driverss)
 	{
 
@@ -122,8 +129,11 @@ public:
 				if (Driverss[i] != nullptr)
 				{
 					clsVehicleDriver p = *Driverss[i];
-					string Line = convertObjectToLine(p);
-					Drivers << Line << endl;
+					if (p.Mode != enDriverMode::OutOfWork)
+					{
+						string Line = convertObjectToLine(p);
+						Drivers << Line << endl;
+					}
 				}
 			}
 
@@ -134,6 +144,10 @@ public:
 
 	void Add()
 	{
+		
+		GetAllDriversOpen();
+		this->Id = ++clsVehicleDriver::idCounter;
+
 		fstream MyFile;
 		MyFile.open(txtFile, ios::out | ios::app);
 
@@ -188,6 +202,9 @@ public:
 			{
 				clsVehicleDriver driver = convertLineToObject(Line);
 				AllDrivers.insert(driver.getId(), driver);
+
+				if (driver.getId() > clsVehicleDriver::idCounter)
+					clsVehicleDriver::setIdCounter(driver.getId());
 			}
 
 			MyFile.close();
@@ -225,6 +242,10 @@ public:
 			{
 				clsVehicleDriver driver = convertLineToObject(Line);
 				AllDrivers.insert(driver.GetFullName(), driver);
+
+				if (driver.getId() > clsVehicleDriver::idCounter) 
+					clsVehicleDriver::setIdCounter(driver.getId());
+
 			}
 
 			MyFile.close();
@@ -247,8 +268,8 @@ public:
 			for (int i = 0; i < AllDrivers.getCapicty(); i++) {
 				Node <HashNode<T, clsVehicleDriver>>* d = AllDrivers.getHead(i);
 				while (d != nullptr) {
-					File << convertObjectToLine(d->item.item) << endl;
-					d = d->next;
+						File << convertObjectToLine(d->item.item) << endl;
+						d = d->next;
 				}
 			}
 
@@ -260,7 +281,7 @@ public:
 	{
 		OpenHash <int, clsVehicleDriver> AllDrivers = GetAllDriversOpen();
 
-		AllDrivers[this->getId()]->Mode = enDriverMode::OutOfWork;
+		AllDrivers.remove(this->getId());
 
 		SaveAllFromOpenHash(AllDrivers);
 	}
@@ -282,3 +303,4 @@ public:
 	}
 
 };
+int clsVehicleDriver::idCounter = 0;

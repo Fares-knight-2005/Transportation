@@ -97,7 +97,7 @@ public:
 
 	void SetEmail(string Eamil)
 	{
-		this->Email = Email;
+		this->Email = Eamil;
 	}
 
 	string GetFullName()

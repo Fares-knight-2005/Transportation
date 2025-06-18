@@ -194,7 +194,9 @@ public:
 		{
 			for (int i = 0; i < AllStatitons.getCapicty(); i++) {
 				Node <HashNode<T, clsStation>>* d = AllStatitons.getHead(i);
+				
 				while (d != nullptr) {
+                    if(!d->item.item.markToDelete)
 					File << convertObjectToLine(d->item.item) << endl;
 					d = d->next;
 				}

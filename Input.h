@@ -190,7 +190,7 @@ public:
 
     static int ReadIntNumberBetween(int From, int To, string ErrorMessage = "Number is not within range, Enter again:\n", string ErrorMessageLetters = "You Can't Enter Text Enter Number : ")
     {
-        int Number = readInt(ErrorMessageLetters);
+        int Number = readInt(ErrorMessageLetters , "");
 
         while (!(Number >= From && Number <= To))
         {

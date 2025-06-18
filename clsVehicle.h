@@ -108,6 +108,9 @@ public:
     {
         OpenHash <int, clsVehicle> AllVehicles = loadVehicles();
 
+        if (AllVehicles[id] == nullptr)
+            return clsVehicle();
+
         return *AllVehicles[id];
     }
 

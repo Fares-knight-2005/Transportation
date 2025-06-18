@@ -51,6 +51,7 @@ private:
 		cout << "[4] Phone Number : " << driver.GetPhoneNumber() << endl;
 		cout << "[5] Salary : " << driver.GetSalary() << endl;
 		cout << "[6] Vehcil Id : " << driver.GetVehcilID() << endl;
+		cout << "[7] To Exit  " << endl;
 		cout << "----------------------------------" << endl;
 
 		cout << endl << endl;
@@ -77,7 +78,7 @@ public:
 
 		if (AllDriversData.size() == 0)
 		{
-			cout << "                              No Drivers Exist " << endl;
+			cout << "                                                  No Drivers Exist " << endl;
 		}
 
 		else
@@ -105,6 +106,20 @@ public:
 
 		ToAdd.SetFirstName(Input::readString("First Name : "));
 		ToAdd.SetLastName(Input::readString("Last Name : "));
+
+        OpenHash <string ,clsVehicleDriver > oh = clsVehicleDriver::GetAllDriversOpenByName();
+		
+		if(oh[ToAdd.GetFullName()] != nullptr)
+			while (oh[ToAdd.GetFullName()] != nullptr)
+			{
+				cout << "The Name you Just enterd In use choose Another Name \n";
+
+				ToAdd.SetFirstName(Input::readString("First Name : "));
+				ToAdd.SetLastName(Input::readString("Last Name : "));
+		    }
+
+
+
 		ToAdd.SetPhoneNumber(Input::readString("Phone Number : "));
 		cout << "Age : ";
 		ToAdd.SetAge(Input::ReadIntNumberBetween(20 , 50 , "Age Should Be Over 20 And Under 50"));
@@ -112,7 +127,11 @@ public:
 		ToAdd.SetSalary(Input::readInt("Enter Number Not Text :(  ", "Enter The Salary : "));
 		ToAdd.setMode(clsVehicleDriver::enDriverMode::Working);
 		cout << "Enter Vehicle Id (If No Vehcile Now Enter 0) :";
-		ToAdd.SetVehicleByID(Input::ReadIntNumberBetween(0, 10000000));
+		int num = Input::ReadIntNumberBetween(0, 10000000);
+		if (num != 0)
+		{
+			ToAdd.SetVehicleByID(num);
+		}
 
 		cout << endl << endl;
 
@@ -134,14 +153,19 @@ public:
 	{
 		clsScreen::NewMenu("\t         Deleting A Driver", 43);
 
-		int id = Input::readInt("Coulsn't Enter text Enter Number : ", "Enter Id Of Driver You Want To Delete : ");
+		int id = Input::readInt("Can't Enter text Enter Number : ", "Enter Id Of Driver You Want To Delete (0 To Exit) : ");
+
+		if (id == 0)
+		{
+			return;
+		}
 
 		clsVehicleDriver *ToDelete = clsVehicleDriver::Find(id);
 
 
 		if (ToDelete == nullptr)
 		{
-			cout << "Couldn't Find Driver :(";
+			cout << "\n\nCouldn't Find Driver :(";
 			return;
 		}
 
@@ -207,12 +231,12 @@ public:
 
 		cout << "Choose What To Update : ";
 
-		int up = Input::ReadIntNumberBetween(1, 6);
+		int up = Input::ReadIntNumberBetween(1, 7);
 
 		switch (up)
 		{
 		case 1:
-			cout << "Enter The New Name Of Station : ";
+			cout << "Enter Age : ";
 			ToUpdate.SetAge(Input::ReadIntNumberBetween(20, 50, "Age Should Be Over 20 And Under 50"));
 			break;
 		case 2:
@@ -229,6 +253,8 @@ public:
 			ToUpdate.SetSalary(Input::readInt("U Can't Enter Text Enter Number : ", "Enter The New Salary :"));
 		case 6:
 			ToUpdate.SetVehicleByID(Input::readInt("U Can't Enter Text Enter Number : ", "Enter Vehcile Id :"));
+		case 7:
+			return;
 		}
 
 

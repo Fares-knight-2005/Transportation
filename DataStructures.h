@@ -446,6 +446,8 @@ public:
     }
 
     Node <HashNode<Key,Item>>* getHead(int index){
+        if (&array[index] == nullptr)
+            return nullptr;
          return array[index].getHead();
     }
 
