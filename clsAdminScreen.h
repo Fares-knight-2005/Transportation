@@ -24,7 +24,7 @@ class clsAdminScreen
 		enShow_Vehcils, enAdd_Vehcile, enDelete_Vehcile, enUpdate_Vehcile, enFind_Vehcile,
 		enShow_Stations, enAdd_Station, enDelete_Station, enUpdate_Station, enFind_Station,
 		enShow_Employyes, enAdd_Employee, enDelete_Employye, enUpdate_Employye, enFind_Employye,
-		enShow_Trips, enSearch_Trip, enPlayGame, enExit
+		enShow_Trips, enSearch_Trip, enPlayGame,enVtrip , enExit
 	};
 
 
@@ -298,17 +298,19 @@ public:
 		cout << setw(37) << left << "" << " Delete Vehcil       [13]  | Delete Station      [18]\n";
 		cout << setw(37) << left << "" << " Update Vehcil       [14]  | Update Station      [19]\n";
 		cout << setw(37) << left << "" << " Find Vehcil         [15]  | Find Station        [20]\n";
-		cout << setw(37) << left << "" << "       ------------------------------------------\n";
+		cout << setw(37) << left << "" << "       ------------------------------------------\n"    ;
 		cout << setw(37) << left << "" << " Show Employees Info [21]  | Other Serveses  :)      \n";
 		cout << setw(37) << left << "" << " Add New Employee    [22]  | Show All V Trips    [26]\n";
 		cout << setw(37) << left << "" << " Delete Employee     [23]  | Search For V Trip   [27]\n";
 		cout << setw(37) << left << "" << " Update Employee     [24]  | Enter To Play Gmae  [28]\n";
-		cout << setw(37) << left << "" << " Find Employee       [25]  | Logout              [29]\n";
+		cout << setw(37) << left << "" << " Find Employee       [25]  | Add Vehicle Trip    [29]\n";
+		cout << setw(37) << left << "" << "       ------------------------------------------\n";
+		cout << setw(37) << left << "" << "                      Logout [30]                \n";
 		cout << setw(37) << left << "" << "=======================================================" << endl;
 
 		int WhatChoos;
 		cout << setw(37) << "" << "Enter What to do [1 -> 29] : ";
-		WhatChoos = Input::ReadIntNumberBetween(1, 29, "                                     Number is Not With Range Enter [1 -> 29] : ");
+		WhatChoos = Input::ReadIntNumberBetween(1, 29, "                                     Number is Not With Range Enter [1 -> 30] : ");
 
 		$p((enWhatToDo)WhatChoos);
 		return;

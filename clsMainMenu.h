@@ -1,7 +1,7 @@
 #pragma once
 #include "Input.h"
 #include "clsScreen.h"
-
+#include "TransportLineService.h"
 using namespace std;
 
 
@@ -13,7 +13,7 @@ class clsMainMenu
 
 		static void ShowLines()
 		{
-			cout << "Show Lines Will Be Here Near :(\n\n";
+			TransportLineService::printAllTransportLines();
 			system("pause");
 		}
 
@@ -30,28 +30,6 @@ class clsMainMenu
 		}
 
 
-		static void LogoutScreen()
-		{
-
-			//clsLoginScreen::LoginScreen();
-
-			//cout << "Logout Screen Will Be Here Near :(\n\n";
-			//system("pause");
-
-		}
-
-		static void ShowRegesters()
-		{
-			/*	cout << "Will Be Here \n\n";
-				system("pause");*/
-
-		}
-
-
-		static void CurrencyExt()
-		{
-			
-		}
 
 		static void $p(enWhatToDo WhatToDo)
 		{

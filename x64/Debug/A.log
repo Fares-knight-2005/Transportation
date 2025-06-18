@@ -11,10 +11,13 @@ D:\coding files\A\A\clsPassengerTrip.h(76,16): warning C4305: '*=': truncation f
 D:\coding files\A\A\clsVehicleTrip.h(176,33): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
   (compiling source file 'A.cpp')
   
-D:\coding files\A\A\clsStation.h(384,13): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
+D:\coding files\A\A\clsStation.h(386,13): warning C4267: 'initializing': conversion from 'size_t' to 'short', possible loss of data
   (compiling source file 'A.cpp')
   
-D:\coding files\A\A\clsStation.h(394,16): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+D:\coding files\A\A\clsStation.h(396,16): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
+  (compiling source file 'A.cpp')
+  
+D:\coding files\A\A\TransportLineService.h(265,40): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   (compiling source file 'A.cpp')
   
 D:\coding files\A\A\clsPassenger.h(94,22): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
@@ -29,10 +32,7 @@ D:\coding files\A\A\clsPassenger.h(111,19): warning C4267: 'initializing': conve
 D:\coding files\A\A\clsPassenger.h(120,25): warning C4267: '=': conversion from 'size_t' to 'short', possible loss of data
   (compiling source file 'A.cpp')
   
-D:\coding files\A\A\PassengerService.h(68,33): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
-  (compiling source file 'A.cpp')
-  
-D:\coding files\A\A\TransportLineService.h(265,40): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
+D:\coding files\A\A\PassengerService.h(69,33): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data
   (compiling source file 'A.cpp')
   
 D:\coding files\A\A\PassengerTripService.h(77,57): warning C4244: 'argument': conversion from 'double' to 'int', possible loss of data

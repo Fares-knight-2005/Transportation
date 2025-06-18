@@ -43,11 +43,11 @@ public:
             return;
         }
 
-      //  if(vehicleDrivers.isEmpty())
-      //  {
-      //      cout << "There is no vehicle Drivers. \n";
-      //      return;
-      //  }
+        if(vehicleDrivers.isEmpty())
+        {
+            cout << "There is no vehicle Drivers. \n";
+            return;
+        }
 
         cout << "\n===========================================\n";
         cout << "        Add New Vehicle";

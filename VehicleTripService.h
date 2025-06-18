@@ -23,6 +23,9 @@ public:
 
     while(station!=nullptr||vehicle.getDestination()){
     clsParking *parking= station->item.getParking(line.getId());
+    if(parking==nullptr)
+        cout<<"yes";
+    cout<<parking->getId();
     Queue<clsPassengerTrip> s;
     parking->addVehicle(vehicle);
 
@@ -38,6 +41,8 @@ public:
     bool hasPackage=vehicle.hasPackageSpace();
 
     if(passenger->getDestination()==destination&&(!passenger->getDisabilityStatus()||hasDisablity)&&(!passenger->getItemsStatus()||hasPackage)){
+
+    movement->passengers.addFirst(*passenger);
     vehicle.currSeats++;
     if(passenger->getDisabilityStatus()){
       movement->currDisabilitSeat++;

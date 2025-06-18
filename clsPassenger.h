@@ -323,6 +323,32 @@ public:
       return passengers;
   }
 
+
+
+  static OpenHash<string, clsPassenger> loadPassengersByPassword() {
+      OpenHash<string, clsPassenger> passengers;
+      ifstream file(clsPassengerFileName);
+      string line;
+
+      while (getline(file, line)) {
+          try {
+              clsPassenger passenger = clsPassenger::parse(line);
+              string fullNameKey = passenger.getPassword();
+              passengers.insert(fullNameKey, passenger);
+
+              if (clsPassenger::getNumberOfAllPassenger() < passenger.getId()) {
+                  clsPassenger::setNumberOfAllPassenger(passenger.getId());
+              }
+          }
+          catch (...) {
+              continue;
+          }
+      }
+
+      return passengers;
+  }
+
+
 };
 
 int clsPassenger::numberOfAllPassenger = 0;

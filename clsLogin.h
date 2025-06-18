@@ -4,6 +4,7 @@
 #include "Input.h"
 #include "clsMainMenu.h"
 #include "clsAdminScreen.h"
+#include "clsPassenger.h"
 
 using namespace std;
 
@@ -13,8 +14,24 @@ class clsLogin
 	enum enWhatToDo { enUser = 1, enAdmin = 2, enDriver = 3, Exit = 4 };
 
 	static void User()
-	{
-		clsMainMenu::MainMenu();
+	{/*
+		Input::Clear();
+		clsScreen::NewMenu("\t     Login Password", 43);
+		
+		OpenHash <string , clsPassenger> oh = clsPassenger::loadPassengersByName();
+		
+		string name = Input::readString("Enter FullName : ");
+		string pass = Input::readPassword();
+		clsPassenger a = *oh[name];
+		if (a == nullptr) {
+			cout << "Wrong user name or Password :(\n\n";
+			Input::pressAnyKeyToContinue();
+			return;
+		}
+
+		
+		if(a.getPassword() == pass)*/
+     		clsMainMenu::MainMenu();
 	}
 
 	static void Admin()
