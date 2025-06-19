@@ -13,6 +13,7 @@
 #include "VehicleTripService.h"
 
 
+
 using namespace std;
 
 
@@ -24,7 +25,7 @@ class clsAdminScreen
 		enShow_Vehcils, enAdd_Vehcile, enDelete_Vehcile, enUpdate_Vehcile, enFind_Vehcile,
 		enShow_Stations, enAdd_Station, enDelete_Station, enUpdate_Station, enFind_Station,
 		enShow_Employyes, enAdd_Employee, enDelete_Employye, enUpdate_Employye, enFind_Employye,
-		enShow_Trips, enSearch_Trip, enPlayGame,enVtrip , enExit
+		enShow_Trips, enSearch_Trip, enPlayGame,enVtrip  , enptrip, enExit
 	};
 
 
@@ -263,6 +264,18 @@ class clsAdminScreen
 			//	LogoutScreen();
 			//	break;
 
+		case enWhatToDo::enVtrip:
+			Input::Clear();
+			VehicleTripService::addNewVehicleTrip();
+			AdminMenu();
+			break;
+
+		case enWhatToDo::enptrip:
+			Input::Clear();
+			PassengerTripService::addNewPassengerTrip();
+			AdminMenu();
+			break;
+
 		case enWhatToDo::enExit:
 			Input::Clear();
 			//AdminMenu();
@@ -305,12 +318,12 @@ public:
 		cout << setw(37) << left << "" << " Update Employee     [24]  | Enter To Play Gmae  [28]\n";
 		cout << setw(37) << left << "" << " Find Employee       [25]  | Add Vehicle Trip    [29]\n";
 		cout << setw(37) << left << "" << "       ------------------------------------------\n";
-		cout << setw(37) << left << "" << "                      Logout [30]                \n";
+		cout << setw(37) << left << "" << " Add Passenger Trip  [30]  |  Logout [31]   \n";
 		cout << setw(37) << left << "" << "=======================================================" << endl;
 
 		int WhatChoos;
-		cout << setw(37) << "" << "Enter What to do [1 -> 29] : ";
-		WhatChoos = Input::ReadIntNumberBetween(1, 29, "                                     Number is Not With Range Enter [1 -> 30] : ");
+		cout << setw(37) << "" << "Enter What to do [1 -> 31] : ";
+		WhatChoos = Input::ReadIntNumberBetween(1, 31, "                                     Number is Not With Range Enter [1 -> 31] : ");
 
 		$p((enWhatToDo)WhatChoos);
 		return;

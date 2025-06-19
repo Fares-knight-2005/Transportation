@@ -206,10 +206,12 @@ public:
 		if (ToFind != nullptr)
 		{
 			PrintOneStatio(*ToFind);
-			cout << endl << "Parkings Of This Statin Are : ";
+			cout << endl << "Parkings Of This Statin Are : \n";
 
 			for (int i = 0; i < ToFind->getAllParkings().size(); i++) {
-				ToFind->getAllParkings()[i]->printParkingInfo();
+			
+				if(ToFind->getAllParkings().getNode(i) != nullptr)
+					ToFind->getAllParkings().getNode(i)->printParkingInfo();
 			}
 		}
 

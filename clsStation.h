@@ -29,33 +29,29 @@ class clsStation
 	enVehicleType stationType;
 	bool markToDelete = false;
 
+
 	static string convertObjectToLine(clsStation s)
 	{
-		string arr[] = {
-			to_string(s.getid()) ,
-			s.getStationName() ,
-			s.getCity() ,
-			s.getStreet() ,
-			to_string(s.getMaxParkingsCapacity()) , 
-			to_string(s.getMaxVehicleNumber()) ,
-			to_string((int)s.getStationType()) ,
-		};
-
-		string* Array = arr;
+		string str = to_string(s.getid()) + "#//#" +
+			s.getStationName() + "#//#" +
+			s.getCity() + "#//#" +
+			s.getStreet() + "#//#" +
+			to_string(s.getMaxParkingsCapacity()) + "#//#" +
+			to_string(s.getMaxVehicleNumber()) + "#//#" +
+			to_string((int)s.getStationType());
 
 		for (int i = 0; i < s.parkings.size(); i++)
 		{
-			clsParking* D = s.parkings.getNode(i);
-			if (D != nullptr)
-			{
-				while (Array != nullptr)
-					Array = Array + 1;
+			clsParking* D = s.parkings[s.station_id];
 
-				*Array = D->getId();
-			}
+			if(D != nullptr)
+			  str += "#//#" + to_string(D->getId());
 		}
-		return JoinString(Array , s.parkings.size() + 7, "#//#");
+
+		return str;
 	}
+
+
 
 	//I Need Function in Parking Class return all station Parkings
 
@@ -76,9 +72,10 @@ class clsStation
 		{
 			OpenHash <int, clsParking> AllParkings = clsParking::loadParkings();
 
-			for (int i = 0; i < ObjectList.size() - 7; i++)
+			for (int i = 7; i < ObjectList.size(); i++)
 			{
-				*St.parkings[i] = *AllParkings[stoi(*ObjectList[i + 7])];
+				clsParking p = *AllParkings[stoi(*ObjectList[i])];
+				St.parkings.insert(p.getLineId(), p);
 			}
 		}
 		return St;
@@ -183,6 +180,7 @@ public:
 
 		clsParking newParking(distance, station_id, type, lineId);
 		parkings.insert(lineId, newParking);
+		this->parkings.insert(station_id, newParking);
 		clsParking::saveParkingsFromOpenHash(parkings);
 		cout << "\nParking added successfully with ID: " << newParking.getId() << "\n";
 	}
